@@ -4,6 +4,7 @@
  * mapexists checks if the given map exists or not.
  */
 
+
 Public class Map
 {
     private String d_mapName;
