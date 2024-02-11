@@ -7,6 +7,8 @@ public class Continent
 {
     private int d_continentId;
     private String d_continentName;
+    private List<Country> d_countries;
+    private int d_continentArmyCount;
 
     /**
      * Default constructor for Continent
@@ -53,8 +55,6 @@ public class Continent
         return d_continentName;
     }
 
-
-
     /**
      * Set Continent Name
      * @param p_continentName - new Continent Name
@@ -63,4 +63,42 @@ public class Continent
     {
         this.d_continentName = p_continentName;
     }
+
+    /**
+     * Get List of countries in the continent
+     * @return Country list
+     */
+    public List<Country> getD_countries()
+    {
+        return d_countries;
+    }
+
+    /**
+     * Set List of countries in the continent
+     * @param p_countries - new Country list
+     * */
+    public void setD_countries(List<Country> p_countries)
+    {
+        this.d_countries = p_countries;
+    }
+
+    /**
+     * Get Continent Army count
+     * @return Continent Army Count
+     */
+    public int getD_continentArmyCount()
+    {
+        return d_continentArmyCount;
+    }
+
+    /**
+     * Set Continent Army Count
+     * @param p_continentArmyCount - new Continent army count
+     */
+    public void setD_continentArmyCount(int p_continentArmyCount)
+    {
+        this.d_continentArmyCount = p_continentArmyCount;
+    }
+
+
 }
