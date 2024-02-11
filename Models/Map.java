@@ -1,3 +1,9 @@
+/**
+ * Class Map defines the map and its properties like mapname and mapexists ,
+ * where mapname is the name of the map and
+ * mapexists checks if the given map exists or not.
+ */
+
 Public class Map
 {
     private String d_mapName;
@@ -46,4 +52,6 @@ Public class Map
     {
         this.d_mapName = p_mapName;
     }
+
+
 }
