@@ -17,6 +17,7 @@ Public class ShowMap
             return;
         }
 
+
         // calculate total number of lines needed for map
         int noOfLines=0;
         for(Continent continent:continents)
@@ -24,5 +25,40 @@ Public class ShowMap
             noOfLines+=Math.max(continent.getD_countries().length,1);
         }
 
+        // initialise map array
+        String[][] map = new String[noOfLines][4];
+
+        // contruct the map for each continent and its countries
+        int lineIterator=0;
+        int continentIndex = 0;
+        while (continentIndex < continents.length)
+        {
+            Continent continent = continents[continentIndex];
+            int countryIndex = 0;
+                while (countryIndex < continent.getD_countries().length)
+                {
+                        Country country = continent.getD_countries()[countryIndex];
+                        map[lineIterator][0] = continent.getD_continentName();
+                        map[lineIterator][1] = country.getD_countryName();
+
+                        String tempNeighbours = "";
+                        for (int neighbourID : country.getD_neighbours())
+                        {
+                            if (neighbourID != 0)
+                            {
+                                tempNeighbours += ", " + country.get_nameFromId(countries, neighbourID);
+                            } else
+                            {
+                                tempNeighbours += country.get_nameFromId(countries, neighbourID);
+                            }
+                        }
+
+                        map[lineIterator][2] = tempNeighbours.toString();
+                        map[lineIterator][3] = String.valueOf(continent.getD_continentArmyValue());
+                        lineIterator++;
+                        countryIndex++;
+                }
+            continentIndex++;
+        }
     }
 }
