@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Country class defines Country Id, Country Name
  * Continent Id - to which the country belong to
@@ -10,6 +12,7 @@ public Class Country
     private String d_countryName;
     private int d_armyCount;
     private int d_continentId;
+    private ArrayList<Integer> d_neighbours = new ArrayList<>();
 
     /**
      * Default constructor for Country
@@ -21,14 +24,20 @@ public Class Country
 
     /**
      * Parametrized Constructor for Country
-     * Initalises a new Country with Id, Name, Armycount, ContinentId
+     * Initalises a new Country with
+     * @param p_countryId - CountryId,
+     * @param p_countryName - CountryName,
+     * @param p_armyCount - Armycount,
+     * @param p_continentId - ContinentId and
+     * @param p_neighbours - neighbours
      */
-    public Country(int p_countryId,String p_countryName,int p_armyCount,int p_continentId)
+    public Country(int p_countryId,String p_countryName,int p_armyCount,int p_continentId,ArrayList<Integer> p_neighbours)
     {
         this.d_countryId=p_countryId;
         this.d_countryName=p_countryName;
         this.d_armyCount=p_armyCount;
         this.d_continentId=p_continentId;
+        this.d_neighbours=p_neighbours;
     }
 
     /**
@@ -89,7 +98,8 @@ public Class Country
      * Get ContinentId
      * @return ContinentId
      */
-    public int getD_continentId() {
+    public int getD_continentId()
+    {
         return d_continentId;
     }
 
@@ -100,6 +110,24 @@ public Class Country
     public void setD_continentId(int p_continentId)
     {
         this.d_continentId = p_continentId;
+    }
+
+    /**
+     * Get Neighbours
+     * @return neighbours
+     */
+    public ArrayList<Integer> getD_neighbours()
+    {
+        return d_neighbours;
+    }
+
+    /**
+     * Set Neighbours
+     * @param d_neighbours
+     */
+    public void setD_neighbours(ArrayList<Integer> d_neighbours)
+    {
+        this.d_neighbours = d_neighbours;
     }
 
 
