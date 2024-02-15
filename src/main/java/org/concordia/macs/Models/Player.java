@@ -119,7 +119,7 @@ public class Player {
     public List<String> getCountryNames(){
         List<String> countryNames = new ArrayList<>();
         for(Country country: d_country){
-            countryNames.add(country.getD_country());
+            countryNames.add(country.getD_countryName());
         }
         return countryNames;
     }
@@ -127,7 +127,7 @@ public class Player {
     public List<String> getContinentNames(){
         List<String> continentNames = new ArrayList<>();
         for(Continent continent: d_continent){
-            continentNames.add(continent.getD_continent());
+            continentNames.add(continent.getD_continentName());
         }
         return continentNames;
     }

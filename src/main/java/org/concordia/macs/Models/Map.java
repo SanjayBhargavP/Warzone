@@ -5,7 +5,7 @@ package org.concordia.macs.Models; /**
  */
 
 
-Public class Map
+public class Map
 {
     private String d_mapName;
     private boolean d_mapExists;
@@ -15,7 +15,7 @@ Public class Map
      */
     public Map()
     {
-        this.d_mapExists=False;
+        this.d_mapExists= false;
     }
 
     /**

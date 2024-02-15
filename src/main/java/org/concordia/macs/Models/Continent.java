@@ -1,5 +1,7 @@
 package org.concordia.macs.Models;
 
+import java.util.List;
+
 /**
  *Continent class defines continentId,continentName
  */
