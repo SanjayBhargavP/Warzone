@@ -1,15 +1,16 @@
 import Models.Continent;
 import Models.Country;
+import dnl.utils.text.table.TextTable;
 /**
- * Class ShowMap displays all continents and countries and their respective neighbors along with the army count
+ * Class Showl_map displays all continents and countries and their respective neighbors along with the army count
  */
 
-Public class ShowMap
+Public class Showl_map
 {
     /**
      * This method displays all the continets , its countries ,its neighbors and its army count
      */
-    public static void showMap(Continent[] continents,Country[] countries)
+    public static void showl_map(Continent[] continents,Country[] countries)
     {
         if(continents.length==0)
         {
@@ -18,7 +19,7 @@ Public class ShowMap
         }
 
 
-        // calculate total number of lines needed for map
+        // calculate total number of lines needed for l_map
         int noOfLines=0;
         for(Continent continent:continents)
         {
@@ -26,7 +27,7 @@ Public class ShowMap
         }
 
         // initialise map array
-        String[][] map = new String[noOfLines][4];
+        String[][] l_map = new String[noOfLines][4];
 
         // contruct the map for each continent and its countries
         int lineIterator=0;
@@ -38,8 +39,8 @@ Public class ShowMap
                 while (countryIndex < continent.getD_countries().length)
                 {
                         Country country = continent.getD_countries()[countryIndex];
-                        map[lineIterator][0] = continent.getD_continentName();
-                        map[lineIterator][1] = country.getD_countryName();
+                        l_map[lineIterator][0] = continent.getD_continentName();
+                        l_map[lineIterator][1] = country.getD_countryName();
 
                         String tempNeighbours = "";
                         for (int neighbourID : country.getD_neighbours())
@@ -53,12 +54,18 @@ Public class ShowMap
                             }
                         }
 
-                        map[lineIterator][2] = tempNeighbours.toString();
-                        map[lineIterator][3] = String.valueOf(continent.getD_continentArmyValue());
+                        l_map[lineIterator][2] = tempNeighbours.toString();
+                        l_map[lineIterator][3] = String.valueOf(continent.getD_continentArmyValue());
                         lineIterator++;
                         countryIndex++;
                 }
             continentIndex++;
         }
+
+       System.out.println("\nThe Map Details : \n");
+       String[] l_mapColumnNames={"Continent","Country","Neighbours","Total Army"};
+       TextTable l_mapAsTable = new TextTable(l_mapColumnNames, l_map);
+       l_mapAsTable.printTable();
+       System.out.println();
     }
 }
