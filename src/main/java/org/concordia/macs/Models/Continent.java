@@ -1,3 +1,4 @@
+package org.concordia.macs.Models;
 
 /**
  *Continent class defines continentId,continentName

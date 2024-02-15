@@ -1,4 +1,4 @@
-/**
+package org.concordia.macs.Models; /**
  * Country class defines Country Id, Country Name
  * Continent Id - to which the country belong to
  * Army count - no of armies deployed in the country
