@@ -1,10 +1,10 @@
-/**
+package org.concordia.macs.Models; /**
  * Country class defines Country Id, Country Name
  * Continent Id - to which the country belong to
  * Army count - no of armies deployed in the country
  */
 
-public Class Country
+public class Country
 {
     private int d_countryId;
     private String d_countryName;
@@ -53,14 +53,14 @@ public Class Country
      * Get CountryName
      * @return Country Name
      */
-    public int getD_countryName()
+    public String getD_countryName()
     {
         return d_countryName;
     }
 
     /**
      * Set CountryName
-     * @param p_countryName - new country Name
+     * @param d_countryName - new country Name
      */
      public void setD_countryName(String d_countryName)
      {
