@@ -2,15 +2,15 @@ import Models.Continent;
 import Models.Country;
 import dnl.utils.text.table.TextTable;
 /**
- * Class Showl_map displays all continents and countries and their respective neighbors along with the army count
+ * Class Show_map displays all continents and countries and their respective neighbors along with the army count
  */
 
-Public class Showl_map
+Public class Show_map
 {
     /**
      * This method displays all the continets , its countries ,its neighbors and its army count
      */
-    public static void showl_map(Continent[] continents,Country[] countries)
+    public static void show_map(Continent[] continents,Country[] countries)
     {
         if(continents.length==0)
         {
