@@ -131,7 +131,19 @@ public class Country
     {
         this.d_neighbours = d_neighbours;
     }
+    public String get_nameFromId(ArrayList<Country> p_countryList,int p_countryId)
+    {
+        for(Country i:p_countryList)
+        {
+            if(i.getD_countryId()==p_countryId)
+            {
+                return i.getD_countryName();
+            }
 
+        }
+        return " ";
+
+    }
 
 
 }
