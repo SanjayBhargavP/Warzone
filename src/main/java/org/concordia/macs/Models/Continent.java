@@ -1,5 +1,4 @@
 package org.concordia.macs.Models;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,4 +121,5 @@ public class Continent
         }
         return l_countries;
     }
+
 }

@@ -1,5 +1,5 @@
-package org.concordia.macs.Models;
 
+package org.concordia.macs.Models;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +14,6 @@ public class Country
     private String d_countryName;
     private int d_armyCount;
     private int d_continentId;
-
     private ArrayList<Integer> d_neighbours = new ArrayList<>();
 
     /**
@@ -144,6 +143,4 @@ public class Country
         return " ";
 
     }
-
-
 }
