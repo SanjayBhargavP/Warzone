@@ -1,16 +1,16 @@
 package org.concordia.macs.View;
 
-import Models.Continent;
-import Models.Country;
+import org.concordia.macs.Models.Continent;
+import org.concordia.macs.Models.Country;
 import dnl.utils.text.table.TextTable;
 /**
  * Class Show_map displays all continents and countries and their respective neighbors along with the army count
  */
 
-Public class Show_map
+public class ShowMap
 {
     /**
-     * This method displays all the continets , its countries ,its neighbors and its army count
+     * This method displays all the continents , its countries ,its neighbors and its army count
      */
     public static void show_map(Continent[] continents,Country[] countries)
     {
@@ -31,9 +31,9 @@ Public class Show_map
         // initialise map array
         String[][] l_map = new String[noOfLines][4];
 
-        // contruct the map for each continent and its countries
+        // construct the map for each continent and its countries
         int lineIterator=0;
-        int continentIndex = 0;
+        int continentIndex=0;
         while (continentIndex < continents.length)
         {
             Continent continent = continents[continentIndex];
