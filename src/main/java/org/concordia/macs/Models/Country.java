@@ -1,6 +1,7 @@
 
 package org.concordia.macs.Models;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Country class defines Country Id, Country Name
@@ -124,12 +125,21 @@ public class Country
 
     /**
      * Set Neighbours
-     * @param d_neighbours
+     * @param p_countryId refers to the country ID.
+     * @param p_neighbouringCountries refers to the neighbouring countries.
      */
-    public void setD_neighbours(ArrayList<Integer> d_neighbours)
+
+    public void setD_neighbours(int p_countryId,HashMap<Integer,ArrayList<Integer>> p_neighbouringCountries)
     {
-        this.d_neighbours = d_neighbours;
+        this.d_neighbours=p_neighbouringCountries.get(p_countryId);
     }
+
+    /**
+     * This method returns the country name
+     * @param p_countryList - list of countries
+     * @param p_countryId - country id
+     * @return - Country Name
+     */
     public String get_nameFromId(ArrayList<Country> p_countryList,int p_countryId)
     {
         for(Country i:p_countryList)
