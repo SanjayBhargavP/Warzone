@@ -5,7 +5,7 @@ import java.io.IOException;
 
 /**
  * The MapCreator class is designed to automatically record to the file each time a user generates a map.
- *
+ * @author SanjayBhargavPabbu
  */
 
 public class MapCreator {
