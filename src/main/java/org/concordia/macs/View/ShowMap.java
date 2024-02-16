@@ -3,6 +3,9 @@ package org.concordia.macs.View;
 import org.concordia.macs.Models.Continent;
 import org.concordia.macs.Models.Country;
 import dnl.utils.text.table.TextTable;
+
+import java.util.ArrayList;
+
 /**
  * Class Show_map displays all continents and countries and their respective neighbors along with the army count
  */
@@ -12,9 +15,9 @@ public class ShowMap
     /**
      * This method displays all the continents , its countries ,its neighbors and its army count
      */
-    public static void show_map(Continent[] continents,Country[] countries)
+    public static void show_map(ArrayList<Continent> p_continentList, ArrayList<Country> p_countryList)
     {
-        if(continents.length==0)
+        if(p_continentList.size()==0)
         {
             System.out.println("Continents or Country does not exist");
             return;
@@ -23,9 +26,9 @@ public class ShowMap
 
         // calculate total number of lines needed for l_map
         int noOfLines=0;
-        for(Continent continent:continents)
+        for(Continent continent:p_continentList)
         {
-            noOfLines+=Math.max(continent.getD_countries().length,1);
+            noOfLines+=Math.max(continent.getD_countries().size(),1);
         }
 
         // initialise map array
@@ -34,13 +37,13 @@ public class ShowMap
         // construct the map for each continent and its countries
         int lineIterator=0;
         int continentIndex=0;
-        while (continentIndex < continents.length)
+        while (continentIndex < p_continentList.size())
         {
-            Continent continent = continents[continentIndex];
+            Continent continent = p_continentList.get(continentIndex);
             int countryIndex = 0;
-                while (countryIndex < continent.getD_countries().length)
+                while (countryIndex < continent.getD_countries().size())
                 {
-                        Country country = continent.getD_countries()[countryIndex];
+                        Country country = continent.getD_countries().get(countryIndex);
                         l_map[lineIterator][0] = continent.getD_continentName();
                         l_map[lineIterator][1] = country.getD_countryName();
 
@@ -49,15 +52,15 @@ public class ShowMap
                         {
                             if (neighbourID != 0)
                             {
-                                tempNeighbours += ", " + country.get_nameFromId(countries, neighbourID);
+                                tempNeighbours += ", " + country.get_nameFromId(p_countryList, neighbourID);
                             } else
                             {
-                                tempNeighbours += country.get_nameFromId(countries, neighbourID);
+                                tempNeighbours += country.get_nameFromId(p_countryList, neighbourID);
                             }
                         }
 
                         l_map[lineIterator][2] = tempNeighbours.toString();
-                        l_map[lineIterator][3] = String.valueOf(continent.getD_continentArmyValue());
+                        l_map[lineIterator][3] = String.valueOf(continent.getD_continentArmyCount());
                         lineIterator++;
                         countryIndex++;
                 }
