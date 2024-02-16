@@ -1,3 +1,5 @@
+package org.concordia.macs.View;
+
 import Models.Continent;
 import Models.Country;
 import dnl.utils.text.table.TextTable;

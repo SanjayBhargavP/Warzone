@@ -1,3 +1,5 @@
+package org.concordia.macs.Models;
+
 import java.util.ArrayList;
 
 /**
@@ -6,12 +8,13 @@ import java.util.ArrayList;
  * Army count - no of armies deployed in the country
  */
 
-public Class Country
+public class Country
 {
     private int d_countryId;
     private String d_countryName;
     private int d_armyCount;
     private int d_continentId;
+
     private ArrayList<Integer> d_neighbours = new ArrayList<>();
 
     /**
@@ -62,14 +65,14 @@ public Class Country
      * Get CountryName
      * @return Country Name
      */
-    public int getD_countryName()
+    public String getD_countryName()
     {
         return d_countryName;
     }
 
     /**
      * Set CountryName
-     * @param p_countryName - new country Name
+     * @param d_countryName - new country Name
      */
      public void setD_countryName(String d_countryName)
      {
@@ -98,8 +101,7 @@ public Class Country
      * Get ContinentId
      * @return ContinentId
      */
-    public int getD_continentId()
-    {
+    public int getD_continentId() {
         return d_continentId;
     }
 
@@ -129,6 +131,7 @@ public Class Country
     {
         this.d_neighbours = d_neighbours;
     }
+
 
 
 }
