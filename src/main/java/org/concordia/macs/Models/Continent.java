@@ -1,5 +1,5 @@
 package org.concordia.macs.Models;
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -103,5 +103,23 @@ public class Continent
         this.d_continentArmyCount = p_continentArmyCount;
     }
 
+    /**
+     * Gets the country name from continent ID.
+     * @param p_continentId refers to the continent ID.
+     * @param p_countryList refers to the list of countries present in the continent.
+     * @return countries name
+     *
+     */
+
+    public ArrayList<Country> d_getCountryFromContinentId(int p_continentId, ArrayList<Country> p_countryList)
+    {
+        ArrayList<Country> l_countries=new ArrayList<Country>();
+        for(Country i:p_countryList)
+        {
+            if(i.getD_continentId()==p_continentId)
+                l_countries.add(i);
+        }
+        return l_countries;
+    }
 
 }

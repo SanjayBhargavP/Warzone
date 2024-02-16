@@ -1,4 +1,8 @@
-package org.concordia.macs.Models; /**
+
+package org.concordia.macs.Models;
+import java.util.ArrayList;
+
+/**
  * Country class defines Country Id, Country Name
  * Continent Id - to which the country belong to
  * Army count - no of armies deployed in the country
@@ -10,6 +14,7 @@ public class Country
     private String d_countryName;
     private int d_armyCount;
     private int d_continentId;
+    private ArrayList<Integer> d_neighbours = new ArrayList<>();
 
     /**
      * Default constructor for Country
@@ -21,14 +26,20 @@ public class Country
 
     /**
      * Parametrized Constructor for Country
-     * Initalises a new Country with Id, Name, Armycount, ContinentId
+     * Initalises a new Country with
+     * @param p_countryId - CountryId,
+     * @param p_countryName - CountryName,
+     * @param p_armyCount - Armycount,
+     * @param p_continentId - ContinentId and
+     * @param p_neighbours - neighbours
      */
-    public Country(int p_countryId,String p_countryName,int p_armyCount,int p_continentId)
+    public Country(int p_countryId,String p_countryName,int p_armyCount,int p_continentId,ArrayList<Integer> p_neighbours)
     {
         this.d_countryId=p_countryId;
         this.d_countryName=p_countryName;
         this.d_armyCount=p_armyCount;
         this.d_continentId=p_continentId;
+        this.d_neighbours=p_neighbours;
     }
 
     /**
@@ -102,5 +113,34 @@ public class Country
         this.d_continentId = p_continentId;
     }
 
+    /**
+     * Get Neighbours
+     * @return neighbours
+     */
+    public ArrayList<Integer> getD_neighbours()
+    {
+        return d_neighbours;
+    }
 
+    /**
+     * Set Neighbours
+     * @param d_neighbours
+     */
+    public void setD_neighbours(ArrayList<Integer> d_neighbours)
+    {
+        this.d_neighbours = d_neighbours;
+    }
+    public String get_nameFromId(ArrayList<Country> p_countryList,int p_countryId)
+    {
+        for(Country i:p_countryList)
+        {
+            if(i.getD_countryId()==p_countryId)
+            {
+                return i.getD_countryName();
+            }
+
+        }
+        return " ";
+
+    }
 }
