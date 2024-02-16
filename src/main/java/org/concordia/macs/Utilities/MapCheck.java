@@ -1,4 +1,6 @@
-import java.io.file;
+package org.concordia.macs.Utilities;
+import java.io.File;
+
 /**
  * MapCheck class checks if user mentioned map is present
  */
@@ -13,7 +15,7 @@ public class MapCheck
     {
         p_enteredFileName=p_enteredFileName+".map";
         File l_directory=new File(p_path);
-        File[] fileList = directory.listFiles();
+        File[] fileList = l_directory.listFiles();
         if (fileList != null)
         {
             for (File file : fileList)
