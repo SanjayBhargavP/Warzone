@@ -136,13 +136,13 @@ public class Player {
 
 
 
-    public Player(String p_playerName, int p_playerId, HashMap<String, Country> p_playerCountry, ArrayList<Order> p_playerOrder){
-        super();
-        this.d_playerName = p_playerName;
-        this.d_playerId = p_playerId;
-        this.d_order = p_playerOrder;
-        this.d_country = p_playerCountry;
-    }
+//    public Player(String p_playerName, int p_playerId, HashMap<String, Country> p_playerCountry, ArrayList<Order> p_playerOrder){
+//        super();
+//        this.d_playerName = p_playerName;
+//        this.d_playerId = p_playerId;
+//        this.d_order = p_playerOrder;
+//        this.d_country = p_playerCountry;
+//    }
 
     /**
      *
