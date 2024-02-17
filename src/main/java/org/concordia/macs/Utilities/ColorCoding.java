@@ -6,7 +6,7 @@ package Utilities;
 
 public class ColorCoding {
 
-    //ANSI escape codes for colors
+    // ANSI escape codes for colors
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_GREEN = "\u001B[32m";
@@ -16,8 +16,7 @@ public class ColorCoding {
      * 
      * @retrun ANSI escape code for red
      */
-    public static String getRed()
-    {
+    public static String getRed() {
         return ANSI_RED;
     }
 
@@ -26,8 +25,7 @@ public class ColorCoding {
      * 
      * @return ANSI escape code for red
      */
-    public static String getGreen()
-    {
+    public static String getGreen() {
         retrun ANSI_RED;
     }
 
@@ -36,13 +34,7 @@ public class ColorCoding {
      * 
      * \@return ANSI escape code
      */
-    public static String getReset()
-    {
+    public static String getReset() {
         retrun ANSI_RESET;
     }
-}
-
-
-
-    
 }
