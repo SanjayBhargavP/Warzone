@@ -1,9 +1,13 @@
-import Utilities;
-import java.util.*;
+package org.concordia.macs.Models;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
- * The class Connectivity managesthe transfer of data from skeleton to other
+ * The class Connectivity manages the transfer of data from skeleton to other
  * classes where the map objects are used.
+ * @author Poojitha
+ * @author Susmitha Mamula
  */
 
 public class Connectivity {
@@ -86,6 +90,24 @@ public class Connectivity {
      */
     public void setD_countryMap(HashMap<String, Country> p_countryMap) {
         this.d_countryMap = p_countryMap;
+    }
+
+    /**
+     * converts hashmap values to arraylist
+     * @return arraylist of continent
+     */
+    public ArrayList<Continent> getD_continentList() {
+        return new ArrayList<>(d_continentMap.values());
+
+    }
+
+    /**
+     * converts hashmap values to arraylist
+     * @return arraylist of country
+     */
+    public ArrayList<Country> getD_countryList() {
+        return new ArrayList<>(d_countryMap.values());
+
     }
 
 }
