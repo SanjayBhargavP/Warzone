@@ -23,16 +23,16 @@ public class ColorCoding {
     /**
      * Returns the ANSI escape code for green color
      * 
-     * @return ANSI escape code for red
+     * @return ANSI escape code for green
      */
     public static String getGreen() {
-        retrun ANSI_RED;
+        retrun ANSI_GREEN;
     }
 
     /**
      * Returns the ANSI reset escape code to reset color
      * 
-     * \@return ANSI escape code
+     * @return ANSI reset escape code
      */
     public static String getReset() {
         retrun ANSI_RESET;
