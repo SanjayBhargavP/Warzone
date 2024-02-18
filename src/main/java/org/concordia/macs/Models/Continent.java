@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  *Continent class defines continentId,continentName
+ * @author Blesslin Jeba Shiny
  */
 
 public class Continent
