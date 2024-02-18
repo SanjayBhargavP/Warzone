@@ -1,7 +1,6 @@
 package org.concordia.macs.Utilities;
 import java.util.*;
-
-import org.concordia.macs.Models.Connectivity;
+import org.concordia.macs.Utilities.Connectivity;
 import org.concordia.macs.Models.Continent;
 import org.concordia.macs.Models.Country;
 import java.io.*;
@@ -36,7 +35,7 @@ public class LoadMap {
 			String absolute = l_file.getAbsolutePath();
             p_connectivityData.setD_pathName(absolute+ File.separator+"src/main/resources");
             l_fileName = absolute + File.separator + "src/main/resources" + File.separator + l_fileName+".map";
-            p_connectivityData.setD_FilepathName(l_fileName);
+            p_connectivityData.setD_FilePathName(l_fileName);
             l_map.setD_mapName(l_fileName);
         }
         catch (Exception e)  
@@ -44,7 +43,7 @@ public class LoadMap {
             System.err.println(e.getMessage());
         }
        
-     if(MapCheck.validateMap(l_copyFileName,p_connectivityData.getD_pathName()))
+     if(MapCheck.checkMap(l_copyFileName,p_connectivityData.getD_pathName()))
      {
     	 try 
     	 {
@@ -95,10 +94,10 @@ public class LoadMap {
     	   			Continent l_continentObj=new Continent();
     	   			l_continentObj.setD_continentId(l_continentId);
     	   			l_continentObj.setD_continentName(aArr[0]);
-    	   			l_continentObj.setD_continentArmyValue(Integer.parseInt(aArr[1]));
+    	   			l_continentObj.setD_continentArmyCount(Integer.parseInt(aArr[1]));
     	   			l_continentObj.setD_countries(l_continentObj.d_getCountryFromContinentId(l_continentId, l_countryList));
     	   			l_continentId++;
-    	   			continentList.add(l_continentObj);	
+    	   			continentList.add(l_continentObj);
     	   		}
     	   		p_connectivityData.setD_continentList(continentList);
     	        p_connectivityData.setD_countryList(l_countryList);
