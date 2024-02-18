@@ -67,7 +67,7 @@ public class Order {
             for(int i=0;i<p_gamePlayer.getD_country().size();i++){
                 if(p_gamePlayer.getD_country().get(i).getD_countryId()==p_gameOrder.getD_sourceCountry().getD_countryId()){
                     p_gamePlayer.getD_country().get(i).setD_armyCount(p_gameOrder.d_armyCount);
-                    System.out.println(ColorCoding.green+ "Player " + p_gamePlayer.getD_playerName()+": "+ p_gamePlayer.getD_country().get(i).getD_countryName()+" is assigned with"+p_gameOrder.d_armyCount+ColorCoding.blank);
+                    System.out.println(ColorCoding.ANSI_GREEN+ "Player " + p_gamePlayer.getD_playerName()+": "+ p_gamePlayer.getD_country().get(i).getD_countryName()+" is assigned with"+p_gameOrder.d_armyCount+ColorCoding.ANSI_RESET);
                 }
             }
         }
