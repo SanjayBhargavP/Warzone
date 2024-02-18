@@ -1,15 +1,17 @@
 package org.concordia.macs.Utilities;
-
+import org.concordia.macs.Models.Connectivity;
+import org.concordia.macs.Models.Continent;
+import org.concordia.macs.Models.Country;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Models.Continent;
-import Models.Country;
 
 /**
  * The MapEditor class allows users to make changes to an existing map.
+ * @author - Piyush
+ * @author - Blesslin Jeba Shiny
  */
 public class MapEditor {
 
@@ -33,7 +35,7 @@ public class MapEditor {
         List<Country> l_countries = new ArrayList<>();
         l_continent.setD_continentId(p_connectivity.getD_continentMap().size() + 1);
         l_continent.setD_continentName(p_continentId);
-        l_continent.setD_continentArmyValue(p_continentvalue);
+        l_continent.setD_continentArmyCount(p_continentvalue);
         l_continent.setD_countries(l_countries);
         p_connectivity.getD_continentMap().put(p_continentId, l_continent);
         System.out.println("Continent Added Successfully");
@@ -70,7 +72,7 @@ public class MapEditor {
 
         l_country.setD_countryId(p_connectivity.getD_countryMap().size() + 1);
         l_country.setD_countryName(p_countryId);
-        l_country.setD_continentId(p_continentId);
+        l_country.setD_continentId(Integer.parseInt(p_continentId));
         p_connectivity.getD_countryMap().put(p_countryId, l_country);
 
         Continent continent = p_connectivity.getD_continentMap().get(p_continentId);
@@ -189,8 +191,10 @@ public class MapEditor {
 
         p_connectivity.getD_continentMap().remove(p_continentId);
 
-        for (Country country : p_connectivity.getD_countryMap().values()) {
-            if (country.getD_continentId().equals(p_continentId)) {
+        for (Country country : p_connectivity.getD_countryMap().values())
+        {
+            if (country.getD_continentId()==Integer.parseInt((p_continentId)))
+            {
                 removeCountry(country.getD_countryName(), p_connectivity);
             }
         }
