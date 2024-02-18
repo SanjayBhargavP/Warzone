@@ -1,6 +1,6 @@
 package org.concordia.macs.Utilities;
 
-import org.concordia.macs.Models.Connectivity;
+import org.concordia.macs.Utilities.Connectivity;
 
 import java.io.FileWriter;
 import java.util.LinkedList;
