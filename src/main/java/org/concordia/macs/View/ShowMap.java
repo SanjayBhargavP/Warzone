@@ -16,7 +16,7 @@ public class ShowMap
     /**
      * This method displays all the continents , its countries ,its neighbors and its army count
      */
-    public static void show_map(ArrayList<Continent> p_continentList, ArrayList<Country> p_countryList)
+    public static void showMap(ArrayList<Continent> p_continentList, ArrayList<Country> p_countryList)
     {
         if(p_continentList.size()==0)
         {
