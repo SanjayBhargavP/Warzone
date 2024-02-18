@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class MapEditorTest {
 
-    Connectivity d_connectivy = new Connectivity();
+    Connectivity d_connectivity = new Connectivity();
 
     /**
      * Test adding a continent to the map
