@@ -1,5 +1,5 @@
 package org.concordia.macs.Utilities;
-import org.concordia.macs.Models.Connectivity;
+import org.concordia.macs.Utilities.Connectivity;
 import org.concordia.macs.Models.Continent;
 import org.concordia.macs.Models.Country;
 import java.util.ArrayList;
