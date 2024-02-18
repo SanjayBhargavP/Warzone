@@ -3,6 +3,7 @@ import java.io.File;
 
 /**
  * MapCheck class checks if user mentioned map is present
+ * @author - Blesslin Jeba Shiny
  */
 public class MapCheck
 {
