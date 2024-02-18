@@ -93,7 +93,8 @@ public class MapEditorTest {
     }
 
     /**
-     * Test removing neighbouring countries without specifying country and neighbours
+     * Test removing neighbouring countries without specifying country and
+     * neighbours
      */
 
     @Test
