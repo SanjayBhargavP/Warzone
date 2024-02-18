@@ -1,5 +1,7 @@
 package org.concordia.macs.Utilities;
 import java.util.*;
+
+import org.concordia.macs.Models.Connectivity;
 import org.concordia.macs.Models.Continent;
 import org.concordia.macs.Models.Country;
 import java.io.*;
@@ -20,7 +22,7 @@ public class LoadMap {
 	 *
 	 */
 	
-	public static void loadMap(Connectivity p_connectivityData,String p_mapFileName)
+	public static void loadMap(Connectivity p_connectivityData, String p_mapFileName)
 	{
 		Scanner l_input = new Scanner(System.in);
 		String l_fileName = p_mapFileName;

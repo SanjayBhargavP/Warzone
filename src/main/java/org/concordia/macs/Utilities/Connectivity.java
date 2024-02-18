@@ -1,5 +1,7 @@
-package org.concordia.macs.Models;
+package org.concordia.macs.Utilities;
 
+import org.concordia.macs.Models.Continent;
+import org.concordia.macs.Models.Country;
 import java.util.ArrayList;
 import java.util.HashMap;
 
