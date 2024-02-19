@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.concordia.macs.Controllers"},{"l":"org.concordia.macs.Models"},{"l":"org.concordia.macs.Utilities"},{"l":"org.concordia.macs.View"}];updateSearchResults();
