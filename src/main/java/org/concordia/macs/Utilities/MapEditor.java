@@ -193,9 +193,13 @@ public class MapEditor {
 
         for (Country country : p_connectivity.getD_countryMap().values())
         {
-            if (country.getD_continentId()==Integer.parseInt((p_continentId)))
-            {
-                removeCountry(country.getD_countryName(), p_connectivity);
+            try {
+                if (country.getD_continentId() == Integer.parseInt((p_continentId))) {
+                    removeCountry(country.getD_countryName(), p_connectivity);
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
             }
         }
 
