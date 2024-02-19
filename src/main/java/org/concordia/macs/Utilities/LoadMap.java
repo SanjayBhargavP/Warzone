@@ -1,6 +1,5 @@
 package org.concordia.macs.Utilities;
 import java.util.*;
-import org.concordia.macs.Utilities.Connectivity;
 import org.concordia.macs.Models.Continent;
 import org.concordia.macs.Models.Country;
 import java.io.*;
@@ -8,11 +7,11 @@ import org.concordia.macs.Models.Map;
 
 /**
  * This class, LoadMap, is responsible for loading the map chosen by the user.
- * @author SanjayBhargavPabbu
+ * @author Sanjay Bhargav Pabbu
  */
 
 public class LoadMap {
-	
+
 	/**
 	 *
 	 * This method is used to load the Map selected by the user whether pre-defined or user made.
@@ -20,7 +19,7 @@ public class LoadMap {
 	 * @param p_mapFileName refers to the Name of the map being loaded.
 	 *
 	 */
-	
+
 	public static void loadMap(Connectivity p_connectivityData, String p_mapFileName)
 	{
 		Scanner l_input = new Scanner(System.in);
@@ -29,8 +28,8 @@ public class LoadMap {
 		ArrayList<Continent> l_continentList=new ArrayList<Continent>();
 		ArrayList<Country> l_countryList=new ArrayList<Country>();
 		Map l_map=new Map();
-		try 
-		{	   
+		try
+		{
 			File l_file = new File("");
 			String absolute = l_file.getAbsolutePath();
             p_connectivityData.setD_pathName(absolute+ File.separator+"src/main/resources");
@@ -38,14 +37,14 @@ public class LoadMap {
             p_connectivityData.setD_FilePathName(l_fileName);
             l_map.setD_mapName(l_fileName);
         }
-        catch (Exception e)  
+        catch (Exception e)
 		{
             System.err.println(e.getMessage());
         }
-       
+
      if(MapCheck.checkMap(l_copyFileName,p_connectivityData.getD_pathName()))
      {
-    	 try 
+    	 try
     	 {
     	   		l_input= new Scanner(new File(l_fileName));
     	   		ArrayList<String> l_fileContent=new ArrayList<String>();
@@ -58,18 +57,18 @@ public class LoadMap {
     	   		int l_borderLength=0;
     	   		for(int i=0;i<l_fileContent.size();i++)
     	   		{
-    	   			String a=l_fileContent.get(i);
-    	   			if(a.equals("[continents]")) l_continentLength=i;	
-    	   			if(a.equals("[countries]")) l_countryLength=i;
-    	   			if(a.equals("[borders]")) l_borderLength=i;
+    	   			String l_fileContentString=l_fileContent.get(i);
+    	   			if(l_fileContentString.equals("[continents]")) l_continentLength=i;	
+    	   			if(l_fileContentString.equals("[countries]")) l_countryLength=i;
+    	   			if(l_fileContentString.equals("[borders]")) l_borderLength=i;
     	   			
     	   		}
     	   		HashMap<Integer,ArrayList<Integer>> l_neighbouringCountries=new HashMap<Integer,ArrayList<Integer>>(); 
     	        for(int i=l_borderLength+1; i<l_fileContent.size(); i++) 
     	        {
-    	        	String a = l_fileContent.get(i);
-    	        	String[] aArr=a.split(",");
-    	        	String l_borderString=aArr[0];
+    	        	String l_fileContentInput = l_fileContent.get(i);
+    	        	String[] l_aArr=l_fileContentInput.split(",");
+    	        	String l_borderString=l_aArr[0];
     	        	String[] l_borderStringArr=l_borderString.split(" ");
     	        	ArrayList<Integer> l_neighbours=new ArrayList<Integer>();
     	        	for(int j=1;j<l_borderStringArr.length;j++) l_neighbours.add(Integer.parseInt(l_borderStringArr[j]));
@@ -77,29 +76,29 @@ public class LoadMap {
     	        }
     	   		for(int i=l_countryLength+1;i<l_borderLength-1;i++)
     	   		{
-    	   			String a=l_fileContent.get(i);
-    	  		    String[] aArr=a.split(" ");
-    	  		    Country obj=new Country();
-    	  		    obj.setD_countryId(Integer.parseInt(aArr[0]));
-    	  		    obj.setD_countryName(aArr[1]);
-    	  		    obj.setD_continentId(Integer.parseInt(aArr[2]));
-    	  		    obj.setD_neighbours(Integer.parseInt(aArr[0]), l_neighbouringCountries);
-    	     		l_countryList.add(obj);	
+    	   			String l_fileContentInput=l_fileContent.get(i);
+    	  		    String[] l_arr=l_fileContentInput.split(" ");
+    	  		    Country l_countryObj=new Country();
+    	  		    l_countryObj.setD_countryId(Integer.parseInt(l_arr[0]));
+    	  		    l_countryObj.setD_countryName(l_arr[1]);
+    	  		    l_countryObj.setD_continentId(Integer.parseInt(l_arr[2]));
+    	  		    l_countryObj.setD_neighbours(Integer.parseInt(l_arr[0]), l_neighbouringCountries);
+    	     		l_countryList.add(l_countryObj);	
     	   		}
     	   		int l_continentId=1;
     	   		for(int i=l_continentLength+1;i<l_countryLength-1;i++)
     	   		{
-    	   			String a=l_fileContent.get(i);
-    	   			String[] aArr=a.split(" ");
+    	   			String l_fileContentInput=l_fileContent.get(i);
+    	   			String[] l_arr=l_fileContentInput.split(" ");
     	   			Continent l_continentObj=new Continent();
     	   			l_continentObj.setD_continentId(l_continentId);
-    	   			l_continentObj.setD_continentName(aArr[0]);
-    	   			l_continentObj.setD_continentArmyCount(Integer.parseInt(aArr[1]));
+    	   			l_continentObj.setD_continentName(l_arr[0]);
+    	   			l_continentObj.setD_continentArmyCount(Integer.parseInt(l_arr[1]));
     	   			l_continentObj.setD_countries(l_continentObj.d_getCountryFromContinentId(l_continentId, l_countryList));
     	   			l_continentId++;
-    	   			continentList.add(l_continentObj);
+					l_continentList.add(l_continentObj);
     	   		}
-    	   		p_connectivityData.setD_continentList(continentList);
+    	   		p_connectivityData.setD_continentList(l_continentList);
     	        p_connectivityData.setD_countryList(l_countryList);
     	        }
     	      catch(Exception e)
@@ -108,24 +107,24 @@ public class LoadMap {
     	       }
     	      try
     	       {
-    	    	  System.out.println(ColorCoding.green+"Map "+p_mapFileName+".map"+" has been successfully loaded..."+ColorCoding.blank);
+    	    	  System.out.println(ColorCoding.ANSI_GREEN+"Map "+p_mapFileName+".map"+" loaded successfully....."+ColorCoding.ANSI_RESET);
     	       } 
     	       catch (Exception e)
     	       {
     	    	   System.out.println("Map could not be loaded properly");
     	    	   return;
     	       }
-    	 	 
+
      }
      else
      {
     	 p_connectivityData.setD_continentList(new ArrayList<Continent>());
     	 p_connectivityData.setD_countryList(new ArrayList<Country>());
-    	 System.out.println(ColorCoding.green+"Map does not exist. Creating a map..."+ColorCoding.blank);
+    	 System.out.println(ColorCoding.ANSI_RESET+"The map does not exist. Creating a map....."+ColorCoding.ANSI_RESET);
     	 MapCreator.generateMapFile(l_copyFileName,p_connectivityData.getD_pathName());
     	 SaveMap.saveMap(p_connectivityData);
   	 }
-       
+
 	}
 }
 
