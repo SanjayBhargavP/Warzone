@@ -1,4 +1,4 @@
-package Utilities;
+package org.concordia.macs.Utilities;
 
 /**
  * The ColoCoding class manages color codes for console output.

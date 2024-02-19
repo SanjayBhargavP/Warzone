@@ -1,6 +1,6 @@
 package org.concordia.macs.Models;
 
-import Utilities.ColorCoding;
+import org.concordia.macs.Utilities.ColorCoding;
 
 /**
  * This class defines orders, including their origin and destination countries and the count of armies that is transferred
@@ -63,7 +63,7 @@ public class Order {
 
     public void execute(Player p_gamePlayer, Order p_gameOrder){
         while(p_gamePlayer.getD_armyNumber()!=0){
-            p_gamePlayer.setD_armyNumber(p_gamePlayer.getD_armyNumber()-p_gameOrder.d_armyCount);
+            p_gamePlayer.setD_armyNumber(p_gamePlayer.getD_armyNumber()-p_gameOrder.getD_armyNumber());
             for(int i=0;i<p_gamePlayer.getD_country().size();i++){
                 if(p_gamePlayer.getD_country().get(i).getD_countryId()==p_gameOrder.getD_sourceCountry().getD_countryId()){
                     p_gamePlayer.getD_country().get(i).setD_armyCount(p_gameOrder.d_armyCount);
