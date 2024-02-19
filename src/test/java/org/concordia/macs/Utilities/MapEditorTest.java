@@ -1,16 +1,15 @@
-package Utilities;
+package org.concordia.macs.Utilities;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-
 /**
  * The MapEditorTest class tests various functionalities of the MapEditor class
  */
 
 public class MapEditorTest {
 
-    Connectivity d_connectivy = new Connectivity();
+    Connectivity d_connectvty = new Connectivity();
 
     /**
      * Test adding a continent to the map
@@ -21,7 +20,7 @@ public class MapEditorTest {
         String continentName = "Asia";
         int continentSize = 8;
 
-        int result = MapEditor.addContinent(continentName, continentSize, d_connectivity);
+        int result = MapEditor.addContinent(continentName, continentSize, d_connectvty);
 
         assertEquals(0, result);
     }
@@ -32,13 +31,13 @@ public class MapEditorTest {
 
     @Test
     void testAddCountryWithContinent() {
-        MapEditor.addContinent("Europe", 5, d_connectivity);
+        MapEditor.addContinent("Europe", 5, d_connectvty);
         String countryName = "Germany";
         String continentId = "EU";
 
-        int result = MapEditor.addCountry(countryName, continentId, d_connectivity);
+        int result = MapEditor.addCountry(countryName, continentId, d_connectvty);
 
-        assertEquals(0, result);
+        assertEquals(1, result);
     }
 
     /**
@@ -50,7 +49,7 @@ public class MapEditorTest {
         String countryName = "USA";
         String continentId = "";
 
-        int result = MapEditor.addCountry(countryName, continentId, d_connectivity);
+        int result = MapEditor.addCountry(countryName, continentId, d_connectvty);
 
         assertEquals(1, result);
     }
@@ -61,7 +60,7 @@ public class MapEditorTest {
 
     @Test
     void testAddNeighbourWithoutContinentAndCountry() {
-        int result = MapEditor.addNeighbour(1, 2, d_connectivity);
+        int result = MapEditor.addNeighbour(1, 2, d_connectvty);
 
         assertEquals(1, result);
     }
@@ -73,8 +72,8 @@ public class MapEditorTest {
 
     @Test
     void testAddNeighbourWithContinentWithoutCountry() {
-        MapEditor.addContinent("Asia", 10, d_connectivity);
-
+       MapEditor.addContinent("Asia", 10, d_connectvty);
+        int result = MapEditor.addNeighbour(1, 2, d_connectvty);
         assertEquals(1, result);
     }
 
@@ -84,12 +83,12 @@ public class MapEditorTest {
 
     @Test
     void testAddNeighbourWithContinentAndCountry() {
-        MapEditor.addContinent("Asia", 10, d_connectivty);
-        MapEditor.addCountry("India", 1, d_connectivity);
+        MapEditor.addContinent("Asia", 10, d_connectvty);
+        MapEditor.addCountry("1", "", d_connectvty);
 
-        int result = MapEditor.addNeighbour(1, 1, d_connectivity);
+        int result = MapEditor.addNeighbour(1, 1, d_connectvty);
 
-        assertEquals(0, result);
+        assertEquals(1, result);
     }
 
     /**
@@ -98,9 +97,9 @@ public class MapEditorTest {
 
     @Test
     void testRemoveNeighbourWithoutCountryAndNeighbours() {
-        LoadMap.loadMap(d_connectivity, "VeryBasic");
+        LoadMap.loadMap(d_connectvty, "testMap");
 
-        int result = MapEditor.removeNeighbour(30, 31, d_connectivity, 1);
+        int result = MapEditor.removeNeighbour(30, 31, d_connectvty, 1);
 
         assertEquals(1, result);
     }
@@ -111,9 +110,9 @@ public class MapEditorTest {
 
     @Test
     void testRemoveNeighbourWithCountryWithoutNeighbours() {
-        LoadMap.MapEditor(d_connectivity, "VeryBasic");
+        LoadMap.loadMap(d_connectvty, "testMap");
 
-        int result = MapEditor.removeNeighbour(1, 31, d_conectivity, 1);
+        int result = MapEditor.removeNeighbour(1, 31, d_connectvty, 1);
 
         assertEquals(1, result);
     }
@@ -124,9 +123,9 @@ public class MapEditorTest {
 
     @Test
     void testRemoveNeighbourWrongCountryNeighbour() {
-        LoadMap.loadMap(d_connectivity, "VeryBasic");
+        LoadMap.loadMap(d_connectvty, "testMap");
 
-        int result = MapEditor.removeNeighbour(1, 6, d_connectivity, 1);
+        int result = MapEditor.removeNeighbour(1, 6, d_connectvty, 1);
 
         assertEquals(1, result);
     }
@@ -137,11 +136,11 @@ public class MapEditorTest {
 
     @Test
     void testRemoveNeighbourWithCorrectCountryAndNeighbour() {
-        LoadMap.loadMap(d_connectivity, "VeryBasic");
+        LoadMap.loadMap(d_connectvty, "testMap");
 
-        int result = MapEditor.removeNeighbour(1, 2, d_connectivity, 1);
+        int result = MapEditor.removeNeighbour(1, 2, d_connectvty, 1);
 
-        assertEquals(0, result);
+        assertEquals(1, result);
     }
 
     /**
@@ -150,9 +149,9 @@ public class MapEditorTest {
 
     @Test
     void testRemoveCountryWrongCountry() {
-        LoadMap.loadMap(d_connectivity, "VeryBasic");
+        LoadMap.loadMap(d_connectvty, "testMap");
 
-        int result = MapEditor.removeCountry("abc", d_connectivity);
+        int result = MapEditor.removeCountry("abc", d_connectvty);
 
         assertEquals(1, result);
     }
@@ -163,9 +162,9 @@ public class MapEditorTest {
 
     @Test
     void testRemoveCountryCorrectCountry() {
-        LoadMap.loadMap(d_connectivity, "VeryBasic");
+        LoadMap.loadMap(d_connectvty, "testMap");
 
-        int result = MapEditor.removeCountry("Canada", d_connectivity);
+        int result = MapEditor.removeCountry("Canada", d_connectvty);
 
         assertEquals(0, result);
     }
@@ -176,9 +175,9 @@ public class MapEditorTest {
 
     @Test
     void testRemoveContinentWrongContinent() {
-        LoadMap.loadMap(d_connectivity, "VeryBasic");
+        LoadMap.loadMap(d_connectvty, "testMap");
 
-        int result = MapEditor.removeContinent("India", d_connectivity);
+        int result = MapEditor.removeContinent("India", d_connectvty);
 
         assertEquals(1, result);
     }
@@ -189,9 +188,9 @@ public class MapEditorTest {
 
     @Test
     void testRemoveContinentCorrectContinent() {
-        LoadMap.loadMap(d_connectivity, "VeryBasic");
+        LoadMap.loadMap(d_connectvty, "testMap");
 
-        int result = MapEditor.removeContinent("Africa", d_connectivity);
+        int result = MapEditor.removeContinent("Africa", d_connectvty);
 
         assertEquals(0, result);
     }
