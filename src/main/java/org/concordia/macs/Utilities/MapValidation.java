@@ -32,7 +32,7 @@ public class MapValidation {
             return false;
         }
         for(Country c: l_countryList){
-            if(c.getD_neighbours() != null || c.getD_neighbours().isEmpty()){
+            if(c.getD_neighbours() == null || c.getD_neighbours().isEmpty()){
                 System.out.println(ColorCoding.ANSI_RED+"ERROR: "+c.getD_countryName()+" does not possess any neighbour, hence isn't reachable!"+ColorCoding.ANSI_RESET);
                 return false;
             }
