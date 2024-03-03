@@ -14,7 +14,7 @@ public class Country
 {
     private int d_countryId;
     private String d_countryName;
-    private int d_armyCount;
+    private int d_armyCount=0;
     private int d_continentId;
     private ArrayList<Integer> d_neighbours = new ArrayList<>();
 
@@ -141,7 +141,7 @@ public class Country
      * @param p_countryId - country id
      * @return - Country Name
      */
-    public String get_nameFromId(ArrayList<Country> p_countryList,int p_countryId)
+    public static String get_nameFromId(ArrayList<Country> p_countryList,int p_countryId)
     {
         for(Country i:p_countryList)
         {
@@ -154,4 +154,42 @@ public class Country
         return " ";
 
     }
+
+    /**
+     * This method returns the country by its name
+     * @param p_countryList - list of countries
+     * @param p_countryName - country name
+     * @return country name if found, null if country not found
+     */
+    public Country getCountryFromName(ArrayList<Country> p_countryList,String p_countryName)
+    {
+        for(Country c :p_countryList)
+        {
+            if(c.getD_countryName().equals(p_countryName))
+                return c;
+        }
+        return null;
+    }
+
+    /**
+     * This method returns the country by its id
+     * @param p_countryList - list of countries
+     * @param p_countryId - country id
+     * @return country name if found, null if country not found
+     */
+
+    public static Country getCountryFromId(ArrayList<Country> p_countryList,int p_countryId)
+    {
+        for(Country c:p_countryList)
+        {
+            if(c.getD_countryId()==p_countryId)
+            {
+                return c;
+            }
+
+        }
+        return null;
+
+    }
+
 }
