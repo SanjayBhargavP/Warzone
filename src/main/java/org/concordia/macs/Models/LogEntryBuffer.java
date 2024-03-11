@@ -1,5 +1,10 @@
 package org.concordia.macs.Models;
+import org.concordia.macs.Utilities.Observable;
+import org.concordia.macs.View.LogWriter;
+
 import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 
 /**
@@ -22,7 +27,7 @@ public class LogEntryBuffer implements Observable
     /**
      * This function notifies all the observers if any object is changed
      */
-    @override
+
     public void notifyObservers(String p_log)
     {
         d_logWriter.update(p_log);
