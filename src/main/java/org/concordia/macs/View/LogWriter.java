@@ -1,4 +1,6 @@
 package org.concordia.macs.View;
+import org.concordia.macs.Utilities.Observer;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -8,12 +10,22 @@ import java.io.PrintWriter;
  * This class writes the log into the log file.
  * @author - Blesslin Jeba Shiny
  */
-public class LogWriter {
+public class LogWriter implements Observer {
     private String l_fileName="LogEntry";
 
     /**
+     * Observer interface implementation
+     * @param p_log - log message to be updated
+     */
+    @Override
+    public void update(String p_log)
+    {
+            writeLog(p_log);
+    }
+
+    /**
      * This method logs into the log file
-     * @param
+     * @param p_logMessage - message to be loged into the file
      */
     public void writeLog(String p_logMessage)
     {
@@ -35,4 +47,6 @@ public class LogWriter {
             l_writeData.close();
         }
     }
+
+
 }
