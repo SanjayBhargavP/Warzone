@@ -6,7 +6,7 @@ package org.concordia.macs.Utilities;
 public interface Observer {
 
     /**
-     * This function updated the log message
+     * This function updates the log message
      * @param p_log - log message to be updated
      */
     void update(String p_log);
