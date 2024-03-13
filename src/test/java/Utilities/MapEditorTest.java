@@ -3,6 +3,7 @@ package org.concordia.macs.Utilities;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
 /**
  * The MapEditorTest class tests various functionalities of the MapEditor class
  */
@@ -92,7 +93,8 @@ public class MapEditorTest {
     }
 
     /**
-     * Test removing neighbouring countries without specifying country and neighbours
+     * Test removing neighbouring countries without specifying country and
+     * neighbours
      */
 
     @Test
