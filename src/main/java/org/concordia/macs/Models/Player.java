@@ -2,6 +2,7 @@ package org.concordia.macs.Models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * class with the details of the player
@@ -15,9 +16,9 @@ public class Player {
     private int d_armyNumber;
 
     private Order d_order;
-    private HashMap<String, Country> d_country = new HashMap<>();
-    private ArrayList<Order> d_playerOrder = new ArrayList<>();
-    private HashMap<String, Continent> d_continent = new HashMap<>();
+    private List<Country> d_country = new ArrayList<>();
+    private List<Order> d_playerOrder = new ArrayList<>();
+    private  List<Continent> d_continent = new ArrayList<>();
 
     /**
      *  issues the orders given by the player
@@ -61,10 +62,11 @@ public class Player {
         return d_order;
     }
 
-    public HashMap<String, Country> getD_country() {
+    public List<Country> getD_country() {
 
         return d_country;
     }
+
 
     /**
      * sets the player's name
@@ -109,7 +111,7 @@ public class Player {
      */
     public void addCountry(Country p_country) {
 
-        d_country.put(p_country.getD_countryName(), p_country);
+        d_country.add(p_country);
     }
 
     /**
@@ -123,7 +125,7 @@ public class Player {
 
     }
 
-    public HashMap<String, Continent> getD_continent() {
+    public List<Continent> getD_continent() {
 
         return d_continent;
     }
@@ -132,7 +134,7 @@ public class Player {
      * sets the player continent
      * @param d_continent refers to the list of continents
      */
-    public void setD_continent(HashMap<String, Continent> d_continent) {
+    public void setD_continent(ArrayList<Continent> d_continent) {
 
         this.d_continent = d_continent;
     }
@@ -153,11 +155,11 @@ public class Player {
     public Player (Player l_player){
         this.d_playerName = l_player.getD_playerName();
         this.d_playerId = l_player.getD_playerId();
-        this.d_country = new HashMap<>(l_player.getD_country());
+        this.d_country = l_player.getD_country();
         this.d_playerOrder= new ArrayList<>(l_player.getD_playerOrder());
         this.d_order = l_player.getD_order();
         this.d_armyNumber = l_player.getD_armyNumber();
-        this.d_continent = new HashMap<>(l_player.getD_continent());
+        this.d_continent = l_player.getD_continent();
     }
 
     /**
@@ -168,11 +170,11 @@ public class Player {
      * @param p_playerOrder refers to the list of orders of player
      */
 
-    public Player(String p_playerName, int p_playerId, HashMap<String, Country> p_playerCountry, ArrayList<Order> p_playerOrder){
+    public Player(String p_playerName, int p_playerId, List<Country> p_playerCountry, ArrayList<Order> p_playerOrder){
         super();
         this.d_playerName = p_playerName;
         this.d_playerId = p_playerId;
-        this.d_order = p_playerOrder;
+        this.d_playerOrder = p_playerOrder;
         this.d_country = p_playerCountry;
     }
 
@@ -181,7 +183,7 @@ public class Player {
      * @return player orders
      */
 
-    public ArrayList<Order> getD_playerOrder(){
+    public List<Order> getD_playerOrder(){
         return d_playerOrder;
     }
 

@@ -4,6 +4,7 @@ import org.concordia.macs.Models.Continent;
 import org.concordia.macs.Models.Country;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 /**
  * The class Connectivity manages the transfer of data from skeleton to other
@@ -111,5 +112,17 @@ public class Connectivity {
         return new ArrayList<>(d_countryMap.values());
 
     }
+
+    public void setD_continentList(ArrayList<Continent> continents) {
+        this.d_continentMap = continents.stream()
+                .collect(Collectors.toMap(Continent::getD_continentName, c -> c, (c1, c2) -> c1, HashMap::new));
+    }
+
+    public void setD_countryList(ArrayList<Country> countries) {
+        this.d_countryMap = countries.stream()
+                .collect(Collectors.toMap(Country::getD_countryName, c -> c, (c1, c2) -> c1, HashMap::new));
+    }
+
+
 
 }
