@@ -1,7 +1,6 @@
 package org.concordia.macs.Models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,6 +18,18 @@ public class Player {
     private List<Country> d_country = new ArrayList<>();
     private List<Order> d_playerOrder = new ArrayList<>();
     private  List<Continent> d_continent = new ArrayList<>();
+
+    private List<String> d_cards = new ArrayList<>();
+
+    private ArrayList<Integer> d_diplomacyWith = new ArrayList<>();
+    private static int d_objCount = 1;
+
+    public Player(){
+
+        this.setD_playerId(d_objCount);
+        d_objCount++;
+    }
+
 
     /**
      *  issues the orders given by the player
@@ -93,7 +104,7 @@ public class Player {
      */
     public int getD_armyNumber() {
 
-        return d_armyNumber;
+        return d_objCount;
     }
 
     /**
@@ -119,8 +130,10 @@ public class Player {
      * @param p_order refers to the order object
      */
     public void setD_order(Order p_order) {
+        LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
         d_order = p_order;
         this.d_armyNumber = this.d_armyNumber - p_order.getD_armyNumber();
+        d_logEntryBuffer.log("Army count changed to "+ d_armyNumber);
         System.out.println("Number of army has changed to "+ d_armyNumber);
 
     }
@@ -139,13 +152,6 @@ public class Player {
         this.d_continent = d_continent;
     }
 
-    /**
-     * This is a default constructor
-     */
-
-    public Player(){
-
-    }
 
     /**
      *
@@ -158,7 +164,7 @@ public class Player {
         this.d_country = l_player.getD_country();
         this.d_playerOrder= new ArrayList<>(l_player.getD_playerOrder());
         this.d_order = l_player.getD_order();
-        this.d_armyNumber = l_player.getD_armyNumber();
+        this.d_objCount = l_player.getD_armyNumber();
         this.d_continent = l_player.getD_continent();
     }
 
@@ -186,6 +192,86 @@ public class Player {
     public List<Order> getD_playerOrder(){
         return d_playerOrder;
     }
+    /**
+     * This function returns the cards of the given player
+     * @return list of cards
+     */
+    public ArrayList<String> getCards() {
+        return (ArrayList<String>) d_cards;
+    }
+    /**
+     * This function sets the cards owned by the players
+     * @param cards cards owned by player
+     */
+
+    public void setCards(ArrayList<String> cards)
+    {
+        d_cards = cards;
+    }
+    /**
+     * This function removes the card from the list of cards owned by the player
+     * @param card Card to be removed from the array list
+     */
+    public void removeCard(String card)
+    {
+        d_cards.remove(card);
+    }
+    /**
+     * This function adds the card to the list of cards
+     * @param card refers to the card to be added to list
+     */
+    public void addCard(String card)
+    {
+        d_cards.add(card);
+    }
+    /**
+     * This function returns the countries the player set the diplomacy with
+     * @return refers to the second country the player set the diplomacy with
+     */
+    public ArrayList<Integer> getDiplomacyWith()
+    {
+        return d_diplomacyWith;
+    }
+    /**
+     * This function sets the countries the player sets the diplomacy with
+     * @param diplomacyWith refers to the second country the player sets the diplomacy with
+     */
+    public void setDiplomacyWith(ArrayList<Integer> diplomacyWith)
+    {
+        d_diplomacyWith = diplomacyWith;
+    }
+    /**
+     * This function adds the country to the diplomacy list
+     * @param l_toPlayerID represents the playerId to perform diplomacy with
+     */
+    public void addDiplomacyWith(Integer l_toPlayerID)
+    {
+        d_diplomacyWith.add(l_toPlayerID);
+    }
+    /**
+     * This function clears the diplomacy list of the player
+     */
+    public void clearDiplomacyWith()
+    {
+        d_diplomacyWith.clear();
+    }
+    /**
+     * This function removes all the assigned continents and countries to the player
+     */
+    public void removeAllCountryAndContinentAssigned()
+    {
+        d_country.clear();
+        d_continent.clear();
+    }
+    /**
+     * This function remove the country from the player country list
+     * @param c Refers to the country
+     */
+    public void removeCountry(Country c)
+    {
+        d_country.remove(c);
+    }
+    
 
 
 

@@ -4,7 +4,7 @@ import org.concordia.macs.Utilities.Connectivity;
 
 import java.io.FileWriter;
 import java.util.LinkedList;
-
+import org.concordia.macs.Models.LogEntryBuffer;
 /**
  * This class, SaveMap, manages the saving of maps after users create new ones or modify existing ones.
  *
@@ -18,6 +18,7 @@ public class SaveMap {
      * @return An integer indicating success or failure of the save operation
      */
     public static int saveMap(Connectivity p_connectivity) {
+        LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
         LinkedList<String> l_mapInfo = new LinkedList<>();
         l_mapInfo.add("[continents]" + "\n");
         for (int i = 0; i < p_connectivity.getD_continentList().size(); i++)
@@ -35,14 +36,28 @@ public class SaveMap {
             l_mapInfo.add(l_countryData + "\n");
         }
 
-        try {
-            FileWriter l_source = new FileWriter(p_connectivity.getD_FilePathName());
-            for (String lines : l_mapInfo)
-                l_source.write(lines);
-            l_source.close();
-            System.out.println("Map has been successfully saved");
-            return 0;
-        } catch (Exception e) {
+        try
+        {
+            if(p_mapName.equals(p_connectivity.getD_mapName()))
+            {
+                FileWriter l_input=new FileWriter(p_connectivity.getD_FilePathName());
+                for(String lines:l_mapInfo)
+                    l_input.write(lines);
+                l_input.close();
+                d_logEntryBuffer.log("Map has been successfully saved");
+                System.out.println("Map has been successfully saved");
+                return 0;
+            }
+            else
+            {
+                System.out.println(ColorCoding.ANSI_RED+"ERROR: Saving mapName '"+p_mapName+"' should be the same name as Loading mapName '"+p_connectivity.getD_mapName()+"'"+ColorCoding.ANSI_RESET);
+                return 1;
+            }
+
+        }
+        catch (Exception e)
+        {
+            d_logEntryBuffer.log("Map could not be saved properly");
             System.out.println("Map could not be saved properly");
             System.err.println(e.getMessage());
             return 1;
