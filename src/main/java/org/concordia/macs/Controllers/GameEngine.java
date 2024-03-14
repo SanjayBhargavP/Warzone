@@ -1,252 +1,415 @@
 package org.concordia.macs.Controllers;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.IOException;
 
-import org.concordia.macs.Utilities.ColorCoding;
-import org.concordia.macs.Utilities.Connectivity;
+import java.util.*;
 
-import org.concordia.macs.Models.Continent;
-import org.concordia.macs.Models.Country;
-import org.concordia.macs.Models.LogEntryBuffer;
 
-import org.concordia.macs.state.*;
+import org.concordia.macs.Models.*;
+
+import org.concordia.macs.Utilities.*;
+
+
+import org.concordia.macs.View.ShowMap;
 
 /**
- *
  * @author Mahfuzzur Rahman
- * Context class implementing the State pattern.
- * It contains a State object, which in this example is the Phase class.
- */
+ 
+
+* The GameEngine class serves as the entry point for the Warzone game, managing player commands and game phases.
+*
+*/
 
 public class GameEngine {
 	
-	LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
-
-	/**
-	 * State object of the GameEngine 
-	 */
-
-	private Phase gamePhase;
-	private Connectivity connectivity;
-	private boolean checkIfTest = false;
-
-	/**
-	 * Used for unit testing
-	 * @return true if testing
-	 */
-
-	public boolean getCheckIfTest() {
-		return checkIfTest;
-	}
-
-	/**
-	 * Sets the checkIfTest parameter.
-	 * @param checkIfTest testing parameter
-	 */
-
-	public void setCheckIfTest(boolean checkIfTest) {
-		this.checkIfTest = checkIfTest;
-	}
-
-	int startOption;
-	String mycommand;
-
-	/**
-	 * Allows the GameEngine object to change its state.
-	 * @param p_phase new state to be set for the GameEngine object.
-	 */
-
-	public void setPhase(Phase p_phase) {
-		gamePhase = p_phase;
-		d_logEntryBuffer.log("new phase: " + p_phase.getClass().getSimpleName());
-		System.out.println("new phase: " + p_phase.getClass().getSimpleName());
-	}
-
-	/**
-	 * Returns the name of the game phase.
-	 * @return name of the game phase
-	 */
-
-	public String getPhaseName()
-	{
-		return gamePhase.getClass().getSimpleName();
-	}
-
-	/**
-	 * Returns the game phase.
-	 * @return the game phase
-	 */
+	private static ArrayList<Player> l_playersArray = new ArrayList<Player>();
 	
-	public Phase getPhase()
+	
+	/**
+	* Retrieves the list of players.
+	* @return The list of players.
+	**/
+	public static ArrayList<Player> getL_playersArray()
 	{
-		return gamePhase;
+		return l_playersArray;
 	}
+	
+	
+	
 
 	/**
-	 * Starts the game by initializing map editing or gameplay.
-	 */
+	* Starts the game and handles user input.
+	* @param args the command line arguments.
+	* @throws IOException when there is an error reading a file.
+	**/
+	public static void main(String[] args) throws IOException {
 
-
-	public void startGame() {
-
-		d_logEntryBuffer.clearFile();
-		Connectivity l_connectivity=new Connectivity();
+		Scanner l_scanner = new Scanner(System.in);
+		Connectivity l_mainConnectivity=new Connectivity();
 		
-		l_connectivity.setD_continentList(new ArrayList<Continent>());
-		l_connectivity.setD_countryList(new ArrayList<Country>());
-
-		boolean l_check_if_map_loaded = false;
-		Scanner keyboard = new Scanner(System.in);
-		Scanner phase_command = new Scanner(System.in);
-		String[] l_commands;
-
-		do {
-			d_logEntryBuffer.log("Choose to Start the Game or End it");
-			System.out.println("1. Edit Map");
-			System.out.println("2. Play Game");
-			System.out.println("3. Quit");
-			System.out.println("Where do you want to start?: ");
-			startOption = keyboard.nextInt();
-
-			switch (startOption) {
-
-			case 1:
-				setPhase(new Preload(this));
-				break;
-
-			case 2:
-				setPhase(new PlaySetup(this));
-				break;
-
-			case 3:
-				d_logEntryBuffer.log("Bye!");
-				System.out.println("Bye!");
-				return;
-
+		l_mainConnectivity.setD_continentList(new ArrayList<Continent>());
+		l_mainConnectivity.setD_countryList(new ArrayList<Country>());
+		
+		String l_gamePhase="startup";
+		
+		System.out.println("\n\n-------- Welcome to Warzone --------\n");
+		System.out.println("Enter 'start' to begin or 'exit' to quit.");
+		
+		String l_option = "";
+		int l_flag = 0;
+		
+		do
+		{	
+			if(l_flag==0)
+			{
+				
+				l_option = l_scanner.next();
+				l_scanner.nextLine();
+				l_flag =1;
+				
+				if(l_option.equals("exit")) {
+					break;
+				}
+				
 			}
 			
-			do {
-				System.out.println(" ====================================================================================================");
-				System.out.println("| #   PHASE                   : command                                                             |"); 
-				System.out.println(" ====================================================================================================");
-				System.out.println("| 1.  Any                     : show map                                                            |");
-				System.out.println("| 2.  Edit:PreLoad            : load map, edit country, edit continent, edit neighbor, validatemap  |");
-				System.out.println("| 3.  Edit:PostLoad           : save map                                                            |");
-				System.out.println("| 4.  Play:PlaySetup          : gameplayer, assigncountries                                         |");
-				System.out.println("| 5.  Play:MainPlay:Reinforce : deploy                                                              |");
-				System.out.println("| 6.  Play:MainPlay:Attack    : advance, bomb, airlift, blockade, negotiate                         |");
-				System.out.println("| 7.  Play:MainPlay:Fortify   : fortify                                                             |");
-				System.out.println("| 8.  End                     : end game                                                            |");
-				System.out.println("| 9.  Any                     : next phase                                                          |");
-				System.out.println(" ====================================================================================================");
-
-				d_logEntryBuffer.log("enter a " + gamePhase.getClass().getSimpleName() + " phase command: ");
-				System.out.println("enter a " + gamePhase.getClass().getSimpleName() + " phase command: ");
-				mycommand = phase_command.nextLine();
-				l_commands = mycommand.split(" "); 
-				System.out.println(" =====================================================================================================");
-
+			else if(l_flag == 1 && l_option.equals("start") && l_gamePhase.equals("startup"))
+			{
+				System.out.println("Enter Warzone commands:\n"
+						+ "1. editcontinent\n"
+						+ "2. editcountry\n"
+						+ "3. editneighbor\n"
+						+ "4. showmap\n"
+						+ "5. savemap\n"
+						+ "6. validatemap\n"
+						+ "7. loadmap");
+				
+				
+				String l_str = l_scanner.nextLine();
+				String[] l_commands = l_str.split(" "); 
+				
+				
 				if(l_commands[0]!= null)
 				{
-				switch (l_commands[0]) {
-
-				case "loadmap":					
-					gamePhase.loadMap(l_connectivity,l_commands);
-					l_check_if_map_loaded = true;
-					break;
-
-				case "validatemap":
-					if(l_check_if_map_loaded) gamePhase.validateMap(l_connectivity);
-					else {
-						d_logEntryBuffer.log("ERROR: Map cannot be validated before loading it");
-						System.out.println(ColorCoding.red+"ERROR: Map cannot be validated before loading it"+ColorCoding.blank);
-					}
-					break;
-
-				case "showmap":
-					if(l_check_if_map_loaded) gamePhase.viewMap(l_connectivity.getD_continentList(),l_connectivity.getD_countryList(),Play.getL_playersArray());
-					else {
-						d_logEntryBuffer.log("ERROR: Map cannot be viewed before loading it");
-						System.out.println(ColorCoding.red+"ERROR: Map cannot be viewed before loading it"+ColorCoding.blank);
-					}
-					break;
-
-				case "help":
-					gamePhase.help();
-					break;
-
-				case "editcountry":
-					gamePhase.editCountry(l_commands, l_connectivity);
-					break;
-
-				case "editcontinent":
-					if(l_check_if_map_loaded) gamePhase.editContinent(l_commands, l_connectivity);
-					else {
-						d_logEntryBuffer.log("ERROR: Map cannot be edited before loading it");
-						System.out.println(ColorCoding.red+"ERROR: Map cannot be edited before loading it"+ColorCoding.blank);
-					}
-					break;
-
-				case "editneighbor":
-					gamePhase.editNeighbor(l_commands, l_connectivity);
-					break;
-
-				case "savemap":
-					gamePhase.saveMap(l_connectivity, l_commands[1]);
-					break;
-
-				case "gameplayer":
-					gamePhase.setPlayers(l_commands);
-					break;
-
-				case "assigncountries":
-					if(gamePhase.assignCountries(l_connectivity))
+					switch(l_commands[0])
 					{
-					gamePhase.next();
+					
+					
+					case "exit":
+						l_option = "exit";
+						break;
+					
+						
+					case "editcontinent":
+						l_gamePhase="startup";
+						
+						for(int i=1; i<l_commands.length;)
+						{
+							
+							if(l_commands[i].equals("-add"))
+							{
+								System.out.println("Adding continent...");
+									MapEditor.addContinent(l_commands[i+1],Integer.parseInt(l_commands[i+2]), l_mainConnectivity);
+									i=i+3;
+							}
+							
+							else if(l_commands[i].equals("-remove") )
+							{
+								System.out.println("Removing continent...");
+									MapEditor.removeContinent(l_commands[i+1], l_mainConnectivity);
+									i=i+2;
+							}
+							
+							else
+							{
+								System.out.println("Invalid command.");
+								break;
+							}
+						}
+						
+						break;
+					
+						
+					case "editcountry":
+						l_gamePhase="startup";
+						
+						for(int i=1; i<l_commands.length;)
+						{
+							if(l_commands[i].equals("-add"))
+							{
+								System.out.println("Adding country...");
+								MapEditor.addCountry(l_commands[i+1], l_commands[i+2], l_mainConnectivity);
+								i = i+3;
+							}
+							
+							else if(l_commands[i].equals("-remove"))
+							{
+								System.out.println("Removing country...");
+								MapEditor.removeCountry(l_commands[i+1], l_mainConnectivity);
+								i=i+2;
+							}
+							
+							else
+							{
+								System.out.println(ColorCoding.ANSI_RED+"ERROR: Invalid Command"+ColorCoding.ANSI_RESET);
+							}
+						}
+						
+						break;
+					
+						
+					case "editneighbor":
+						l_gamePhase="startup";
+						
+						
+						for(int i=1; i<l_commands.length;)
+						{
+							if(l_commands[i].equals("-add"))
+							{
+								System.out.println("Adding neighbour...");
+								MapEditor.addNeighbour(Integer.parseInt(l_commands[i+1]), Integer.parseInt(l_commands[i+2]), l_mainConnectivity);
+								i=i+3;
+							}
+							
+							else if(l_commands[i].equals("-remove"))
+							{
+								System.out.println("Removing neighbour...");
+								MapEditor.removeNeighbour(Integer.parseInt(l_commands[i+1]), Integer.parseInt(l_commands[i+2]), l_mainConnectivity,1);
+								i=i+3;
+							}
+							
+							else
+							{
+								System.out.println(ColorCoding.ANSI_RED+"ERROR: Invalid Command"+ColorCoding.ANSI_RESET);
+							}
+						}
+						
+						break;
+					
+						
+					case "showmap":
+						l_gamePhase="startup";
+						ShowMap.showMap(l_mainConnectivity.getD_continentList(), l_mainConnectivity.getD_countryList());
+						break;
+					
+						
+					case "savemap":
+						l_gamePhase="startup";
+						SaveMap.saveMap(l_mainConnectivity);
+						break;
+					
+						
+					case "validatemap":
+						l_gamePhase="startup";
+						if(MapValidation.validateMap(l_mainConnectivity)){
+							System.out.println(ColorCoding.ANSI_GREEN+"Valid Map!"+ColorCoding.ANSI_RESET);
+						}
+						break;
+					
+						
+					case "loadmap":
+						l_gamePhase="startup";
+						
+						if(l_commands.length == 2)
+						{
+							LoadMap.loadMap(l_mainConnectivity,l_commands[1]);
+						} 
+						
+						else {
+							System.out.println(ColorCoding.ANSI_RED+"No map entered. Kindly enter exact name of map to be loaded"+ColorCoding.ANSI_RESET);
+						}
+						
+						break;
+						
+					case "gameplayer":
+						
+						for(int i=1;i<l_commands.length;)
+						{
+							
+							if(l_commands[i].equals("-add"))
+							{
+								Player l_player = new Player();
+								l_player.setD_playerName(l_commands[i+1]);
+								l_playersArray.add(l_player);
+								System.out.println(ColorCoding.ANSI_GREEN+l_player.getD_playerName()+" added successfully"+ColorCoding.ANSI_RESET);
+								i=i+2;
+								
+							}
+							
+							else if(l_commands[i].equals("-remove"))
+							{
+								for(int j=0;j<l_playersArray.size();j++)
+								{
+									if(l_commands[i+1].equals(l_playersArray.get(j).getD_playerName()))
+									{
+										System.out.println(ColorCoding.ANSI_GREEN+l_playersArray.get(j).getD_playerName()+" removed successfully"+ColorCoding.ANSI_RESET);
+										l_playersArray.remove(j);
+										i=i+2;
+										break;
+									}
+								}
+							}
+						}
+						
+						break;
+					
+						
+					case "assigncountries":
+						l_gamePhase="startup";
+						
+						if(l_playersArray.size()>0)
+						{
+							if(PlayersGameplay.assignCountries(l_playersArray,l_mainConnectivity.getD_countryList(),l_mainConnectivity.getD_continentList())==0)
+							{
+								System.out.println(ColorCoding.ANSI_GREEN+"Countries assigned to the players successfully"+ColorCoding.ANSI_RESET+"\n");
+								l_gamePhase="mainGameLoop";
+							}
+						}
+						
+						else
+						{
+							System.out.println(ColorCoding.ANSI_RED+"ERROR: No players to assign Countries"+ColorCoding.ANSI_RESET);
+						}
+						
+						break;
+					
+						
+						
+					case "deploy":
+						
+						break;
+					
+						
+					case "playersCountry":
+						
+						for(Player p:l_playersArray)
+						{
+							PlayersGameplay.showPlayersCountry(p,1);
+						}
+						
+						break;
+						
+						
+					default:
+						System.out.println(ColorCoding.ANSI_RED+"Invalid Command"+ColorCoding.ANSI_RESET);
+							
+					}	
+				}
+				
+			}
+			else
+			{
+				if(l_gamePhase.equals("startup"))
+				{
+					System.out.println(ColorCoding.ANSI_RED+"ERROR: Invalid Command"+ColorCoding.ANSI_RESET);
+					l_flag = 0;
+				}
+			}
+			
+			
+			if(l_gamePhase.equals("mainGameLoop"))
+			{
+				PlayersGameplay.assignArmiesToPlayers(l_playersArray);
+				System.out.println("The Warzone Game Begins!!\n -------------------------------------------");
+				
+				for(int i=0;i<l_playersArray.size();i++)
+				{
+					System.out.println("Player "+ Integer.sum(i,1) +"("+l_playersArray.get(i).getD_playerName()+") has Army Count: "+l_playersArray.get(i).getD_armyNumber());
+					PlayersGameplay.showPlayersCountry(l_playersArray.get(i),1);
+					System.out.println();
+				}
+				
+				int l_temp =1;
+				int flag=0;
+				
+				while(l_temp>0) {
+					
+					for(int i=0;i<l_playersArray.size();i++)
+					{
+						String l_userOrder="";
+						Order l_order=new Order();
+						
+						if(l_playersArray.get(i).getD_armyNumber()!=0)
+						{
+							System.out.println("Player "+l_playersArray.get(i).getD_playerName()+" deploy your troops:");
+							l_userOrder=l_scanner.nextLine();
+							
+							String[] l_tempOrderListArray=l_userOrder.split(" ");
+							
+							for(int j=0;j<l_playersArray.get(i).getD_country().size();j++)
+							{
+								if(Integer.parseInt(l_tempOrderListArray[1])==(l_playersArray.get(i).getD_country().get(j).getD_countryId()))
+								{
+									l_order.setD_sourceCountry(l_playersArray.get(i).getD_country().get(j));
+								}
+							}	
+							
+							if(PlayersGameplay.checkArmyAvailable(Integer.parseInt(l_tempOrderListArray[2]),l_playersArray.get(i)))
+							{
+								l_order.setD_armyCount(Integer.parseInt(l_tempOrderListArray[2]));
+								l_playersArray.get(i).setD_order(l_order);
+								l_playersArray.get(i).issue_order();
+							}
+							
+							else
+							{
+								System.out.println(ColorCoding.ANSI_RED+"Error: Please enter valid number of troops"+ColorCoding.ANSI_RESET);
+								i--;
+							}
+							
+							if(l_playersArray.get(i).getD_armyNumber()==0) flag++;
+						}
+						
+						if(flag==l_playersArray.size())
+						{
+							l_temp=0;
+							break;
+						}
 					}
-					break;
-
-				case "deploy":
-					gamePhase.reinforce(l_connectivity);
-					break;
-
-				case "attack":
-					gamePhase.attack(l_connectivity);
-					break;
-
-				case "fortify":
-					gamePhase.fortify(l_connectivity);
-					break;
-
-				case "exit":
-					gamePhase.endGame();
-					break;
-
-				default: 
-					d_logEntryBuffer.log("This command does not exist");
-					System.out.println("This command does not exist");
 				}
+				
+				PlayersGameplay.assignArmiesToPlayers(l_playersArray);
+				
+				l_temp=1;
+				flag=0;
+				
+				while(l_temp>0) 
+				{
+					for(int i=0;i<l_playersArray.size();i++)
+					{
+						if(l_playersArray.get(i).getD_armyNumber()!=0)
+						{
+							l_playersArray.get(i).getD_order().execute(l_playersArray.get(i), l_playersArray.get(i).next_order());
+							if(l_playersArray.get(i).getD_armyNumber()==0)
+							{
+								flag+=1;
+							}
+						}
+						
+						if(flag==l_playersArray.size())
+						{
+							l_temp=0;
+							break;
+						}
+						
+					}
+					
+					
 				}
-			} while (!(gamePhase instanceof End));
-		} while (l_commands[0] != "exit");
-		keyboard.close();
+				
+				l_gamePhase = "execute";
+				l_flag=0;
+				
+				System.out.println(ColorCoding.ANSI_GREEN+"All Armies have been successfully deployed. Enter command to proceed "+ColorCoding.ANSI_RESET);
+			}
+			
+		}while(l_option !="exit");
+		
+		System.out.println("\n Thank you for Playing the Game !");
+		
+		l_scanner.close();
+		System.exit(0);
+		
 	}
 
-	/**
-	 * @return returns the map content
-	 */
-
-	public Connectivity getConnectivity() {
-		return connectivity;
-	}
-
-	/**
-	 * Sets the map content.
-	 * @param connectivity - holds values of the continent country neighbor 
-	 */
-
-	public void setConnectivity(Connectivity connectivity) {
-		this.connectivity = connectivity;
-	}
 }

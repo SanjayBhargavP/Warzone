@@ -12,7 +12,7 @@ public class Continent
     private int d_continentId;
     private String d_continentName;
     private List<Country> d_countries;
-    private int d_continentArmyCount;
+    private int d_continentArmyBonus;
 
     /**
      * Default constructor for Continent
@@ -87,21 +87,21 @@ public class Continent
     }
 
     /**
-     * Get Continent Army count
-     * @return Continent Army Count
+     * Get Continent Army bonus
+     * @return Continent Army bonus
      */
-    public int getD_continentArmyCount()
+    public int getD_continentArmyBonus()
     {
-        return d_continentArmyCount;
+        return d_continentArmyBonus;
     }
 
     /**
-     * Set Continent Army Count
-     * @param p_continentArmyCount - new Continent army count
+     * Set Continent Army bonus
+     * @param p_continentArmyBonus - new Continent army bonus
      */
-    public void setD_continentArmyCount(int p_continentArmyCount)
+    public void setD_continentArmyBonus(int p_continentArmyBonus)
     {
-        this.d_continentArmyCount = p_continentArmyCount;
+        this.d_continentArmyBonus = p_continentArmyBonus;
     }
 
     /**
