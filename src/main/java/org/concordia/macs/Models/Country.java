@@ -31,15 +31,14 @@ public class Country
      * Initalises a new Country with
      * @param p_countryId - CountryId,
      * @param p_countryName - CountryName,
-     * @param p_armyCount - Armycount,
      * @param p_continentId - ContinentId and
      * @param p_neighbours - neighbours
      */
-    public Country(int p_countryId,String p_countryName,int p_armyCount,int p_continentId,ArrayList<Integer> p_neighbours)
+    public Country(int p_countryId,String p_countryName,int p_continentId,ArrayList<Integer> p_neighbours)
     {
         this.d_countryId=p_countryId;
         this.d_countryName=p_countryName;
-        this.d_armyCount=p_armyCount;
+        this.d_armyCount=0;
         this.d_continentId=p_continentId;
         this.d_neighbours=p_neighbours;
     }
