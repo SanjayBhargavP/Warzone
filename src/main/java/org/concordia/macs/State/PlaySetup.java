@@ -61,7 +61,7 @@ public class PlaySetup extends Play {
     public boolean assignCountries(Connectivity p_connectivity) {
         if (l_playersArray.size() > 0) {
 
-            if (PlayersGameplay.assigncountries(l_playersArray, p_connectivity.getD_countryList(), p_connectivity.getD_continentList()) == 0) {
+            if (PlayersGameplay.assignCountries(l_playersArray, p_connectivity.getD_countryList(), p_connectivity.getD_continentList()) == 0) {
                 System.out.println(ColorCoding.ANSI_GREEN + "Countries assigned to players Successfully" + ColorCoding.ANSI_RESET + "\n");
 
             } else {
@@ -78,9 +78,9 @@ public class PlaySetup extends Play {
         PlayersGameplay.assignArmiesToPlayers(l_playersArray);
         System.out.println("Game Begins!!!!!!!!\n");
         int i = 0;
-        while (i < l_plaersArray.size()) {
+        while (i < l_playersArray.size()) {
             System.out.println("Player" + Integer.sum(i, 1) + "(" + l_playersArray.get(i).getD_playerName() + ") has Army count:"
-                    + l_playersArray.get(i).getD_armyCount());
+                    + l_playersArray.get(i).getD_armyNumber());
             PlayersGameplay.showPlayersCountry(l_playersArray.get(i), 1);
             System.out.println();
             i++;
@@ -172,7 +172,7 @@ public class PlaySetup extends Play {
     @Override
     public void editNeighbor(String[] p_commands, Connectivity p_connectivity){
         // TODO Auto-generated method stub
-        printiInvalidCommandMessage();
+        printInvalidCommandMessage();
     }
     /**
      *{@inheritDoc}
