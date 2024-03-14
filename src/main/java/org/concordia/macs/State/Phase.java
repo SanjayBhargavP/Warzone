@@ -39,9 +39,9 @@ public abstract class Phase {
      * @param p_countryList the list of countries
      * @param p_players the list of players in the game
      */
-    public void viewMap(ArrayList<Continent> p_continentList, ArrayList<Country> p_countryList, ArrayList<Player> p_players)
+    public void showMap(ArrayList<Continent> p_continentList, ArrayList<Country> p_countryList, ArrayList<Player> p_players)
     {
-        ViewMap.viewMap(p_continentList, p_countryList, p_players);
+        ShowMap.showMap(p_continentList, p_countryList, p_players);
     }
 
     /**
