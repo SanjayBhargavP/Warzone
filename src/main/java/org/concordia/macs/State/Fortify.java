@@ -2,10 +2,15 @@ package org.concordia.macs.State;
 
 import org.concordia.macs.Controllers.GameEngine;
 import org.concordia.macs.Models.Country;
+import org.concordia.macs.Models.Order;
 import org.concordia.macs.Models.Player;
+import org.concordia.macs.Utilities.ColorCoding;
 import org.concordia.macs.Utilities.Connectivity;
+import org.concordia.macs.Utilities.PlayersGameplay;
+import org.concordia.macs.View.ShowMap;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 /**
@@ -61,7 +66,7 @@ public class Fortify extends MainPlay{
         if(user_output.equalsIgnoreCase("yes"))
         {
             int l_terminateFlag=0;
-            int l_flag=0;
+            int l_flag1=0;
             int l_executeOrder=0;
             ArrayList<String> playerNames =new ArrayList<>();
 
@@ -69,12 +74,12 @@ public class Fortify extends MainPlay{
             {
                 for(int i=0;i<l_playersArray.size();i++)
                 {
-                    l_flag=1;
+                    l_flag1=1;
                     do
                     {
                         if (playerNames.contains(l_playersArray.get(i).getD_playerName()))
                             continue;
-                        System.out.println(ColorCoding.cyan+"\n"+l_playersArray.get(i).getD_playerName()+"!! Do you want to give command or pass?(Press enter to continue / pass)"+ColorCoding.blank);
+                        System.out.println(ColorCoding.getCyan()+"\n"+l_playersArray.get(i).getD_playerName()+"Do you want to give command or pass?(Press enter to continue / pass)"+ColorCoding.getReset());
                         Scanner l_sc = new Scanner(System.in);
                         String l_passContinue=l_sc.nextLine();
                         if(l_passContinue.equalsIgnoreCase("exit"))
@@ -89,7 +94,7 @@ public class Fortify extends MainPlay{
                             break;
                         }
                         Order l_order=new Order();
-                        System.out.println("\nEnter the Command for player: "+l_playersArray.get(i).getD_playerName());
+                        System.out.println("\n Enter the Command for player: "+l_playersArray.get(i).getD_playerName());
                         System.out.println("Cards available: "+l_playersArray.get(i).getCards());
                         String l_orderinput=l_sc.nextLine();
                         if(l_orderinput.equalsIgnoreCase("exit"))
@@ -109,7 +114,7 @@ public class Fortify extends MainPlay{
                                 break;
                             default:
                                 //d_logEntryBuffer.log("Invalid Command!!");
-                                System.out.println(ColorCoding.red+"Invalid Command!!"+ColorCoding.blank);
+                                System.out.println(ColorCoding.getRed()+"Invalid Command!!"+ColorCoding.getReset());
                                 l_flag1=0;
                         }
 
@@ -136,10 +141,10 @@ public class Fortify extends MainPlay{
                         l_executeOrder++;
                         continue;
                     }
-                    l_playersArray.get(j).getD_Order().execute(l_playersArray.get(j), l_playersArray.get(j).next_order(),p_connectivity,1,1);
+                    l_playersArray.get(j).getD_order().execute(l_playersArray.get(j), l_playersArray.get(j).next_order(),p_connectivity,1,1);
                 }
             }
-            ViewMap.viewMap(p_connectivity.getD_continentList(), p_connectivity.getD_countryList(), l_playersArray);
+            ShowMap.showMap(p_connectivity.getD_continentList(), p_connectivity.getD_countryList(), l_playersArray);
             PlayersGameplay.resetDiplomacy(l_playersArray);
             System.out.println("fortification done");
             ge.setPhase(new Reinforcement(ge));
