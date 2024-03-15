@@ -74,31 +74,31 @@ public class ValidateGraph {
         ArrayList<String> l_countries = new ArrayList<>();
         ArrayList<String> l_continents=new ArrayList<>();
 
-        for(int i=0;i<p_connectivity.getD_continentList().size();i++)
+        for(int i=0;i<p_connectivity.getD_continentsList().size();i++)
         {
-            if(p_connectivity.getD_continentList().get(i).getD_countries().size()==0)
+            if(p_connectivity.getD_continentsList().get(i).getD_countries().size()==0)
             {
-                d_logEntryBuffer.log("Graph is disconnected as "+p_connectivity.getD_continentList().get(i).getD_continentName()+" has no countries.");
-                System.out.println(ColorCoding.getRed()+"Graph is disconnected as "+p_connectivity.getD_continentList().get(i).getD_continentName()+" has no countries."+ColorCoding.getReset());
+                d_logEntryBuffer.log("Graph is disconnected as "+p_connectivity.getD_continentsList().get(i).getD_continentName()+" has no countries.");
+                System.out.println(ColorCoding.getRed()+"Graph is disconnected as "+p_connectivity.getD_continentsList().get(i).getD_continentName()+" has no countries."+ColorCoding.getReset());
                 return false;
             }
-            if(l_continents.contains(p_connectivity.getD_continentList().get(i).getD_continentName()))
+            if(l_continents.contains(p_connectivity.getD_continentsList().get(i).getD_continentName()))
             {
-                d_logEntryBuffer.log("Map is invalid because "+p_connectivity.getD_continentList().get(i).getD_continentName()+" is duplicated.");
-                System.out.println(ColorCoding.getRed()+"Map is invalid because "+p_connectivity.getD_continentList().get(i).getD_continentName()+" is duplicated."+ColorCoding.getReset());
+                d_logEntryBuffer.log("Map is invalid because "+p_connectivity.getD_continentsList().get(i).getD_continentName()+" is duplicated.");
+                System.out.println(ColorCoding.getRed()+"Map is invalid because "+p_connectivity.getD_continentsList().get(i).getD_continentName()+" is duplicated."+ColorCoding.getReset());
                 return false;
             }
-            else l_continents.add(p_connectivity.getD_continentList().get(i).getD_continentName());
+            else l_continents.add(p_connectivity.getD_continentsList().get(i).getD_continentName());
 
-            for(int j=0;j<p_connectivity.getD_continentList().get(i).getD_countries().size();j++)
+            for(int j=0;j<p_connectivity.getD_continentsList().get(i).getD_countries().size();j++)
             {
-                if(l_countries.contains(p_connectivity.getD_continentList().get(i).getD_countries().get(j).getD_countryName()))
+                if(l_countries.contains(p_connectivity.getD_continentsList().get(i).getD_countries().get(j).getD_countryName()))
                 {
-                    d_logEntryBuffer.log("Map is invalid because "+p_connectivity.getD_continentList().get(i).getD_countries().get(j).getD_countryName()+" is duplicated.");
-                    System.out.println(ColorCoding.getRed()+"Map is invalid because "+p_connectivity.getD_continentList().get(i).getD_countries().get(j).getD_countryName()+" is duplicated."+ColorCoding.getReset());
+                    d_logEntryBuffer.log("Map is invalid because "+p_connectivity.getD_continentsList().get(i).getD_countries().get(j).getD_countryName()+" is duplicated.");
+                    System.out.println(ColorCoding.getRed()+"Map is invalid because "+p_connectivity.getD_continentsList().get(i).getD_countries().get(j).getD_countryName()+" is duplicated."+ColorCoding.getReset());
                     return false;
                 }
-                else l_countries.add(p_connectivity.getD_continentList().get(i).getD_countries().get(j).getD_countryName());
+                else l_countries.add(p_connectivity.getD_continentsList().get(i).getD_countries().get(j).getD_countryName());
             }
 
         }

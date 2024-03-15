@@ -21,10 +21,10 @@ public class Graph extends ValidateGraph {
         {
             d_adjCountriesList[i]=new LinkedList();
         }
-        for(int i=0;i<p_connectivity.getD_countryList().size();i++)
+        for(int i=0;i<p_connectivity.getD_countriesList().size();i++)
         {
-            for(int j=0;j<p_connectivity.getD_countryList().get(i).getD_neighbours().size();j++)
-                this.addCountries(p_connectivity.getD_countryList().get(i).getD_countryId(), p_connectivity.getD_countryList().get(i).getD_neighbours().get(j));
+            for(int j=0;j<p_connectivity.getD_countriesList().get(i).getD_neighbours().size();j++)
+                this.addCountries(p_connectivity.getD_countriesList().get(i).getD_countryId(), p_connectivity.getD_countriesList().get(i).getD_neighbours().get(j));
         }
     }
 

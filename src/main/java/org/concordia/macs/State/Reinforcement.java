@@ -52,7 +52,7 @@ public class Reinforcement extends MainPlay
 				Order l_order=new Order();
 				boolean l_validUserCommand =false;
 
-				if(l_playersArray.get(i).getD_armyCount()!=0)
+				if(l_playersArray.get(i).getD_armyNumber()!=0)
 				{
 
 					System.out.println("Player "+l_playersArray.get(i).getD_playerName()+" deploy your troops:");
@@ -60,8 +60,8 @@ public class Reinforcement extends MainPlay
 
 					if(ge.getCheckIfTest())
 					{
-						int l_countryID = l_playersArray.get(i).getD_Country().get(0).getD_countryId();
-						int l_armycount = l_playersArray.get(i).getD_armyCount();
+						int l_countryID = l_playersArray.get(i).getD_country().get(0).getD_countryId();
+						int l_armycount = l_playersArray.get(i).getD_armyNumber();
 
 						l_userOrder = "deploy "+l_countryID+" "+l_armycount;
 						System.out.println("For testcase, we have the following command\n"+l_userOrder);
@@ -78,11 +78,11 @@ public class Reinforcement extends MainPlay
 
 					String[] l_tempOrderListArray=l_userOrder.split(" ");
 
-					for(int j=0;j<l_playersArray.get(i).getD_Country().size();j++)
+					for(int j=0;j<l_playersArray.get(i).getD_country().size();j++)
 					{
-						if(Integer.parseInt(l_tempOrderListArray[1])==(l_playersArray.get(i).getD_Country().get(j).getD_countryId()))
+						if(Integer.parseInt(l_tempOrderListArray[1])==(l_playersArray.get(i).getD_country().get(j).getD_countryId()))
 						{
-							l_order.setD_fromCountry(l_playersArray.get(i).getD_Country().get(j));
+							l_order.setD_sourceCountry(l_playersArray.get(i).getD_country().get(j));
 							l_validUserCommand= true;
 						}
 
@@ -92,22 +92,22 @@ public class Reinforcement extends MainPlay
 					{
 						if(PlayersGameplay.checkArmyAvailable(Integer.parseInt(l_tempOrderListArray[2]),l_playersArray.get(i)))
 						{
-							l_order.setD_numberOfArmies(Integer.parseInt(l_tempOrderListArray[2]));
-							l_playersArray.get(i).setD_Order(l_order);
+							l_order.setD_armyCount(Integer.parseInt(l_tempOrderListArray[2]));
+							l_playersArray.get(i).setD_order(l_order);
 							l_playersArray.get(i).issue_order();
 						}
 
 						else
 						{
-							System.out.println(ColorCoding.red+"Error: Please enter valid number of troops"+ColorCoding.blank);
+							System.out.println(ColorCoding.ANSI_RED+"Error: Please enter valid number of troops"+ColorCoding.ANSI_RESET);
 						}
 					}
 
 					else
 					{
-						System.out.println(ColorCoding.red+"INVALID Command as player "
+						System.out.println(ColorCoding.ANSI_RED+"INVALID Command as player "
 								+ l_playersArray.get(i).getD_playerName()+" doesn't control country with countryID "
-								+l_tempOrderListArray[1]+ColorCoding.blank);
+								+l_tempOrderListArray[1]+ColorCoding.ANSI_RESET);
 					}
 
 					for(int j=0;j<l_playersArray.size();j++)
@@ -117,7 +117,7 @@ public class Reinforcement extends MainPlay
 
 						else
 						{
-						if(l_playersArray.get(j).getD_armyCount()==0)
+						if(l_playersArray.get(j).getD_armyNumber()==0)
 							{
 								l_tempName.add(l_playersArray.get(j).getD_playerName());
 								flag++;	
@@ -144,10 +144,10 @@ public class Reinforcement extends MainPlay
 
 			for(int i=0;i<l_playersArray.size();i++)
 			{
-				if(l_playersArray.get(i).getD_armyCount()!=0)
+				if(l_playersArray.get(i).getD_armyNumber()!=0)
 				{
-					l_playersArray.get(i).getD_Order().execute(l_playersArray.get(i), l_playersArray.get(i).next_order(),p_connectivity,0,0);
-					if(l_playersArray.get(i).getD_armyCount()==0)
+					l_playersArray.get(i).getD_order().execute(l_playersArray.get(i), l_playersArray.get(i).next_order(),p_connectivity,0,0);
+					if(l_playersArray.get(i).getD_armyNumber()==0)
 					{
 						flag+=1;
 					}
@@ -164,8 +164,8 @@ public class Reinforcement extends MainPlay
 			
 		}
 
-		System.out.println(ColorCoding.green+"All Armies have been successfully deployed. Enter command to proceed"+ColorCoding.blank);
-		ShowMap.showMap(p_connectivity.getD_continentList(), p_connectivity.getD_countryList(), Play.getL_playersArray());
+		System.out.println(ColorCoding.ANSI_GREEN+"All Armies have been successfully deployed. Enter command to proceed"+ColorCoding.ANSI_RESET);
+		ShowMap.showMap(p_connectivity.getD_continentsList(), p_connectivity.getD_countriesList(), Play.getL_playersArray());
 		System.out.println("reinforcement done");
 		ge.setPhase(new Attack(ge));
 	}

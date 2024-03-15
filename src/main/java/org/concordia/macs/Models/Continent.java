@@ -24,12 +24,18 @@ public class Continent
 
     /**
      * Parametrized Constructor for Continent
-     * Initalises a new continent with Id and name
+     * Initializes a new continent
+     * @param p_continentID - new continentID
+     * @param p_continentName - new continentName
+     * @param p_continentArmyBonus - Army count
+     * @param p_countries - list of countries
      */
-    public Continent(int p_continentID, String p_continentName)
+    public Continent(int p_continentID, String p_continentName,int p_continentArmyBonus, List<Country> p_countries)
     {
         this.d_continentId=p_continentID;
         this.d_continentName=p_continentName;
+        this.d_continentArmyBonus = p_continentArmyBonus;
+        this.d_countries = p_countries;
     }
 
     /**
@@ -111,7 +117,6 @@ public class Continent
      * @return countries name
      *
      */
-
     public ArrayList<Country> d_getCountryFromContinentId(int p_continentId, ArrayList<Country> p_countryList)
     {
         ArrayList<Country> l_countries=new ArrayList<Country>();

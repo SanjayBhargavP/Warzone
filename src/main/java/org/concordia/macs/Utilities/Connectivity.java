@@ -3,8 +3,7 @@ package org.concordia.macs.Utilities;
 import org.concordia.macs.Models.Continent;
 import org.concordia.macs.Models.Country;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.stream.Collectors;
+import java.util.List;
 
 /**
  * The class Connectivity manages the transfer of data from skeleton to other
@@ -12,23 +11,39 @@ import java.util.stream.Collectors;
  * @author Poojitha
  * @author Susmitha Mamula
  */
-
 public class Connectivity {
 
-    private HashMap<String, Continent> d_continentMap = new HashMap<String, Continent>();
-    private HashMap<String, Country> d_countryMap = new HashMap<String, Country>();
+    private List<Continent> d_continentsList = new ArrayList<Continent>();
+    private List<Country> d_countriesList = new ArrayList<Country>();
 
     private String d_pathName;
-    private String D_FILE_PATH_NAME;
+    private String d_filePathName;
+
+    private String d_nameOfMap;
+
+    /**
+     * Function is used to get the name of current map
+     * @return name of map
+     */
+    public String getD_nameOfMap() {
+        return d_nameOfMap;
+    }
+
+    /**
+     * Used to set the name of current map
+     * @param d_nameOfMap name of map to be set
+     */
+    public void setD_nameOfMap(String d_nameOfMap) {
+        this.d_nameOfMap = d_nameOfMap;
+    }
 
     /**
      * Gets the File path address.
      *
      * @return file path
      */
-
-    public String getD_FilePathName() {
-        return D_FILE_PATH_NAME;
+    public String getD_filePathName() {
+        return d_filePathName;
     }
 
     /**
@@ -36,9 +51,8 @@ public class Connectivity {
      *
      * @param p_FilePathName refers to the address of the file.
      */
-
     public void setD_FilePathName(String p_FilePathName) {
-        this.D_FILE_PATH_NAME = p_FilePathName;
+        this.d_filePathName = p_FilePathName;
     }
 
     /**
@@ -60,69 +74,97 @@ public class Connectivity {
     }
 
     /**
-     * Gets the continent map.
+     * Gets the continents List.
      *
-     * @return the continent map
+     * @return the continentsList
      */
-    public HashMap<String, Continent> getD_continentMap() {
-        return d_continentMap;
+    public ArrayList<Continent> getD_continentsList() {
+        return (ArrayList<Continent>) d_continentsList;
     }
 
     /**
      * Sets the continent map.
      *
-     * @param p_continentMap refers to the map of continents.
+     * @param p_continentsList refers to the map of continents.
      */
-    public void setD_continentMap(HashMap<String, Continent> p_continentMap) {
-        this.d_continentMap = p_continentMap;
+    public void setD_continentsList(List<Continent> p_continentsList) {
+        this.d_continentsList = p_continentsList;
     }
 
     /**
-     * Gets the country map.
+     * Gets the countries List.
      *
-     * @return the country map
+     * @return the countries List
      */
-    public HashMap<String, Country> getD_countryMap() {
-        return d_countryMap;
+    public ArrayList<Country> getD_countriesList() {
+        return (ArrayList<Country>) d_countriesList;
     }
 
     /**
-     * Sets the country map.
+     * Sets the countries List.
      *
-     * @param p_countryMap refers to the map of countries.
+     * @param p_countriesList refers to the list of countries.
      */
-    public void setD_countryMap(HashMap<String, Country> p_countryMap) {
-        this.d_countryMap = p_countryMap;
+    public void setD_countriesList(List<Country> p_countriesList) {
+        this.d_countriesList = p_countriesList;
     }
 
     /**
-     * converts hashmap values to arraylist
-     * @return arraylist of continent
+     * Gets the continent object from continent ID.
+     * @param p_continentId refers to the continent ID.
+     * @return continent object if found
+     *
      */
-    public ArrayList<Continent> getD_continentList() {
-        return new ArrayList<>(d_continentMap.values());
+    public Continent getContinentFromContinentId(int p_continentId)
+    {
 
+        for(Continent continent:d_continentsList)
+        {
+            if(continent.getD_continentId() == p_continentId)
+               return continent;
+        }
+        return null;
     }
 
     /**
-     * converts hashmap values to arraylist
-     * @return arraylist of country
+     * Gets the Country object from country ID.
+     * @param p_countryId refers to the country ID.
+     * @return Country object if found else returns null
+     *
      */
-    public ArrayList<Country> getD_countryList() {
-        return new ArrayList<>(d_countryMap.values());
+    public Country getCountryFromCountryId(int p_countryId)
+    {
 
+        for(Country country:d_countriesList)
+        {
+            if(country.getD_continentId() == p_countryId)
+                return country;
+        }
+        return null;
     }
 
-    public void setD_continentList(ArrayList<Continent> continents) {
-        this.d_continentMap = continents.stream()
-                .collect(Collectors.toMap(Continent::getD_continentName, c -> c, (c1, c2) -> c1, HashMap::new));
+    /**
+     * Deletes the country from countries list.
+     * @param p_country refers to the country object
+     *
+     */
+    public void removeCountry(Country p_country)
+    {
+        if(p_country != null){
+            d_countriesList.remove(p_country);
+        }
     }
 
-    public void setD_countryList(ArrayList<Country> countries) {
-        this.d_countryMap = countries.stream()
-                .collect(Collectors.toMap(Country::getD_countryName, c -> c, (c1, c2) -> c1, HashMap::new));
+    /**
+     * Deletes the continent from continents list.
+     * @param p_continent refers to the continent object
+     *
+     */
+    public void removeContinent(Continent p_continent)
+    {
+        if(p_continent != null){
+            d_continentsList.remove(p_continent);
+        }
     }
-
-
 
 }

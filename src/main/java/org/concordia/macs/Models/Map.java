@@ -20,7 +20,6 @@ public class Map {
 
     /**
      * Check if map exists
-     * 
      * @return true or false
      */
     public boolean isD_mapExists() {
@@ -29,7 +28,6 @@ public class Map {
 
     /**
      * Set if map exists
-     * 
      * @param p_mapExists - new boolean value
      */
     public void setD_mapExists(boolean p_mapExists) {
@@ -38,7 +36,6 @@ public class Map {
 
     /**
      * Gets the file name
-     * 
      * @return file name
      */
     public String getD_mapName() {
@@ -47,7 +44,6 @@ public class Map {
 
     /**
      * Set file name
-     * 
      * @param p_mapName - new file name
      */
     public void setD_mapName(String p_mapName) {
