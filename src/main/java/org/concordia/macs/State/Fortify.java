@@ -144,7 +144,7 @@ public class Fortify extends MainPlay{
                     l_playersArray.get(j).getD_order().execute(l_playersArray.get(j), l_playersArray.get(j).next_order(),p_connectivity,1,1);
                 }
             }
-            ShowMap.showMap(p_connectivity.getD_continentList(), p_connectivity.getD_countryList(), l_playersArray);
+            ShowMap.showMap(p_connectivity.getD_continentsList(), p_connectivity.getD_countriesList(), l_playersArray);
             PlayersGameplay.resetDiplomacy(l_playersArray);
             System.out.println("fortification done");
             ge.setPhase(new Reinforcement(ge));
