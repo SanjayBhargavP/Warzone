@@ -73,11 +73,21 @@ public class Player {
         return d_order;
     }
 
+    /**
+     * gets the list of countries with the player
+     * @return the list of countries with the player
+     */
     public List<Country> getD_country() {
 
         return d_country;
     }
 
+    /**
+     * sets the list of countries with the player
+     */
+    public void setD_country(List<Country> d_country) {
+        this.d_country = d_country;
+    }
 
     /**
      * sets the player's name

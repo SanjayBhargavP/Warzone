@@ -93,8 +93,8 @@ public class GameEngine {
 		d_logEntryBuffer.clearFile();
 		Connectivity l_connectivity=new Connectivity();
 		
-		l_connectivity.setD_continentList(new ArrayList<Continent>());
-		l_connectivity.setD_countryList(new ArrayList<Country>());
+		l_connectivity.setD_continentsList(new ArrayList<Continent>());
+		l_connectivity.setD_countriesList(new ArrayList<Country>());
 
 		boolean l_check_if_map_loaded = false;
 		Scanner keyboard = new Scanner(System.in);
@@ -112,7 +112,7 @@ public class GameEngine {
 			switch (startOption) {
 
 			case 1:
-				setPhase(new Preload(this));
+				setPhase(new PreLoad(this));
 				break;
 
 			case 2:
@@ -160,15 +160,15 @@ public class GameEngine {
 					if(l_check_if_map_loaded) gamePhase.validateMap(l_connectivity);
 					else {
 						d_logEntryBuffer.log("ERROR: Map cannot be validated before loading it");
-						System.out.println(ColorCoding.red+"ERROR: Map cannot be validated before loading it"+ColorCoding.blank);
+						System.out.println(ColorCoding.ANSI_RED+"ERROR: Map cannot be validated before loading it"+ColorCoding.ANSI_RESET);
 					}
 					break;
 
 				case "showmap":
-					if(l_check_if_map_loaded) gamePhase.viewMap(l_connectivity.getD_continentList(),l_connectivity.getD_countryList(),Play.getL_playersArray());
+					if(l_check_if_map_loaded) gamePhase.showMap(l_connectivity.getD_continentsList(),l_connectivity.getD_countriesList(),Play.getL_playersArray());
 					else {
 						d_logEntryBuffer.log("ERROR: Map cannot be viewed before loading it");
-						System.out.println(ColorCoding.red+"ERROR: Map cannot be viewed before loading it"+ColorCoding.blank);
+						System.out.println(ColorCoding.ANSI_RED+"ERROR: Map cannot be viewed before loading it"+ColorCoding.ANSI_RESET);
 					}
 					break;
 
@@ -184,7 +184,7 @@ public class GameEngine {
 					if(l_check_if_map_loaded) gamePhase.editContinent(l_commands, l_connectivity);
 					else {
 						d_logEntryBuffer.log("ERROR: Map cannot be edited before loading it");
-						System.out.println(ColorCoding.red+"ERROR: Map cannot be edited before loading it"+ColorCoding.blank);
+						System.out.println(ColorCoding.ANSI_RED+"ERROR: Map cannot be edited before loading it"+ColorCoding.ANSI_RESET);
 					}
 					break;
 
