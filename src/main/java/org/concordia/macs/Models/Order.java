@@ -91,7 +91,7 @@ public class Order {
                 {
                     if(p_player.getD_country().get(i).getD_countryId()==p_order.getD_sourceCountry().getD_countryId())
                     {
-                        p_player.getD_country().get(i).setD_armyDeployedOnCountry(p_order.d_armyCount+ p_player.getD_country().get(i).getD_armyDeployedOnCountry());
+                        p_player.getD_country().get(i).setD_armyCount(p_order.d_armyCount+ p_player.getD_country().get(i).getD_armyCount());
                         d_logEntryBuffer.log("Player "+p_player.getD_playerName()+": " + p_player.getD_country().get(i).getD_countryName() + " has been assigned with " + p_order.d_armyCount);
                         System.out.println(ColorCoding.ANSI_RED+"Player "+p_player.getD_playerName()+": "+ p_player.getD_country().get(i).getD_countryName()+" has been assigned with "+p_order.d_armyCount+ColorCoding.ANSI_RESET);
                     }

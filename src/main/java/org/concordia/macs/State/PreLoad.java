@@ -12,7 +12,7 @@ import java.util.Scanner;
  * Concrete state representing the phase before loading a map.
  * Allows the user to load, edit, and validate the map before entering PostLoad phase.
  */
-public class Preload extends Edit {
+public class PreLoad extends Edit {
 
     /**
      * Constructor for Preload phase.
