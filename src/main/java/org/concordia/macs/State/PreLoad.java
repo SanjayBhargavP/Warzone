@@ -31,15 +31,15 @@ public class PreLoad extends Edit {
      */
     public void loadMap(Connectivity p_connectivity, String[] p_command) {
         int newMapCreated = 0;
-        if (commands.length == 2) {
-            newMapCreated = LoadMap.loadMap(connectivity, commands[1]);
+        if (p_command.length == 2) {
+            newMapCreated = LoadMap.loadMap(p_connectivity, p_command[1]);
         } else {
             System.out.println(ColorCoding.getRed() + "No map entered. Please enter the name of the map to be loaded" + ColorCoding.getReset());
         }
         if (newMapCreated == 0) {
             System.out.println(ColorCoding.getCyan() + "\n-------- Validating the loaded map --------\n" + ColorCoding.getReset());
-            Graph graph = new Graph(connectivity.getD_countryList().size(), connectivity);
-            if (graph.continentConnection(connectivity, graph))
+            Graph graph = new Graph(p_connectivity.getD_countriesList().size(), p_connectivity);
+            if (graph.continentConnection(p_connectivity, graph))
                 graph.isConnected(graph);
         } else {
             System.out.println(ColorCoding.getGreen() + "Skipping Map Validation as it is a newly created map" + ColorCoding.getReset());
@@ -118,7 +118,7 @@ public class PreLoad extends Edit {
      */
     public void validateMap(Connectivity connectivity) {
         System.out.println(ColorCoding.getCyan() + "\n-------- Validating the loaded map --------\n" + ColorCoding.getReset());
-        Graph graph = new Graph(connectivity.getD_countryList().size(), connectivity);
+        Graph graph = new Graph(connectivity.getD_countriesList().size(), connectivity);
         if (graph.continentConnection(connectivity, graph))
             graph.isConnected(graph);
         next();
