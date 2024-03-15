@@ -61,7 +61,7 @@ public class PlaySetup extends Play {
     public boolean assignCountries(Connectivity p_connectivity) {
         if (l_playersArray.size() > 0) {
 
-            if (PlayersGameplay.assignCountries(l_playersArray, p_connectivity.getD_countryList(), p_connectivity.getD_continentList()) == 0) {
+            if (PlayersGameplay.assignCountries(l_playersArray, p_connectivity.getD_countriesList(), p_connectivity.getD_continentsList()) == 0) {
                 System.out.println(ColorCoding.ANSI_GREEN + "Countries assigned to players Successfully" + ColorCoding.ANSI_RESET + "\n");
 
             } else {

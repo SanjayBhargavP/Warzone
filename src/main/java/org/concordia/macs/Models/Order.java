@@ -3,7 +3,7 @@ package org.concordia.macs.Models;
 import org.concordia.macs.Utilities.ColorCoding;
 import org.concordia.macs.Utilities.PlayersGameplay;
 import org.concordia.macs.Utilities.Connectivity;
-import state.Play;
+import org.concordia.macs.State.Play;
 /**
  * This class defines orders, including their origin and destination countries and the count of armies that is transferred
  * @author Susmitha Mamula
@@ -91,7 +91,7 @@ public class Order {
                 {
                     if(p_player.getD_country().get(i).getD_countryId()==p_order.getD_sourceCountry().getD_countryId())
                     {
-                        p_player.getD_country().get(i).setD_armyDeployedOnCountry(p_order.d_armyCount+ p_player.getD_country().get(i).getD_armyDeployedOnCountry());
+                        p_player.getD_country().get(i).setD_armyCount(p_order.d_armyCount+ p_player.getD_country().get(i).getD_armyCount());
                         d_logEntryBuffer.log("Player "+p_player.getD_playerName()+": " + p_player.getD_country().get(i).getD_countryName() + " has been assigned with " + p_order.d_armyCount);
                         System.out.println(ColorCoding.ANSI_RED+"Player "+p_player.getD_playerName()+": "+ p_player.getD_country().get(i).getD_countryName()+" has been assigned with "+p_order.d_armyCount+ColorCoding.ANSI_RESET);
                     }
@@ -107,34 +107,34 @@ public class Order {
                 case "advance":
                     d_logEntryBuffer.log(p_player.getD_playerName()+"is calling"+"Advance");
                     //System.out.println(p_player.getD_playerName()+"is calling"+"Advance");
-                    PlayersGameplay.advance(p_player,Play.getL_playersArray(),l_getCountry.getCountryFromName(p_connectivity.getD_countryList(), l_orderContent[1]) , l_getCountry.getCountryFromName(p_connectivity.getD_countryList(), l_orderContent[2]), Integer.parseInt( l_orderContent[3]),p_connectivity.getD_continentList(),p_connectivity,fortify_flag);
+                    PlayersGameplay.advance(p_player,Play.getL_playersArray(),l_getCountry.getCountryFromName(p_connectivity.getD_countriesList(), l_orderContent[1]) , l_getCountry.getCountryFromName(p_connectivity.getD_countriesList(), l_orderContent[2]), Integer.parseInt( l_orderContent[3]),p_connectivity.getD_continentsList(),p_connectivity,fortify_flag);
                     break;
                 case "bomb":
                     d_logEntryBuffer.log(p_player.getD_playerName()+"is calling"+"bomb");
                     System.out.println(p_player.getD_playerName()+"is calling"+"bomb");
                     if(p_player.getCards().contains("bomb")) {
-                        PlayersGameplay.bomb(p_player,Play.getL_playersArray(), Country.getCountryFromID(p_connectivity.getD_countryList(), Integer.parseInt(l_orderContent[1])) , p_connectivity.getD_continentList());
+                        PlayersGameplay.bomb(p_player,Play.getL_playersArray(), Country.getCountryFromId(p_connectivity.getD_countriesList(), Integer.parseInt(l_orderContent[1])) , p_connectivity.getD_continentsList());
                         p_player.removeCard("bomb");
                     } else {
-                        System.out.println(ColorCoding.red+p_player.getD_playerName()+" doesn't have bomb card "+ColorCoding.blank);
+                        System.out.println(ColorCoding.ANSI_RED+p_player.getD_playerName()+" doesn't have bomb card "+ColorCoding.ANSI_RESET);
                     }
                     break;
                 case "blockade":
                     d_logEntryBuffer.log(p_player.getD_playerName()+"is calling"+"blockade");
                     System.out.println(p_player.getD_playerName()+"is calling"+"blockade");
                     if(p_player.getCards().contains("blockade")){
-                        PlayersGameplay.Blockade(l_getCountry.get_nameFromId(p_connectivity.getD_countryList(), Integer.parseInt(l_orderContent[1])),p_player,Play.getL_playersArray(),p_connectivity.getD_continentList());
+                        PlayersGameplay.Blockade(l_getCountry.get_nameFromId(p_connectivity.getD_countriesList(), Integer.parseInt(l_orderContent[1])),p_player,Play.getL_playersArray(),p_connectivity.getD_continentsList());
                         p_player.removeCard("blockade");
                     }
                     else
-                        System.out.println(ColorCoding.red+p_player.getD_playerName()+" doesn't have blockade card "+ColorCoding.blank);
+                        System.out.println(ColorCoding.ANSI_RED+p_player.getD_playerName()+" doesn't have blockade card "+ColorCoding.ANSI_RESET);
                     break;
                 case "airlift":
                     d_logEntryBuffer.log(p_player.getD_playerName()+"is calling"+"airlift");
                     System.out.println(p_player.getD_playerName()+"is calling"+"airlift");
                     if(p_player.getCards().contains("airlift")) {
 
-                        PlayersGameplay.AirliftDeploy(l_getCountry.get_nameFromId(p_connectivity.getD_countryList(), Integer.parseInt(l_orderContent[1])),l_getCountry.get_nameFromId(p_connectivity.getD_countryList(), Integer.parseInt(l_orderContent[2])), Integer.parseInt( l_orderContent[3]), p_player);
+                        PlayersGameplay.AirliftDeploy(l_getCountry.get_nameFromId(p_connectivity.getD_countriesList(), Integer.parseInt(l_orderContent[1])),l_getCountry.get_nameFromId(p_connectivity.getD_countriesList(), Integer.parseInt(l_orderContent[2])), Integer.parseInt( l_orderContent[3]), p_player);
                         p_player.removeCard("airlift");
                     }
                     else

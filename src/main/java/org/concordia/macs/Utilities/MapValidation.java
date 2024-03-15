@@ -21,8 +21,8 @@ public class MapValidation {
      */
     public static boolean validateMap(Connectivity p_connectivity)
     {
-        List<Continent> l_continentsList = p_connectivity.getD_continentList();
-        List<Country> l_countryList = p_connectivity.getD_countryList();
+        List<Continent> l_continentsList = p_connectivity.getD_continentsList();
+        List<Country> l_countryList = p_connectivity.getD_countriesList();
         if(l_continentsList==null || l_continentsList.isEmpty()){
             System.out.println(ColorCoding.ANSI_RED+"ERROR: Map must possess atleast one continent!"+ColorCoding.ANSI_RESET);
             return false;
@@ -108,7 +108,7 @@ public class MapValidation {
      * @return matching country object
      */
     public static Country getCountry(Integer p_countryId, Connectivity p_connectivity) {
-        return p_connectivity.getD_countryList().stream().filter(l_country -> (l_country.getD_countryId() == (p_countryId))).findFirst().orElse(null);
+        return p_connectivity.getD_countriesList().stream().filter(l_country -> (l_country.getD_countryId() == (p_countryId))).findFirst().orElse(null);
     }
 
     /**

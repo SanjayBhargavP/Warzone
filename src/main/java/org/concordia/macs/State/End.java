@@ -133,8 +133,7 @@ public class End extends Phase {
      * @param p_mapName - map name
      */
     @Override
-    public void saveMap(Connectivity p_connectivity,String[] p_mapName)
-    {
+    public void saveMap(Connectivity p_connectivity, String p_mapName) {
         // TODO Auto-generated method stub
     }
 
@@ -180,9 +179,8 @@ public class End extends Phase {
      * @param p_commands - array of user commands
      */
     @Override
-    public void editNeighbour(String[] p_commands,Connectivity p_connectivity)
-    {
-        // TODO Auto-generated method stub
+    public void editNeighbor(String[] p_commands, Connectivity p_connectivity) {
+
     }
 
 }

@@ -17,7 +17,7 @@ public abstract class MainPlay extends Play {
      * Constructor for MainPlay phase
      * @param p_g The associated GameEngine object
      */
-        MainPlay(GameEngine p_g)
+    MainPlay(GameEngine p_g)
         {
             super(p_g);
         }

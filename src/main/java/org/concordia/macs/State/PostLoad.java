@@ -1,8 +1,8 @@
 package org.concordia.macs.State;
 
-import Controllers.GameEngine;
-import Tools.Connectivity;
-import Tools.SaveMap;
+import org.concordia.macs.Controllers.GameEngine;
+import org.concordia.macs.Utilities.Connectivity;
+import org.concordia.macs.Utilities.SaveMap;
 
 /**
  * Concrete state representing the phase after loading a map.
@@ -13,10 +13,10 @@ public class PostLoad extends Edit {
     /**
      * Constructor for PostLoad phase.
      *
-     * @param gameEngine The GameEngine object associated with this phase.
+     * @param p_gameEngine The GameEngine object associated with this phase.
      */
-    public PostLoad(GameEngine gameEngine) {
-        super(gameEngine);
+    public PostLoad(GameEngine p_gameEngine) {
+        super(p_gameEngine);
     }
 
     /**
@@ -43,11 +43,11 @@ public class PostLoad extends Edit {
     /**
      * Saves the map.
      *
-     * @param connectivity The connectivity object containing map data.
-     * @param mapName      The name of the map to save.
+     * @param p_connectivity The connectivity object containing map data.
+     * @param p_mapName      The name of the map to save.
      */
-    public void saveMap(Connectivity connectivity, String mapName) {
-        int saveMapResult = SaveMap.saveMap(connectivity, mapName);
+    public void saveMap(Connectivity p_connectivity, String p_mapName) {
+        int saveMapResult = SaveMap.saveMap(p_connectivity, p_mapName);
         if (saveMapResult == 0) {
             ge.setPhase(new PlaySetup(ge));
         }

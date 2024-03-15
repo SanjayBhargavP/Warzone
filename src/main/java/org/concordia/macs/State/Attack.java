@@ -84,7 +84,7 @@ public class Attack extends MainPlay
 			{
 				d_logEntryBuffer.log("Winner assigned for test case");
 				System.out.println("Winner assigned for test case\n");
-				l_playersArray.get(0).setD_Country(p_connectivity.getD_countryList());
+				l_playersArray.get(0).setD_country(p_connectivity.getD_countriesList());
 			}
 
 			if(winner_check>0)
@@ -116,7 +116,7 @@ public class Attack extends MainPlay
 				continue;
 
 			d_logEntryBuffer.log(l_playersArray.get(i).getD_playerName()+"Asked whether he/she wants to give a command");
-			System.out.println(ColorCoding.cyan+"\n"+l_playersArray.get(i).getD_playerName()+"!! Do you want to give command or pass?(Press enter to continue / pass)"+ColorCoding.blank);
+			System.out.println(ColorCoding.ANSI_RESET+"\n"+l_playersArray.get(i).getD_playerName()+"!! Do you want to give command or pass?(Press enter to continue / pass)"+ColorCoding.ANSI_RESET);
 
 			Scanner l_sc = new Scanner(System.in);
 			String l_passContinue = "";
@@ -154,9 +154,9 @@ public class Attack extends MainPlay
 
 			if(ge.getCheckIfTest())
 			{
-				String l_neighbor = Country.get_nameFromId(l_playersArray.get(i).getD_Country(), l_playersArray.get(i).getD_Country().get(0).getD_neighbours().get(0));
+				String l_neighbor = Country.get_nameFromId((ArrayList<Country>) l_playersArray.get(i).getD_country(), l_playersArray.get(i).getD_country().get(0).getD_neighbours().get(0));
 				System.out.println(l_neighbor);
-				l_orderinput = "advance " + l_playersArray.get(i).getD_Country().get(0).getD_countryName() + " "+l_neighbor+ " "+l_playersArray.get(i).getD_Country().get(0).getD_armyDeployedOnCountry();
+				l_orderinput = "advance " + l_playersArray.get(i).getD_country().get(0).getD_countryName() + " "+l_neighbor+ " "+l_playersArray.get(i).getD_country().get(0).getD_armyCount();
 				System.out.println("For testcase, we have the following command\n"+l_orderinput);
 			}
 			else
@@ -202,7 +202,7 @@ public class Attack extends MainPlay
 				break;
 
 			default:
-				System.out.println(ColorCoding.red+"Invalid Command!!"+ColorCoding.blank);
+				System.out.println(ColorCoding.ANSI_RED+"Invalid Command!!"+ColorCoding.ANSI_RESET);
 				l_flag1=0;
 			}
 
@@ -230,10 +230,10 @@ public class Attack extends MainPlay
 					l_executeOrder++;
 					continue;	
 				}
-				l_playersArray.get(j).getD_Order().execute(l_playersArray.get(j), l_playersArray.get(j).next_order(),p_connectivity,1,0);
+				l_playersArray.get(j).getD_order().execute(l_playersArray.get(j), l_playersArray.get(j).next_order(),p_connectivity,1,0);
 			}
 		}
-		ShowMap.showMap(p_connectivity.getD_continentList(), p_connectivity.getD_countryList(), l_playersArray);
+		ShowMap.showMap(p_connectivity.getD_continentsList(), p_connectivity.getD_countriesList(), l_playersArray);
 		winner_check++;
 		PlayersGameplay.resetDiplomacy(l_playersArray);
 	}

@@ -1,8 +1,11 @@
 package org.concordia.macs.State;
 
 import org.concordia.macs.Controllers.GameEngine;
-import org.concordia.macs.Utilities.*;
-
+import  org.concordia.macs.Utilities.ColorCoding;
+import org.concordia.macs.Utilities.Connectivity;
+import org.concordia.macs.Utilities.MapEditor;
+import org.concordia.macs.Utilities.LoadMap;
+import org.concordia.macs.Utilities.Graph;
 import java.util.Scanner;
 
 /**
@@ -23,10 +26,10 @@ public class PreLoad extends Edit {
     /**
      * Loads a map using the provided commands.
      *
-     * @param connectivity The connectivity object containing map data.
-     * @param commands     Array of user commands for loading a map.
+     * @param p_connectivity The connectivity object containing map data.
+     * @param p_command     Array of user commands for loading a map.
      */
-    public void loadMap(Connectivity connectivity, String[] commands) {
+    public void loadMap(Connectivity p_connectivity, String[] p_command) {
         int newMapCreated = 0;
         if (commands.length == 2) {
             newMapCreated = LoadMap.loadMap(connectivity, commands[1]);

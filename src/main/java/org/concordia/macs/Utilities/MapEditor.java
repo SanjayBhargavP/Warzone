@@ -1,11 +1,8 @@
 package org.concordia.macs.Utilities;
-import org.concordia.macs.Utilities.Connectivity;
 import org.concordia.macs.Models.Continent;
 import org.concordia.macs.Models.Country;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -26,18 +23,18 @@ public class MapEditor {
     public static int addContinent(String p_continentId, int p_continentvalue, Connectivity p_connectivity) {
 
         Continent l_continent = new Continent();
-        for (Continent continent : p_connectivity.getD_continentMap().values()) {
+        for (Continent continent : p_connectivity.getD_continentsList()) {
             if (p_continentId.equalsIgnoreCase(continent.getD_continentName())) {
                 System.out.println("Continent already Exists.");
                 return 1;
             }
         }
         List<Country> l_countries = new ArrayList<>();
-        l_continent.setD_continentId(p_connectivity.getD_continentMap().size() + 1);
+        l_continent.setD_continentId(p_connectivity.getD_continentsList().size() + 1);
         l_continent.setD_continentName(p_continentId);
-        l_continent.setD_continentArmyCount(p_continentvalue);
+        l_continent.setD_continentArmyBonus(p_continentvalue);
         l_continent.setD_countries(l_countries);
-        p_connectivity.getD_continentMap().put(p_continentId, l_continent);
+        p_connectivity.getD_continentsList().add(l_continent);
         System.out.println("Continent Added Successfully");
         return 0;
     }
@@ -53,15 +50,29 @@ public class MapEditor {
     public static int addCountry(String p_countryId, String p_continentId, Connectivity p_connectivity) {
         Country l_country = new Country();
         int flag = 0;
-        if (p_connectivity.getD_continentMap().size() == 0) {
+        if (p_connectivity.getD_continentsList().isEmpty()) {
             System.out.println("ERROR: Enter the values of continents first..");
             return 1;
         }
-        if (!p_connectivity.getD_continentMap().containsKey(p_continentId)) {
+        boolean continentExists = false;
+        for (Continent continent : p_connectivity.getD_continentsList()) {
+            try {
+                if (continent.getD_continentId() == Integer.parseInt(p_continentId)) {
+                continentExists = true;
+                break;
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        if (!continentExists) {
             System.out.println("Continent " + p_continentId + " does not exist");
             return 1;
         }
-        for (Continent continent : p_connectivity.getD_continentMap().values()) {
+
+        for (Continent continent : p_connectivity.getD_continentsList()) {
             for (Country country : continent.getD_countries()) {
                 if (p_countryId.equalsIgnoreCase(country.getD_countryName())) {
                     System.out.println("Country " + p_countryId + " already exists under this continent");
@@ -70,13 +81,20 @@ public class MapEditor {
             }
         }
 
-        l_country.setD_countryId(p_connectivity.getD_countryMap().size() + 1);
+        l_country.setD_countryId(p_connectivity.getD_countriesList().size() + 1);
         l_country.setD_countryName(p_countryId);
         l_country.setD_continentId(Integer.parseInt(p_continentId));
-        p_connectivity.getD_countryMap().put(p_countryId, l_country);
-
-        Continent continent = p_connectivity.getD_continentMap().get(p_continentId);
-        continent.getD_countries().add(l_country);
+        p_connectivity.getD_countriesList().add(l_country);
+        Continent continent = null;
+        try {
+             continent = p_connectivity.getContinentFromContinentId(Integer.parseInt(p_continentId));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        if(continent!= null){
+            continent.getD_countries().add(l_country);
+        }
 
         System.out.println("Country Added Successfully");
         return 0;
@@ -91,17 +109,17 @@ public class MapEditor {
      * @return                       0 if neighbor added successfully, 1 if country or neighbor doesn't exist.
      */
     public static int addNeighbour(int p_countryId, int p_neighbourcountryId, Connectivity p_connectivity) {
-        if (p_connectivity.getD_continentMap().size() == 0) {
+        if (p_connectivity.getD_continentsList().isEmpty()) {
             System.out.println("ERROR: Enter the values of continents first..");
             return 1;
         }
-        if (p_connectivity.getD_countryMap().size() == 0) {
+        if (p_connectivity.getD_countriesList().isEmpty()) {
             System.out.println("ERROR: Enter the values of countries first..");
             return 1;
         }
 
-        Country l_country = p_connectivity.getD_countryMap().get(p_countryId);
-        Country l_neighbourCountry = p_connectivity.getD_countryMap().get(p_neighbourcountryId);
+        Country l_country = p_connectivity.getCountryFromCountryId(p_countryId);
+        Country l_neighbourCountry = p_connectivity.getCountryFromCountryId(p_neighbourcountryId);
 
         if (l_country == null || l_neighbourCountry == null) {
             System.out.println("Country IDs do not exist");
@@ -123,8 +141,8 @@ public class MapEditor {
      * @return                       0 if neighbor removed successfully, 1 if country or neighbor doesn't exist.
      */
     public static int removeNeighbour(int p_countryId, int p_neighbourcountryId, Connectivity p_connectivity, int p_displayMessage) {
-        Country l_country = p_connectivity.getD_countryMap().get(p_countryId);
-        Country l_neighbourCountry = p_connectivity.getD_countryMap().get(p_neighbourcountryId);
+        Country l_country = p_connectivity.getCountryFromCountryId(p_countryId);
+        Country l_neighbourCountry = p_connectivity.getCountryFromCountryId(p_neighbourcountryId);
 
         if (l_country == null || l_neighbourCountry == null) {
             if (p_displayMessage != 0) {
@@ -154,15 +172,21 @@ public class MapEditor {
      * @return                  0 if country removed successfully, 1 if country doesn't exist.
      */
     public static int removeCountry(String p_countryId, Connectivity p_connectivity) {
-        Country l_country = p_connectivity.getD_countryMap().get(p_countryId);
+        Country l_country = null;
+        try {
+            l_country = p_connectivity.getCountryFromCountryId(Integer.parseInt(p_countryId));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         if (l_country == null) {
             System.out.println("Country " + p_countryId + " does not exist");
             return 1;
         }
 
-        p_connectivity.getD_countryMap().remove(p_countryId);
+        p_connectivity.removeCountry(l_country);
 
-        for (Continent continent : p_connectivity.getD_continentMap().values()) {
+        for (Continent continent : p_connectivity.getD_continentsList()) {
             if (continent.getD_countries().remove(l_country)) {
                 for (Country neighbour : continent.getD_countries()) {
                     removeNeighbour(neighbour.getD_countryId(), l_country.getD_countryId(), p_connectivity, 0);
@@ -183,15 +207,21 @@ public class MapEditor {
      * @return                  0 if continent removed successfully, 1 if continent doesn't exist.
      */
     public static int removeContinent(String p_continentId, Connectivity p_connectivity) {
-        Continent continent = p_connectivity.getD_continentMap().get(p_continentId);
+        Continent continent = null;
+        try {
+            continent = p_connectivity.getContinentFromContinentId(Integer.parseInt(p_continentId));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         if (continent == null) {
             System.out.println("Continent: " + p_continentId + " doesn't exist");
             return 1;
         }
 
-        p_connectivity.getD_continentMap().remove(p_continentId);
+        p_connectivity.removeContinent(continent);
 
-        for (Country country : p_connectivity.getD_countryMap().values())
+        for (Country country : p_connectivity.getD_countriesList())
         {
             try {
                 if (country.getD_continentId() == Integer.parseInt((p_continentId))) {
