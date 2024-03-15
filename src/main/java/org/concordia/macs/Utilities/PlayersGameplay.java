@@ -88,7 +88,7 @@ public class PlayersGameplay {
             if(l_player.getD_continent().size()!=0)
             {
                 for(Continent l_continent: l_player.getD_continent())
-                    l_tempContinentCount=l_tempContinentCount+ l_continent.getD_continentArmyCount();
+                    l_tempContinentCount=l_tempContinentCount+ l_continent.getD_continentArmyBonus();
             }
             l_armyCount+=l_tempContinentCount;
             l_player.setD_armyNumber(l_armyCount);

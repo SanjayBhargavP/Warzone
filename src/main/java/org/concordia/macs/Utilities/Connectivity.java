@@ -78,8 +78,8 @@ public class Connectivity {
      *
      * @return the continentsList
      */
-    public List<Continent> getD_continentsList() {
-        return d_continentsList;
+    public ArrayList<Continent> getD_continentsList() {
+        return (ArrayList<Continent>) d_continentsList;
     }
 
     /**
@@ -96,8 +96,8 @@ public class Connectivity {
      *
      * @return the countries List
      */
-    public List<Country> getD_countryMap() {
-        return d_countriesList;
+    public ArrayList<Country> getD_countriesList() {
+        return (ArrayList<Country>) d_countriesList;
     }
 
     /**
@@ -105,8 +105,66 @@ public class Connectivity {
      *
      * @param p_countriesList refers to the list of countries.
      */
-    public void setD_countryMap(List<Country> p_countriesList) {
+    public void setD_countriesList(List<Country> p_countriesList) {
         this.d_countriesList = p_countriesList;
+    }
+
+    /**
+     * Gets the continent object from continent ID.
+     * @param p_continentId refers to the continent ID.
+     * @return continent object if found
+     *
+     */
+    public Continent getContinentFromContinentId(int p_continentId)
+    {
+
+        for(Continent continent:d_continentsList)
+        {
+            if(continent.getD_continentId() == p_continentId)
+               return continent;
+        }
+        return null;
+    }
+
+    /**
+     * Gets the Country object from country ID.
+     * @param p_countryId refers to the country ID.
+     * @return Country object if found else returns null
+     *
+     */
+    public Country getCountryFromCountryId(int p_countryId)
+    {
+
+        for(Country country:d_countriesList)
+        {
+            if(country.getD_continentId() == p_countryId)
+                return country;
+        }
+        return null;
+    }
+
+    /**
+     * Deletes the country from countries list.
+     * @param p_country refers to the country object
+     *
+     */
+    public void removeCountry(Country p_country)
+    {
+        if(p_country != null){
+            d_countriesList.remove(p_country);
+        }
+    }
+
+    /**
+     * Deletes the continent from continents list.
+     * @param p_continent refers to the continent object
+     *
+     */
+    public void removeContinent(Continent p_continent)
+    {
+        if(p_continent != null){
+            d_continentsList.remove(p_continent);
+        }
     }
 
 }

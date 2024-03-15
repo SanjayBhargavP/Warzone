@@ -117,7 +117,6 @@ public class Continent
      * @return countries name
      *
      */
-
     public ArrayList<Country> d_getCountryFromContinentId(int p_continentId, ArrayList<Country> p_countryList)
     {
         ArrayList<Country> l_countries=new ArrayList<Country>();

@@ -3,6 +3,8 @@ import java.util.*;
 import org.concordia.macs.Models.Continent;
 import org.concordia.macs.Models.Country;
 import java.io.*;
+
+import org.concordia.macs.Models.LogEntryBuffer;
 import org.concordia.macs.Models.Map;
 
 /**
@@ -14,14 +16,15 @@ public class LoadMap {
 
 	/**
 	 *
-	 * This method is used to load the Map selected by the user whether pre-defined or user made.
+	 * This method is used to load the Map selected by the user whether pre-defined or user made and returns 0 in-case of successful loading of map; 1 in-case unsuccessful loading of map
 	 * @param p_connectivityData to transfer of data from skeleton to classes where the map objects are used.
 	 * @param p_mapFileName refers to the Name of the map being loaded.
 	 *
 	 */
 
-	public static void loadMap(Connectivity p_connectivityData, String p_mapFileName)
+	public static int loadMap(Connectivity p_connectivityData, String p_mapFileName)
 	{
+		LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
 		Scanner l_input = new Scanner(System.in);
 		String l_fileName = p_mapFileName;
 		String l_copyFileName=l_fileName;
@@ -93,13 +96,13 @@ public class LoadMap {
     	   			Continent l_continentObj=new Continent();
     	   			l_continentObj.setD_continentId(l_continentId);
     	   			l_continentObj.setD_continentName(l_arr[0]);
-    	   			l_continentObj.setD_continentArmyCount(Integer.parseInt(l_arr[1]));
+    	   			l_continentObj.setD_continentArmyBonus(Integer.parseInt(l_arr[1]));
     	   			l_continentObj.setD_countries(l_continentObj.d_getCountryFromContinentId(l_continentId, l_countryList));
     	   			l_continentId++;
 					l_continentList.add(l_continentObj);
     	   		}
-    	   		p_connectivityData.setD_continentList(l_continentList);
-    	        p_connectivityData.setD_countryList(l_countryList);
+    	   		p_connectivityData.setD_continentsList(l_continentList);
+    	        p_connectivityData.setD_countriesList(l_countryList);
     	        }
     	      catch(Exception e)
     	       {
@@ -107,22 +110,24 @@ public class LoadMap {
     	       }
     	      try
     	       {
+				   d_logEntryBuffer.log("Map "+p_mapFileName+".map"+" loaded successfully.....");
     	    	  System.out.println(ColorCoding.ANSI_GREEN+"Map "+p_mapFileName+".map"+" loaded successfully....."+ColorCoding.ANSI_RESET);
     	       } 
     	       catch (Exception e)
     	       {
     	    	   System.out.println("Map could not be loaded properly");
-    	    	   return;
+    	    	   return -1;
     	       }
-
+			  return 0;
      }
      else
      {
-    	 p_connectivityData.setD_continentList(new ArrayList<Continent>());
-    	 p_connectivityData.setD_countryList(new ArrayList<Country>());
+    	 p_connectivityData.setD_continentsList(new ArrayList<Continent>());
+    	 p_connectivityData.setD_countriesList(new ArrayList<Country>());
     	 System.out.println(ColorCoding.ANSI_RESET+"The map does not exist. Creating a map....."+ColorCoding.ANSI_RESET);
     	 MapCreator.generateMapFile(l_copyFileName,p_connectivityData.getD_pathName());
-    	 SaveMap.saveMap(p_connectivityData);
+    	 SaveMap.saveMap(p_connectivityData, l_copyFileName);
+		 return 1;
   	 }
 
 	}
