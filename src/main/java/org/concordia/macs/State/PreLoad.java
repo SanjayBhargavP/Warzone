@@ -1,25 +1,22 @@
 package org.concordia.macs.State;
 
-import Controllers.GameEngine;
-import Tools.ColorCoding;
-import Tools.Connectivity;
-import Tools.MapEditor;
-import Tools.MapLoader;
-import Tools.Graph;
+import org.concordia.macs.Controllers.GameEngine;
+import org.concordia.macs.Utilities.*;
+
 import java.util.Scanner;
 
 /**
  * Concrete state representing the phase before loading a map.
  * Allows the user to load, edit, and validate the map before entering PostLoad phase.
  */
-public class Preload extends Edit {
+public class PreLoad extends Edit {
 
     /**
      * Constructor for Preload phase.
      *
      * @param gameEngine The GameEngine object associated with this phase.
      */
-    public Preload(GameEngine gameEngine) {
+    public PreLoad(GameEngine gameEngine) {
         super(gameEngine);
     }
 
@@ -32,17 +29,17 @@ public class Preload extends Edit {
     public void loadMap(Connectivity connectivity, String[] commands) {
         int newMapCreated = 0;
         if (commands.length == 2) {
-            newMapCreated = MapLoader.loadMap(connectivity, commands[1]);
+            newMapCreated = LoadMap.loadMap(connectivity, commands[1]);
         } else {
-            System.out.println(ColorCoding.red + "No map entered. Please enter the name of the map to be loaded" + ColorCoding.blank);
+            System.out.println(ColorCoding.getRed() + "No map entered. Please enter the name of the map to be loaded" + ColorCoding.getReset());
         }
         if (newMapCreated == 0) {
-            System.out.println(ColorCoding.cyan + "\n-------- Validating the loaded map --------\n" + ColorCoding.blank);
+            System.out.println(ColorCoding.getCyan() + "\n-------- Validating the loaded map --------\n" + ColorCoding.getReset());
             Graph graph = new Graph(connectivity.getD_countryList().size(), connectivity);
             if (graph.continentConnection(connectivity, graph))
                 graph.isConnected(graph);
         } else {
-            System.out.println(ColorCoding.green + "Skipping Map Validation as it is a newly created map" + ColorCoding.blank);
+            System.out.println(ColorCoding.getGreen() + "Skipping Map Validation as it is a newly created map" + ColorCoding.getReset());
         }
         next();
     }
@@ -62,7 +59,7 @@ public class Preload extends Edit {
                 MapEditor.removeCountry(commands[i + 1], connectivity);
                 i = i + 2;
             } else {
-                System.out.println(ColorCoding.red + "ERROR: Invalid Command" + ColorCoding.blank);
+                System.out.println(ColorCoding.getRed() + "ERROR: Invalid Command" + ColorCoding.getReset());
             }
         }
         next();
@@ -83,7 +80,7 @@ public class Preload extends Edit {
                 MapEditor.removeContinent(commands[i + 1], connectivity);
                 i = i + 2;
             } else {
-                System.out.println(ColorCoding.red + "Invalid Command" + ColorCoding.blank);
+                System.out.println(ColorCoding.getRed() + "Invalid Command" + ColorCoding.getReset());
                 break;
             }
         }
@@ -105,7 +102,7 @@ public class Preload extends Edit {
                 MapEditor.removeNeighbour(Integer.parseInt(commands[i + 1]), Integer.parseInt(commands[i + 2]), connectivity, 1);
                 i = i + 3;
             } else {
-                System.out.println(ColorCoding.red + "ERROR: Invalid Command" + ColorCoding.blank);
+                System.out.println(ColorCoding.getRed() + "ERROR: Invalid Command" + ColorCoding.getReset());
             }
         }
         next();
@@ -117,7 +114,7 @@ public class Preload extends Edit {
      * @param connectivity The connectivity object containing map data.
      */
     public void validateMap(Connectivity connectivity) {
-        System.out.println(ColorCoding.cyan + "\n-------- Validating the loaded map --------\n" + ColorCoding.blank);
+        System.out.println(ColorCoding.getCyan() + "\n-------- Validating the loaded map --------\n" + ColorCoding.getReset());
         Graph graph = new Graph(connectivity.getD_countryList().size(), connectivity);
         if (graph.continentConnection(connectivity, graph))
             graph.isConnected(graph);
