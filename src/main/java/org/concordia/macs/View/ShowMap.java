@@ -3,6 +3,8 @@ package org.concordia.macs.View;
 import org.concordia.macs.Models.Continent;
 import org.concordia.macs.Models.Country;
 import dnl.utils.text.table.TextTable;
+import org.concordia.macs.Models.Player;
+
 import java.util.ArrayList;
 
 
@@ -67,8 +69,8 @@ public class ShowMap
                         int playerIndex = 0;
                             while (playerIndex < p_playerList.size()) {
                                 int countryOwnedIndex = 0;
-                                while (countryOwnedIndex < p_playerList.get(playerIndex).getD_Country().size()) {
-                                    if (p_playerList.get(playerIndex).getD_Country().get(countryOwnedIndex).getD_countryId() == country.getD_countryId()) {
+                                while (countryOwnedIndex < p_playerList.get(playerIndex).getD_country().size()) {
+                                    if (p_playerList.get(playerIndex).getD_country().get(countryOwnedIndex).getD_countryId() == country.getD_countryId()) {
                                         l_map[lineIterator][5] = p_playerList.get(playerIndex).getD_playerName();
                                     }
                                     countryOwnedIndex++;
