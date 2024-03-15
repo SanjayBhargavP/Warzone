@@ -1,192 +1,141 @@
 package org.concordia.macs.Models;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+package Models;
 
-/**
- * class with the details of the player
- *
- * @author Susmitha Mamula
- */
+import java.util.ArrayList;
 
 public class Player {
+
+    // Player properties
     private String d_playerName;
     private int d_playerId;
-    private int d_armyNumber;
+    private ArrayList<Country> d_playerCountry;
+    private ArrayList<Order> d_playerOrder;
+    private int d_armyCount;
+    private ArrayList<Continent> d_playerContinent;
+    private ArrayList<String> d_cards;
+    private ArrayList<Integer> d_diplomacyWith;
+    private static int d_objCount = 1;
 
-    private Order d_order;
-    private List<Country> d_country = new ArrayList<>();
-    private List<Order> d_playerOrder = new ArrayList<>();
-    private  List<Continent> d_continent = new ArrayList<>();
+    // Constructor to initialize a new player
+    public Player() {
+        this.d_playerId = d_objCount++;
+        this.d_playerCountry = new ArrayList<>();
+        this.d_playerOrder = new ArrayList<>();
+        this.d_playerContinent = new ArrayList<>();
+        this.d_cards = new ArrayList<>();
+        this.d_diplomacyWith = new ArrayList<>();
+    }
 
-    /**
-     *  issues the orders given by the player
-     */
-    public void issue_order(){
+    // Copy constructor
+    public Player(Player d_player) {
+        this.d_playerName = d_player.getD_playerName();
+        this.d_playerId = d_player.getD_playerId();
+        this.d_playerCountry = new ArrayList<>(d_player.getD_playerCountry());
+        this.d_playerOrder = new ArrayList<>(d_player.getD_playerOrder());
+        this.d_armyCount = d_player.getD_armyCount();
+        this.d_playerContinent = new ArrayList<>(d_player.getD_playerContinent());
+        this.d_cards = new ArrayList<>(d_player.getCards());
+        this.d_diplomacyWith = new ArrayList<>(d_player.getDiplomacyWith());
+    }
+
+    // Issue an order
+    public void issue_order(Order d_order) {
         this.d_playerOrder.add(d_order);
     }
 
-    /**
-     * @return once an order is issued and executed then it gets removed from the list
-     */
-    public Order next_order(){
-        Order l_order = d_playerOrder.remove(0);
-        return l_order;
+    // Get the next order
+    public Order next_order() {
+        return d_playerOrder.remove(0);
     }
 
-    /**
-     * gets the name of the player
-     * @return name of the player
-     */
+    // Getters and setters for player properties
     public String getD_playerName() {
-
         return d_playerName;
     }
 
-    /**
-     * gets the Id of the player
-     * @return Id of the player
-     */
-    public int getD_playerId() {
+    public void setD_playerName(String d_playerName) {
+        this.d_playerName = d_playerName;
+    }
 
+    public int getD_playerId() {
         return d_playerId;
     }
 
-    /**
-     * gets the orders given by the player
-     * @return orders given by the player
-     */
-    public Order getD_order() {
-
-        return d_order;
-    }
-
-    public List<Country> getD_country() {
-
-        return d_country;
-    }
-
-
-    /**
-     * sets the player's name
-     * @param p_playerName refers to the name of the player
-     */
-    public void setD_playerName(String p_playerName) {
-
-        this.d_playerName = p_playerName;
-    }
-
-    /**
-     * sets the player's Id
-     * @param p_playerId refers to the Id of the player
-     */
-    public void setD_playerId(int p_playerId) {
-
-        d_playerId = p_playerId;
-    }
-
-
-    /**
-     * gets the army count
-     * @return the army count
-     */
-    public int getD_armyNumber() {
-
-        return d_armyNumber;
-    }
-
-    /**
-     * sets the army count
-     * @param d_armyNumber refers to the army count
-     */
-    public void setD_armyNumber(int d_armyNumber) {
-
-        this.d_armyNumber = d_armyNumber;
-    }
-
-    /**
-     * adds countries to the list of countries owned by the player
-     * @param p_country refers to the list of countries
-     */
-    public void addCountry(Country p_country) {
-
-        d_country.add(p_country);
-    }
-
-    /**
-     * sets the orders given by the player
-     * @param p_order refers to the order object
-     */
-    public void setD_order(Order p_order) {
-        d_order = p_order;
-        this.d_armyNumber = this.d_armyNumber - p_order.getD_armyNumber();
-        System.out.println("Number of army has changed to "+ d_armyNumber);
-
-    }
-
-    public List<Continent> getD_continent() {
-
-        return d_continent;
-    }
-
-    /**
-     * sets the player continent
-     * @param d_continent refers to the list of continents
-     */
-    public void setD_continent(ArrayList<Continent> d_continent) {
-
-        this.d_continent = d_continent;
-    }
-
-    /**
-     * This is a default constructor
-     */
-
-    public Player(){
-
-    }
-
-    /**
-     *
-     * @param l_player denotes the object of player class
-     */
-
-    public Player (Player l_player){
-        this.d_playerName = l_player.getD_playerName();
-        this.d_playerId = l_player.getD_playerId();
-        this.d_country = l_player.getD_country();
-        this.d_playerOrder= new ArrayList<>(l_player.getD_playerOrder());
-        this.d_order = l_player.getD_order();
-        this.d_armyNumber = l_player.getD_armyNumber();
-        this.d_continent = l_player.getD_continent();
-    }
-
-    /**
-     *
-     * @param p_playerName refers to the name of the player
-     * @param p_playerId refers to the ID
-     * @param p_playerCountry refers to the country owned by the player
-     * @param p_playerOrder refers to the list of orders of player
-     */
-
-    public Player(String p_playerName, int p_playerId, List<Country> p_playerCountry, ArrayList<Order> p_playerOrder){
-        super();
-        this.d_playerName = p_playerName;
-        this.d_playerId = p_playerId;
-        this.d_playerOrder = p_playerOrder;
-        this.d_country = p_playerCountry;
-    }
-
-    /**
-     * Receives the player orders
-     * @return player orders
-     */
-
-    public List<Order> getD_playerOrder(){
+    public ArrayList<Order> getD_playerOrder() {
         return d_playerOrder;
     }
 
+    public void setD_playerOrder(ArrayList<Order> d_playerOrder) {
+        this.d_playerOrder = d_playerOrder;
+    }
 
+    public ArrayList<Country> getD_playerCountry() {
+        return d_playerCountry;
+    }
 
+    public void setD_playerCountry(ArrayList<Country> d_playerCountry) {
+        this.d_playerCountry = d_playerCountry;
+    }
+
+    public void addCountry(Country d_country) {
+        this.d_playerCountry.add(d_country);
+    }
+
+    public ArrayList<Continent> getD_playerContinent() {
+        return d_playerContinent;
+    }
+
+    public void setD_playerContinent(ArrayList<Continent> d_playerContinent) {
+        this.d_playerContinent = d_playerContinent;
+    }
+
+    public int getD_armyCount() {
+        return d_armyCount;
+    }
+
+    public void setD_armyCount(int d_armyCount) {
+        this.d_armyCount = d_armyCount;
+    }
+
+    public ArrayList<String> getCards() {
+        return d_cards;
+    }
+
+    public void setCards(ArrayList<String> d_cards) {
+        this.d_cards = d_cards;
+    }
+
+    public void removeCard(String d_card) {
+        this.d_cards.remove(d_card);
+    }
+
+    public void addCard(String d_card) {
+        this.d_cards.add(d_card);
+    }
+
+    public ArrayList<Integer> getDiplomacyWith() {
+        return d_diplomacyWith;
+    }
+
+    public void setDiplomacyWith(ArrayList<Integer> d_diplomacyWith) {
+        this.d_diplomacyWith = d_diplomacyWith;
+    }
+
+    public void addDiplomacyWith(Integer d_toPlayerID) {
+        this.d_diplomacyWith.add(d_toPlayerID);
+    }
+
+    public void clearDiplomacyWith() {
+        this.d_diplomacyWith.clear();
+    }
+
+    public void removeAllCountryAndContinentAssigned() {
+        this.d_playerCountry.clear();
+        this.d_playerContinent.clear();
+    }
+
+    public void removeCountry(Country d_country) {
+        this.d_playerCountry.remove(d_country);
+    }
 }
