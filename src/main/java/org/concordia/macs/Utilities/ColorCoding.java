@@ -11,6 +11,8 @@ public class ColorCoding {
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
 
+    public static final String ANSI_CYAN="\u001B[36m";
+
     /**
      * Returns the ANSI escape code for red color
      * 
@@ -36,5 +38,14 @@ public class ColorCoding {
      */
     public static String getReset() {
         return ANSI_RESET;
+    }
+
+    /**
+     * Returns the ANSI  escape code to Cyan color
+     *
+     * @return ANSI Cyan escape code
+     */
+    public static String getCyan() {
+        return ANSI_CYAN;
     }
 }
