@@ -19,6 +19,7 @@ public class SaveMap {
      * @return An integer indicating success or failure of the save operation
      */
     public static int saveMap(Connectivity p_connectivity, String p_mapName) {
+        System.out.println("1");
         LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
         LinkedList<String> l_mapInfo = new LinkedList<>();
         l_mapInfo.add("[continents]" + "\n");

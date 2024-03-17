@@ -143,7 +143,7 @@ public class GameEngine {
 
 				d_logEntryBuffer.log("enter a " + gamePhase.getClass().getSimpleName() + " phase command: ");
 				System.out.println("enter a " + gamePhase.getClass().getSimpleName() + " phase command: ");
-				mycommand = phase_command.nextLine();
+      			mycommand = phase_command.nextLine();
 				l_commands = mycommand.split(" "); 
 				System.out.println(" =====================================================================================================");
 

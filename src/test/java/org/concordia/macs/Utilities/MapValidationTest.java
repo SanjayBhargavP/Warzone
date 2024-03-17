@@ -20,12 +20,13 @@ public class MapValidationTest {
     @Before
     public void setUp() {
         d_mockConnectivity = new Connectivity();
-       // d_continent1 = new Continent(1);
+
+        //d_continent1 = new Continent(1, "Continent1");
         d_country1 = new Country( 1, "Country1", d_continent1.getD_continentId(), new ArrayList<>(Arrays.asList(2)));
         d_country2 = new Country( 2, "Country2", d_continent1.getD_continentId(), new ArrayList<>(Arrays.asList(1, 3)));
         d_country3 = new Country( 3, "Country3", d_continent1.getD_continentId(), new ArrayList<>(Arrays.asList(3)));
+        //d_continent1.setD_countries(new ArrayList<Country> (Arrays.asList(d_country1, d_country2, d_country3)));
         d_continent1 = new Continent(1, "Continent1",8,new ArrayList<Country> (Arrays.asList(d_country1, d_country2, d_country3)));
-       // d_continent1.setD_countries(new ArrayList<Country> (Arrays.asList(d_country1, d_country2, d_country3)));
         d_mockConnectivity.setD_continentsList(new ArrayList<Continent> (Arrays.asList(d_continent1)));
         d_mockConnectivity.setD_countriesList(new ArrayList<Country> (Arrays.asList(d_country1, d_country2, d_country3)));
     }

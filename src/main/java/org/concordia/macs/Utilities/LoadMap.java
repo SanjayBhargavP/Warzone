@@ -27,6 +27,7 @@ public class LoadMap {
 		LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
 		Scanner l_input = new Scanner(System.in);
 		String l_fileName = p_mapFileName;
+		String l_mapname=p_mapFileName;
 		String l_copyFileName=l_fileName;
 		ArrayList<Continent> l_continentList=new ArrayList<Continent>();
 		ArrayList<Country> l_countryList=new ArrayList<Country>();
@@ -38,7 +39,8 @@ public class LoadMap {
             p_connectivityData.setD_pathName(absolute+ File.separator+"src/main/resources");
             l_fileName = absolute + File.separator + "src/main/resources" + File.separator + l_fileName+".map";
             p_connectivityData.setD_FilePathName(l_fileName);
-            l_map.setD_mapName(l_fileName);
+			p_connectivityData.setD_nameOfMap(l_mapname);
+            l_map.setD_mapName(l_mapname);
         }
         catch (Exception e)
 		{
