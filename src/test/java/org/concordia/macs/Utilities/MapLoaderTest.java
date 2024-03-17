@@ -4,13 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.concordia.macs.Utilities.Connectivity;
 
 
 import org.concordia.macs.Controllers.GameEngine;
 import org.concordia.macs.State.PreLoad;
-
-import javax.swing.text.Utilities;
 
 /**
  * The class MapLoader tests if we can load the valid map or not.
@@ -38,7 +35,7 @@ public class MapLoaderTest {
         gameEngine.setPhase(new PreLoad(gameEngine));
 
         LoadMap.loadMap(gameEngine.getConnectivity(),"continent_without_country" );
-        Utilities.Graph l_graph=new Utilities.Graph(d_connectivity.getD_countriesList().size(),d_connectivity);
+        Graph l_graph=new Graph(d_connectivity.getD_countriesList().size(),d_connectivity);
         assertEquals(l_graph.continentConnection(d_connectivity, l_graph), false);
 
 
@@ -53,7 +50,7 @@ public class MapLoaderTest {
         gameEngine.setPhase(new PreLoad(gameEngine));
 
         LoadMap.loadMap(gameEngine.getConnectivity(),"multiple_continents_same_country" );
-        Utilities.Graph l_graph=new Tools.Graph(d_connectivity.getD_countriesList().size(),d_connectivity);
+        Graph l_graph=new Graph(d_connectivity.getD_countriesList().size(),d_connectivity);
         assertEquals(l_graph.continentConnection(d_connectivity, l_graph), false);
 
 
@@ -68,7 +65,7 @@ public class MapLoaderTest {
         gameEngine.setPhase(new PreLoad(gameEngine));
 
         LoadMap.loadMap(gameEngine.getConnectivity(),"multiple_continents" );
-        Utilities.Graph l_graph=new Utilities.Graph(d_connectivity.getD_countriesList().size(),d_connectivity);
+        Graph l_graph=new Graph(d_connectivity.getD_countriesList().size(),d_connectivity);
         assertEquals(l_graph.continentConnection(d_connectivity, l_graph), false);
 
 
