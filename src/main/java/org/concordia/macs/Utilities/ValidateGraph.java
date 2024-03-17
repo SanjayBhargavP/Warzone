@@ -22,6 +22,11 @@ public class ValidateGraph {
 
         DFS(1,adjacencyList,visited);
         boolean connected = true;
+        if(visited.length == 1){
+            d_logEntryBuffer.log("Graph is not connected");
+            System.out.println(ColorCoding.getRed() +"Graph is not Connected"+ColorCoding.getReset());
+            return 1;
+        }
         for(int i=1;i< visited.length;i++)
         {
             if(!visited[i]) {
@@ -53,12 +58,17 @@ public class ValidateGraph {
      */
     public void DFS(int source,LinkedList<Integer> adjacencyList [],boolean[] visited)
     {
-        visited[source]=true;
-        for(int i=0;i<adjacencyList[source].size();i++)
-        {
-            int neighbour=adjacencyList[source].get(i);
-            if(visited[neighbour]==false)
-                DFS(neighbour,adjacencyList,visited);
+        try {
+
+            visited[source] = true;
+            for (int i = 0; i < adjacencyList[source].size(); i++) {
+                int neighbour = adjacencyList[source].get(i);
+                if (visited[neighbour] == false)
+                    DFS(neighbour, adjacencyList, visited);
+            }
+        }
+        catch (Exception e){
+
         }
     }
 
