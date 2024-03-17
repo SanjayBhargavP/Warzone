@@ -37,11 +37,11 @@ public abstract class Phase {
      * This method displays the map in a tabular format.
      * @param p_continentList the list of continents
      * @param p_countryList the list of countries
-     * @param p_players the list of players in the game
+     * @param p_playerList the list of players in the game
      */
-    public void showMap(ArrayList<Continent> p_continentList, ArrayList<Country> p_countryList, ArrayList<Player> p_players)
+    public void showMap(ArrayList<Continent> p_continentList, ArrayList<Country> p_countryList, ArrayList<Player> p_playerList)
     {
-        ShowMap.showMap(p_continentList, p_countryList, p_players);
+        ShowMap.showMap(p_continentList, p_countryList, p_playerList);
     }
 
     /**

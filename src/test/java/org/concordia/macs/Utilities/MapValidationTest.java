@@ -20,13 +20,14 @@ public class MapValidationTest {
     @Before
     public void setUp() {
         d_mockConnectivity = new Connectivity();
-        d_continent1 = new Continent(1, "Continent1");
-        d_country1 = new Country( 1, "Country1", 10, d_continent1.getD_continentId(), new ArrayList<>(Arrays.asList(2)));
-        d_country2 = new Country( 2, "Country2", 9, d_continent1.getD_continentId(), new ArrayList<>(Arrays.asList(1, 3)));
-        d_country3 = new Country( 3, "Country3", 6, d_continent1.getD_continentId(), new ArrayList<>(Arrays.asList(3)));
-        d_continent1.setD_countries(new ArrayList<Country> (Arrays.asList(d_country1, d_country2, d_country3)));
-        d_mockConnectivity.setD_continentList(new ArrayList<Continent> (Arrays.asList(d_continent1)));
-        d_mockConnectivity.setD_countryList(new ArrayList<Country> (Arrays.asList(d_country1, d_country2, d_country3)));
+       // d_continent1 = new Continent(1);
+        d_country1 = new Country( 1, "Country1", d_continent1.getD_continentId(), new ArrayList<>(Arrays.asList(2)));
+        d_country2 = new Country( 2, "Country2", d_continent1.getD_continentId(), new ArrayList<>(Arrays.asList(1, 3)));
+        d_country3 = new Country( 3, "Country3", d_continent1.getD_continentId(), new ArrayList<>(Arrays.asList(3)));
+        d_continent1 = new Continent(1, "Continent1",8,new ArrayList<Country> (Arrays.asList(d_country1, d_country2, d_country3)));
+       // d_continent1.setD_countries(new ArrayList<Country> (Arrays.asList(d_country1, d_country2, d_country3)));
+        d_mockConnectivity.setD_continentsList(new ArrayList<Continent> (Arrays.asList(d_continent1)));
+        d_mockConnectivity.setD_countriesList(new ArrayList<Country> (Arrays.asList(d_country1, d_country2, d_country3)));
     }
 
     /**
@@ -42,7 +43,7 @@ public class MapValidationTest {
      */
     @Test
     public void testMapWithoutContinents() {
-        d_mockConnectivity.setD_continentList(new ArrayList<Continent>());
+        d_mockConnectivity.setD_continentsList(new ArrayList<Continent>());
         assertFalse(MapValidation.validateMap(d_mockConnectivity));
     }
 
@@ -51,7 +52,7 @@ public class MapValidationTest {
      */
     @Test
     public void testMapWithoutCountries() {
-        d_mockConnectivity.setD_countryList(new ArrayList<Country>());
+        d_mockConnectivity.setD_countriesList(new ArrayList<Country>());
         assertFalse(MapValidation.validateMap(d_mockConnectivity));
     }
 
