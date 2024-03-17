@@ -16,7 +16,8 @@ import org.concordia.macs.Models.Player;
  */
 
 public class PlayersGamePlayTest {
-    private static List<Player>  d_playersList = GameEngine.getL_playersArray();
+
+    private ArrayList<Player> d_playersArray = new ArrayList<Player>();
     private static Connectivity d_connectivity = new Connectivity();
 
     /**
@@ -24,17 +25,17 @@ public class PlayersGamePlayTest {
      */
     @BeforeEach
     public void addPlayersIfNotThereTest() {
-        if (d_playersList.isEmpty()) {
+        if (d_playersArray.isEmpty()) {
             LoadMap.loadMap(d_connectivity, "testMap");
 
             Player l_currentPlayer = new Player();
             l_currentPlayer.setD_playerName("player1");
-            d_playersList.add(l_currentPlayer);
+            d_playersArray.add(l_currentPlayer);
 
-            PlayersGameplay.assignCountries(d_playersList, d_connectivity.getD_countryList(),
-                    d_connectivity.getD_continentList());
+            PlayersGameplay.assignCountries((ArrayList<Player>) d_playersArray, d_connectivity.getD_countriesList(),
+                    d_connectivity.getD_continentsList());
 
-            PlayersGameplay.assignArmiesToPlayers((ArrayList<Player>) d_playersList);
+            PlayersGameplay.assignArmiesToPlayers((ArrayList<Player>) d_playersArray);
         }
     }
 
@@ -43,9 +44,9 @@ public class PlayersGamePlayTest {
      */
     @Test
     void assignCountriesWithoutPlayersTest() {
-        d_playersList.clear();
-        assertEquals(1, PlayersGameplay.assignCountries(d_playersList, d_connectivity.getD_countryList(),
-                d_connectivity.getD_continentList()));
+        d_playersArray.clear();
+        assertEquals(1, PlayersGameplay.assignCountries((ArrayList<Player>) d_playersArray, d_connectivity.getD_countriesList(),
+                d_connectivity.getD_continentsList()));
     }
 
     /**
@@ -55,11 +56,11 @@ public class PlayersGamePlayTest {
     void assignCountriesWithPlayersWithoutCountriesTest() {
         Player l_testPlayer = new Player();
         l_testPlayer.setD_playerName("player2");
-        d_playersList.add(l_testPlayer);
+        d_playersArray.add(l_testPlayer);
         ArrayList<Country> l_countries = new ArrayList<>();
 
-        assertEquals(1, PlayersGameplay.assignCountries(d_playersList, l_countries,
-                d_connectivity.getD_continentList()));
+        assertEquals(1, PlayersGameplay.assignCountries((ArrayList<Player>) d_playersArray, l_countries,
+                d_connectivity.getD_continentsList()));
     }
 
     /**
@@ -69,7 +70,7 @@ public class PlayersGamePlayTest {
     void assignCountriesWithPlayersAndWithLessCountriesTest() {
         Player l_testPlayer = new Player();
         l_testPlayer.setD_playerName("player2");
-        d_playersList.add(l_testPlayer);
+        d_playersArray.add(l_testPlayer);
         Country India = new Country();
 
         Set<Country> l_countrySet = new HashSet<>();
@@ -81,7 +82,7 @@ public class PlayersGamePlayTest {
      */
     @Test
     void checkArmyAvailableSendMoreTroopsTest() {
-        Player l_currentPlayer = d_playersList.get(0);
+        Player l_currentPlayer = d_playersArray.get(0);
         boolean l_truthValue = PlayersGameplay.checkArmyAvailable((l_currentPlayer.getD_armyNumber() + 1),
                 l_currentPlayer);
         assertEquals(false, l_truthValue);
@@ -92,7 +93,7 @@ public class PlayersGamePlayTest {
      */
     @Test
     void assignArmiesToPlayersManualCorrectTest() {
-        Player l_currentPlayer = d_playersList.get(0);
+        Player l_currentPlayer = d_playersArray.get(0);
         Player l_testPlayer = new Player(l_currentPlayer);
 
         List<Player> l_testPlayerList = new ArrayList<>();
@@ -103,15 +104,15 @@ public class PlayersGamePlayTest {
         int l_continentBonus = 0;
         if (!l_testPlayerList.get(0).getD_continent().isEmpty()) {
             for (Continent l_continent : l_testPlayerList.get(0).getD_continent())
-                l_continentBonus += l_continent.getD_continentArmyCount();
+                l_continentBonus += l_continent.getD_continentArmyBonus();
         }
         l_assignedArmies += l_continentBonus;
         l_testPlayerList.get(0).setD_armyNumber(l_assignedArmies);
         System.out.println(l_assignedArmies);
 
-        PlayersGameplay.assignArmiesToPlayers((ArrayList<Player>) d_playersList);
+        PlayersGameplay.assignArmiesToPlayers((ArrayList<Player>) d_playersArray);
 
-        assertEquals(d_playersList.get(0).getD_armyNumber(), l_testPlayerList.get(0).getD_armyNumber());
+        assertEquals(d_playersArray.get(0).getD_armyNumber(), l_testPlayerList.get(0).getD_armyNumber());
     }
 
     /**
@@ -119,7 +120,7 @@ public class PlayersGamePlayTest {
      */
     @Test
     void assignArmiesToPlayersManualWrongTest() {
-        Player l_currentPlayer = d_playersList.get(0);
+        Player l_currentPlayer = d_playersArray.get(0);
         Player l_testPlayer = new Player(l_currentPlayer);
 
         List<Player> l_testPlayerList = new ArrayList<>();
@@ -130,15 +131,15 @@ public class PlayersGamePlayTest {
         int l_continentBonus = 0;
         if (!l_testPlayerList.get(0).getD_continent().isEmpty()) {
             for (Continent l_continent : l_testPlayerList.get(0).getD_continent())
-                l_continentBonus += l_continent.getD_continentArmyCount();
+                l_continentBonus += l_continent.getD_continentArmyBonus();
         }
         l_assignedArmies += l_continentBonus;
 
         l_testPlayerList.get(0).setD_armyNumber(l_assignedArmies + 1);
         System.out.println(l_assignedArmies);
 
-        PlayersGameplay.assignArmiesToPlayers((ArrayList<Player>) d_playersList);
+        PlayersGameplay.assignArmiesToPlayers((ArrayList<Player>) d_playersArray);
 
-        assertNotEquals(d_playersList.get(0).getD_armyNumber(), l_testPlayerList.get(0).getD_armyNumber());
+        assertNotEquals(d_playersArray.get(0).getD_armyNumber(), l_testPlayerList.get(0).getD_armyNumber());
     }
 }

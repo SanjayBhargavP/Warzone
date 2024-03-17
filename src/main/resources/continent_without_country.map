@@ -1,0 +1,15 @@
+; map: canada.map
+; map made with the map maker
+; yura.net Risk 1.0.9.2
+
+[files]
+pic canada_pic.png
+map canada_map.gif
+crd canada.cards
+
+[continents]
+Atlantic_Provinces 3 blue
+
+[countries]
+
+[borders]
