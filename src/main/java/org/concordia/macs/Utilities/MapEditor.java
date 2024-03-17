@@ -125,6 +125,12 @@ public class MapEditor {
             System.out.println("Country IDs do not exist");
             return 1;
         }
+        for(Integer l_neighborId: l_country.getD_neighbours()){
+            if(l_neighborId == p_neighbourcountryId){
+                System.out.println("Neighbor " + l_neighbourCountry.getD_countryName() + "(" + p_neighbourcountryId + ") is already added successfully to " + l_country.getD_countryName() + "(" + p_countryId + ")");
+                return 1;
+            }
+        }
 
         l_country.getD_neighbours().add(p_neighbourcountryId);
         System.out.println("Neighbor " + l_neighbourCountry.getD_countryName() + "(" + p_neighbourcountryId + ") added successfully to " + l_country.getD_countryName() + "(" + p_countryId + ")");
