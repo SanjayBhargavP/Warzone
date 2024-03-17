@@ -1,26 +1,22 @@
 package org.concordia.macs.Utilities;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import org.concordia.macs.Controllers.GameEngine;
-import org.concordia.macs.State.Preload;
-import org.concordia.macs.Utilities.Graph;
 
-import javax.swing.text.Utilities;
+import org.concordia.macs.Controllers.GameEngine;
+import org.concordia.macs.State.PreLoad;
 
 /**
- *
  * The class MapLoader tests if we can load the valid map or not.
  *
  */
+public class MapLoaderTest {
 
-public class MapLoaderTest
-{
-    private static Connectivity d_connectivity = new Connectivity();
-    private static GameEngine gameEngine = new GameEngine();
+    private static Connectivity d_connectivity=new Connectivity();
+    static GameEngine gameEngine =  new GameEngine();
 
     @BeforeAll
     static void startGame()
@@ -29,58 +25,49 @@ public class MapLoaderTest
         gameEngine.setCheckIfTest(true);
     }
 
+
     /**
-     *
-     * Test to check if a map without continents can be loaded.
-     *
+     * This test checks whether a map containing continent without country could be loaded for not
      */
-
     @Test
-    void loadMap_NoContinents()
+    void loadMapTest1()
     {
-        gameEngine.setPhase(new Preload(gameEngine));
+        gameEngine.setPhase(new PreLoad(gameEngine));
 
-        LoadMap.loadMap(gameEngine.getConnectivity(), "map_without_continents");
+        LoadMap.loadMap(gameEngine.getConnectivity(),"continent_without_country" );
+        Graph l_graph=new Graph(d_connectivity.getD_countriesList().size(),d_connectivity);
+        assertEquals(l_graph.continentConnection(d_connectivity, l_graph), false);
 
-        Utilities.Graph l_graph = new Utilities.Graph(d_connectivity.getD_countryList().size(), d_connectivity);
-        assertEquals(0, d_connectivity.getD_continents().size());
-        assertFalse(l_graph.continentConnection(d_connectivity, l_graph));
+
     }
 
     /**
-     *
-     * Test to check if a map with multiple continents and countries can be loaded.
-     *
+     * This test checks whether a map containing same country assigned to multiple continents could be loaded or not.
      */
-
     @Test
-    void loadMap_MultipleContinents()
+    void loadMapTest2()
     {
-        gameEngine.setPhase(new Preload(gameEngine));
+        gameEngine.setPhase(new PreLoad(gameEngine));
 
-        LoadMap.loadMap(gameEngine.getConnectivity(), "map_with_multiple_continents");
+        LoadMap.loadMap(gameEngine.getConnectivity(),"multiple_continents_same_country" );
+        Graph l_graph=new Graph(d_connectivity.getD_countriesList().size(),d_connectivity);
+        assertEquals(l_graph.continentConnection(d_connectivity, l_graph), false);
 
-        Utilities.Graph l_graph = new Utilities.Graph(d_connectivity.getD_countryList().size(), d_connectivity);
-        assertTrue(d_connectivity.getD_continents().size() > 1);
-        assertTrue(d_connectivity.getD_countryList().size() > 1);
-        assertFalse(l_graph.continentConnection(d_connectivity, l_graph));
+
     }
 
     /**
-     *
-     * Test to check if a map with invalid connections between continents can be loaded.
-     *
+     * This test checks whether a map containing multiple continents could be loaded or not.
      */
-
     @Test
-    void loadMap_InvalidContinentConnections()
+    void loadMapTest3()
     {
-        gameEngine.setPhase(new Preload(gameEngine));
+        gameEngine.setPhase(new PreLoad(gameEngine));
 
-        LoadMap.loadMap(gameEngine.getConnectivity(), "map_with_invalid_continent_connections");
+        LoadMap.loadMap(gameEngine.getConnectivity(),"multiple_continents" );
+        Graph l_graph=new Graph(d_connectivity.getD_countriesList().size(),d_connectivity);
+        assertEquals(l_graph.continentConnection(d_connectivity, l_graph), false);
 
-        Utilities.Graph l_graph = new Utilities.Graph(d_connectivity.getD_countryList().size(), d_connectivity);
-        assertFalse(d_connectivity.isContinentConnected());
-        assertFalse(l_graph.continentConnection(d_connectivity, l_graph));
+
     }
 }

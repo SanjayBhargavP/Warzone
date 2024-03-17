@@ -39,12 +39,12 @@ public class PhaseValidationTest {
         if (d_commands[0].equals("1"))
         {
             // Setting the phase to Preload
-            d_gameEngine.setPhase(new Preload(d_gameEngine));
+            d_gameEngine.setPhase(new PreLoad(d_gameEngine));
             System.out.println(d_gameEngine.getPhase());
 
             // Checking if the phase is set to Preload
             assertEquals("Preload", d_gameEngine.getPhaseName());
-            System.out.println(ColorCoding.green + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.blank);
+            System.out.println(ColorCoding.ANSI_GREEN + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.ANSI_RESET);
 
             // Splitting the second command to get map details
             String[] mapCommand = d_commands[1].split(" ");
@@ -55,7 +55,7 @@ public class PhaseValidationTest {
 
             // Checking if the phase is set to PostLoad
             assertEquals("PostLoad", d_gameEngine.getPhaseName());
-            System.out.println(ColorCoding.green + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.blank);
+            System.out.println(ColorCoding.ANSI_GREEN + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.ANSI_RESET);
 
             if (d_commands[3].equals("savemap VeryBasic")) {
                 d_gameEngine.getPhase().saveMap(d_connectvty, "VeryBasic");
@@ -63,7 +63,7 @@ public class PhaseValidationTest {
 
             // Checking if the phase is set to PlaySetup
             assertEquals("PlaySetup", d_gameEngine.getPhaseName());
-            System.out.println(ColorCoding.green + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.blank);
+            System.out.println(ColorCoding.ANSI_GREEN + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.ANSI_RESET);
 
             String[] playerCommands = d_commands[4].split(" ");
 
@@ -76,42 +76,42 @@ public class PhaseValidationTest {
 
             // Checking if the phase is set to Reinforcement
             assertEquals("Reinforcement", d_gameEngine.getPhaseName());
-            System.out.println(ColorCoding.green + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.blank);
+            System.out.println(ColorCoding.ANSI_GREEN + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.ANSI_RESET);
 
             // Performing reinforcement
             d_gameEngine.getPhase().reinforce(d_connectvty);
 
             // Checking if the phase is set to Attack
             assertEquals("Attack", d_gameEngine.getPhaseName());
-            System.out.println(ColorCoding.green + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.blank);
+            System.out.println(ColorCoding.ANSI_GREEN + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.ANSI_RESET);
 
             // Performing attack
             d_gameEngine.getPhase().attack(d_connectvty);
 
             // Checking if the phase is set to Fortify
             assertEquals("Fortify", d_gameEngine.getPhaseName());
-            System.out.println(ColorCoding.green + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.blank);
+            System.out.println(ColorCoding.ANSI_GREEN + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.ANSI_RESET);
 
             // Performing Fortification
             d_gameEngine.getPhase().fortify(d_connectvty);
 
             // Checking if the phase is set to Reinforcement again
             assertEquals("Reinforcement", d_gameEngine.getPhaseName());
-            System.out.println(ColorCoding.green + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.blank);
+            System.out.println(ColorCoding.ANSI_GREEN + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.ANSI_RESET);
 
             // Performing Reinforcement again
             d_gameEngine.getPhase().reinforce(d_connectvty);
 
             // Checking if the phase is set to Attack
             assertEquals("Attack", d_gameEngine.getPhaseName());
-            System.out.println(ColorCoding.green + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.blank);
+            System.out.println(ColorCoding.ANSI_GREEN + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.ANSI_RESET);
 
             // Performing Attack again
             d_gameEngine.getPhase().attack(d_connectvty);
 
             // Checking if the phase is set to End
             assertEquals("End", d_gameEngine.getPhaseName());
-            System.out.println(ColorCoding.green + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.blank);
+            System.out.println(ColorCoding.ANSI_GREEN + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.ANSI_RESET);
         }
     }
 }

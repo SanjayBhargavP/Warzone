@@ -75,6 +75,7 @@ public class PreLoad extends Edit {
      * @param connectivity The connectivity object containing map data.
      */
     public void editContinent(String[] commands, Connectivity connectivity) {
+        try{
         for (int i = 1; i < commands.length;) {
             if (commands[i].equals("-add")) {
                 MapEditor.addContinent(commands[i + 1], Integer.parseInt(commands[i + 2]), connectivity);
@@ -88,6 +89,10 @@ public class PreLoad extends Edit {
             }
         }
         next();
+        }
+        catch ( Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -97,18 +102,23 @@ public class PreLoad extends Edit {
      * @param connectivity The connectivity object containing map data.
      */
     public void editNeighbor(String[] commands, Connectivity connectivity) {
-        for (int i = 1; i < commands.length;) {
-            if (commands[i].equals("-add")) {
-                MapEditor.addNeighbour(Integer.parseInt(commands[i + 1]), Integer.parseInt(commands[i + 2]), connectivity);
-                i = i + 3;
-            } else if (commands[i].equals("-remove")) {
-                MapEditor.removeNeighbour(Integer.parseInt(commands[i + 1]), Integer.parseInt(commands[i + 2]), connectivity, 1);
-                i = i + 3;
-            } else {
-                System.out.println(ColorCoding.getRed() + "ERROR: Invalid Command" + ColorCoding.getReset());
+        try {
+            for (int i = 1; i < commands.length; ) {
+                if (commands[i].equals("-add")) {
+                    MapEditor.addNeighbour(Integer.parseInt(commands[i + 1]), Integer.parseInt(commands[i + 2]), connectivity);
+                    i = i + 3;
+                } else if (commands[i].equals("-remove")) {
+                    MapEditor.removeNeighbour(Integer.parseInt(commands[i + 1]), Integer.parseInt(commands[i + 2]), connectivity, 1);
+                    i = i + 3;
+                } else {
+                    System.out.println(ColorCoding.getRed() + "ERROR: Invalid Command" + ColorCoding.getReset());
+                }
             }
+            next();
         }
-        next();
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
