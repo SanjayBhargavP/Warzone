@@ -43,7 +43,7 @@ public class PhaseValidationTest {
             System.out.println(d_gameEngine.getPhase());
 
             // Checking if the phase is set to Preload
-            assertEquals("PreLoad", d_gameEngine.getPhaseName());
+            assertEquals("Preload", d_gameEngine.getPhaseName());
             System.out.println(ColorCoding.ANSI_GREEN + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.ANSI_RESET);
 
             // Splitting the second command to get map details
