@@ -130,8 +130,8 @@ public class GameEngine {
 				System.out.println(" ====================================================================================================");
 				System.out.println("| #   PHASE                   : command                                                             |"); 
 				System.out.println(" ====================================================================================================");
-				System.out.println("| 1.  Any                     : show map                                                            |");
-				System.out.println("| 2.  Edit:PreLoad            : load map, edit country, edit continent, edit neighbor, validatemap  |");
+				System.out.println("| 1.  Any                     : showmap                                                             |");
+				System.out.println("| 2.  Edit:PreLoad            : loadmap, edit country, edit continent, edit neighbor, validatemap   |");
 				System.out.println("| 3.  Edit:PostLoad           : save map                                                            |");
 				System.out.println("| 4.  Play:PlaySetup          : gameplayer, assigncountries                                         |");
 				System.out.println("| 5.  Play:MainPlay:Reinforce : deploy                                                              |");

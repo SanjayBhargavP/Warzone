@@ -32,14 +32,14 @@ public class PlaySetup extends Play {
                 Player l_player = new Player();
                 l_player.setD_playerName(p_command[i + 1]);
                 l_playersArray.add(l_player);
-                System.out.println(ColorCoding.ANSI_GREEN + l_player.getD_playerName() + "added successfully" + ColorCoding.ANSI_RESET);
+                System.out.println(ColorCoding.ANSI_GREEN + l_player.getD_playerName() + " added successfully" + ColorCoding.ANSI_RESET);
                 i = i + 2;
 
             } else if (p_command[i].equals(("-remove"))) {
                 int j = 0;
                 while (j < l_playersArray.size()) {
                     if (p_command[i + 1].equals(l_playersArray.get(j).getD_playerName())) {
-                        System.out.println(ColorCoding.ANSI_GREEN + l_playersArray.get(j).getD_playerName() + "removed successfully" + ColorCoding.ANSI_RESET);
+                        System.out.println(ColorCoding.ANSI_GREEN + l_playersArray.get(j).getD_playerName() + " removed successfully" + ColorCoding.ANSI_RESET);
                         l_playersArray.remove(j);
                         i = i + 2;
                         break;
