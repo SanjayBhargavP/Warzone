@@ -125,40 +125,45 @@ public class PlayersGameplay {
      * @return        true if army is available, false otherwise
      */
     public static boolean checkArmyAvailable(int army, Player player) {
-        return player.getD_armyNumber() >= army;
+        if(player.getD_armyNumber() >= army){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
      * Advances troops to a country belonging to the same player or attacks if the country doesn't belong to the player.
      *
-     * @param player          the individual player
-     * @param playersArray    the list of players
-     * @param fromCountry     the country from which troops are advanced or attacked
+     * @param p_player          the individual player
+     * @param p_playersArray    the list of players
+     * @param p_fromCountry     the country from which troops are advanced or attacked
      * @param toCountry       the country to which troops are sent or attack happens
-     * @param troops          the number of troops to be sent or used for attacking
-     * @param continent       the list of continents
-     * @param connectivity    the map connectivity
-     * @param fortifyFlag     the flag indicating the fortify phase
+     * @param p_troops          the number of troops to be sent or used for attacking
+     * @param p_continent       the list of continents
+     * @param p_connectivity    the map connectivity
+     * @param p_fortifyFlag     the flag indicating the fortify phase
      * @return                0 for successful advance/attack and 1 for failed advance/attack
      */
-    public static int advance(Player player, ArrayList<Player> playersArray, Country fromCountry, Country toCountry, int troops, ArrayList<Continent> continent, Connectivity connectivity, int fortifyFlag) {
+    public static int advance(Player p_player, ArrayList<Player> p_playersArray, Country p_fromCountry, Country toCountry, int p_troops, ArrayList<Continent> p_continent, Connectivity p_connectivity, int p_fortifyFlag) {
         LogEntryBuffer logEntryBuffer = new LogEntryBuffer();
-        if (connectivity.getD_countriesList().contains(fromCountry) && connectivity.getD_countriesList().contains(toCountry)) {
-            if (player.getD_country().contains(fromCountry)) {
-                if (player.getD_country().contains(toCountry)) {
-                    if (fromCountry.getD_neighbours().contains(toCountry.getD_countryId())) {
-                        if (troops >= 0) {
-                            if (troops <= fromCountry.getD_armyCount()) {
+        if (p_connectivity.getD_countriesList().contains(p_fromCountry) && p_connectivity.getD_countriesList().contains(toCountry)) {
+            if (p_player.getD_country().contains(p_fromCountry)) {
+                if (p_player.getD_country().contains(toCountry)) {
+                    if (p_fromCountry.getD_neighbours().contains(toCountry.getD_countryId())) {
+                        if (p_troops >= 0) {
+                            if (p_troops <= p_fromCountry.getD_armyCount()) {
                                 logEntryBuffer.log("Calling Advance");
                                 System.out.println("Calling Advance");
-                                int troopsAddition = toCountry.getD_armyCount() + troops;
+                                int troopsAddition = toCountry.getD_armyCount() + p_troops;
                                 toCountry.setD_armyCount(troopsAddition);
-                                int troopsDeduction = fromCountry.getD_armyCount() - troops;
-                                fromCountry.setD_armyCount(troopsDeduction);
-                                logEntryBuffer.log(troops + " Troops advanced from " + fromCountry.getD_countryName() + " to " + toCountry.getD_countryName());
-                                System.out.println(ColorCoding.ANSI_GREEN + troops + " Troops advanced from " + fromCountry.getD_countryName() + " to " + toCountry.getD_countryName() + ColorCoding.ANSI_RESET);
-                                logEntryBuffer.log("After change " + fromCountry.getD_countryName() + " has " + fromCountry.getD_armyCount() + " troops");
-                                System.out.println("After change " + fromCountry.getD_countryName() + " has " + fromCountry.getD_armyCount() + " troops");
+                                int troopsDeduction = p_fromCountry.getD_armyCount() - p_troops;
+                                p_fromCountry.setD_armyCount(troopsDeduction);
+                                logEntryBuffer.log(p_troops + " Troops advanced from " + p_fromCountry.getD_countryName() + " to " + toCountry.getD_countryName());
+                                System.out.println(ColorCoding.ANSI_GREEN + p_troops + " Troops advanced from " + p_fromCountry.getD_countryName() + " to " + toCountry.getD_countryName() + ColorCoding.ANSI_RESET);
+                                logEntryBuffer.log("After change " + p_fromCountry.getD_countryName() + " has " + p_fromCountry.getD_armyCount() + " troops");
+                                System.out.println("After change " + p_fromCountry.getD_countryName() + " has " + p_fromCountry.getD_armyCount() + " troops");
                                 logEntryBuffer.log("After change " + toCountry.getD_countryName() + " has " + toCountry.getD_armyCount() + " troops");
                                 System.out.println("After change " + toCountry.getD_countryName() + " has " + toCountry.getD_armyCount() + " troops");
                                 return 0;
@@ -173,28 +178,28 @@ public class PlayersGameplay {
                             return 1;
                         }
                     } else {
-                        logEntryBuffer.log("Error: " + fromCountry.getD_countryName() + " is not the neighbour of " + toCountry.getD_countryName() + ". Troops can't be advanced or country can't be attacked");
-                        System.out.println(ColorCoding.ANSI_RED + "Error: " + fromCountry.getD_countryName() + " is not the neighbour of " + toCountry.getD_countryName() + ". Troops can't be advanced or country can't be attacked" + ColorCoding.ANSI_RESET);
+                        logEntryBuffer.log("Error: " + p_fromCountry.getD_countryName() + " is not the neighbour of " + toCountry.getD_countryName() + ". Troops can't be advanced or country can't be attacked");
+                        System.out.println(ColorCoding.ANSI_RED + "Error: " + p_fromCountry.getD_countryName() + " is not the neighbour of " + toCountry.getD_countryName() + ". Troops can't be advanced or country can't be attacked" + ColorCoding.ANSI_RESET);
                         return 1;
                     }
                 } else {
-                    if (fortifyFlag == 0) {
+                    if (p_fortifyFlag == 0) {
                         logEntryBuffer.log("Inside fortify");
                         System.out.println("Inside fortify");
-                        Player topLayer = findPlayerWithCountry(playersArray, toCountry);
+                        Player topLayer = findPlayerWithCountry(p_playersArray, toCountry);
 
                         if (topLayer != null) {
-                            System.out.println(player.getDiplomacyWith());
-                            if (!player.getDiplomacyWith().contains(topLayer.getD_playerId())) {
-                                attack(player, playersArray, fromCountry, toCountry, troops, continent, connectivity);
+                            System.out.println(p_player.getDiplomacyWith());
+                            if (!p_player.getDiplomacyWith().contains(topLayer.getD_playerId())) {
+                                attack(p_player, p_playersArray, p_fromCountry, toCountry, p_troops, p_continent, p_connectivity);
                                 return 0;
                             } else {
-                                logEntryBuffer.log("Attack is not possible between " + fromCountry.getD_countryName() + " and " + toCountry.getD_countryName() + " because of diplomacy");
-                                System.out.println(ColorCoding.ANSI_RED + "Attack is not possible between " + fromCountry.getD_countryName() + " and " + toCountry.getD_countryName() + " because of diplomacy" + ColorCoding.ANSI_RESET);
+                                logEntryBuffer.log("Attack is not possible between " + p_fromCountry.getD_countryName() + " and " + toCountry.getD_countryName() + " because of diplomacy");
+                                System.out.println(ColorCoding.ANSI_RED + "Attack is not possible between " + p_fromCountry.getD_countryName() + " and " + toCountry.getD_countryName() + " because of diplomacy" + ColorCoding.ANSI_RESET);
                                 return 1;
                             }
                         } else {
-                            attack(player, playersArray, fromCountry, toCountry, troops, continent, connectivity);
+                            attack(p_player, p_playersArray, p_fromCountry, toCountry, p_troops, p_continent, p_connectivity);
                             return 0;
                         }
                     } else {
@@ -204,16 +209,16 @@ public class PlayersGameplay {
                     }
                 }
             } else {
-                logEntryBuffer.log("Error: " + fromCountry.getD_countryName() + " doesn't belong to player from where they want to advance the troops");
-                System.out.println(ColorCoding.ANSI_RED + "Error: " + fromCountry.getD_countryName() + " doesn't belong to player from where they want to advance the troops" + ColorCoding.ANSI_RESET);
+                logEntryBuffer.log("Error: " + p_fromCountry.getD_countryName() + " doesn't belong to player from where they want to advance the troops");
+                System.out.println(ColorCoding.ANSI_RED + "Error: " + p_fromCountry.getD_countryName() + " doesn't belong to player from where they want to advance the troops" + ColorCoding.ANSI_RESET);
                 return 1;
             }
         } else {
-            if (!connectivity.getD_countriesList().contains(fromCountry)) {
-                logEntryBuffer.log("Error: Country " + fromCountry.getD_countryName() + " doesn't belong to the Map");
-                System.out.println(ColorCoding.ANSI_RED + "Error: Country " + fromCountry.getD_countryName() + " doesn't belong to the Map" + ColorCoding.ANSI_RESET);
+            if (!p_connectivity.getD_countriesList().contains(p_fromCountry)) {
+                logEntryBuffer.log("Error: Country " + p_fromCountry.getD_countryName() + " doesn't belong to the Map");
+                System.out.println(ColorCoding.ANSI_RED + "Error: Country " + p_fromCountry.getD_countryName() + " doesn't belong to the Map" + ColorCoding.ANSI_RESET);
                 return 1;
-            } else if (!connectivity.getD_countriesList().contains(toCountry)) {
+            } else if (!p_connectivity.getD_countriesList().contains(toCountry)) {
                 logEntryBuffer.log("Error: Country " + toCountry.getD_countryName() + " doesn't belong to the Map");
                 System.out.println(ColorCoding.ANSI_RED + "Error: Country " + toCountry.getD_countryName() + " doesn't belong to the Map" + ColorCoding.ANSI_RESET);
                 return 1;

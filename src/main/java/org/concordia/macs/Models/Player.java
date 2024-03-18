@@ -114,7 +114,7 @@ public class Player {
      */
     public int getD_armyNumber() {
 
-        return d_objCount;
+        return d_armyNumber;
     }
 
     /**
