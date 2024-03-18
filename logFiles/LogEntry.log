@@ -1,0 +1,85 @@
+Choose to Start the Game or End it
+new phase: PreLoad
+enter a PreLoad phase command: 
+Map canada.map loaded successfully.....
+Graph is not connected
+enter a PreLoad phase command: 
+new phase: PostLoad
+enter a PostLoad phase command: 
+Map has been successfully saved
+new phase: PlaySetup
+enter a PlaySetup phase command: 
+enter a PlaySetup phase command: 
+enter a PlaySetup phase command: 
+Player:sush has following countries assigned
+New_Brunswick
+Prince_Edward_Island
+Player:sanjay has following countries assigned
+Nova_Scotia
+N&L-Newfoundland
+N&L-Labrador
+Quebec-North
+Quebec-Central
+Quebec-South
+Ontario-South
+Ontario-West
+Ontario-North
+Manitoba-South
+Saskatchewan-South
+Alberta-South
+British_Columbia-South
+BC-Vancouver_Island
+British_Columbia-North
+Alberta-North
+Saskatchewan-North
+Manitoba-North
+Nunavut-Continental
+NU-Southern_Islands
+NU-Baffin_Island
+NU-Victoria_Island-East
+NU-Northern_Islands
+Player sush has been allotted 3 armies for this round
+Player sanjay has been allotted 14 armies for this round
+Player:sush has following countries assigned
+New_Brunswick
+Prince_Edward_Island
+Player:sanjay has following countries assigned
+Nova_Scotia
+N&L-Newfoundland
+N&L-Labrador
+Quebec-North
+Quebec-Central
+Quebec-South
+Ontario-South
+Ontario-West
+Ontario-North
+Manitoba-South
+Saskatchewan-South
+Alberta-South
+British_Columbia-South
+BC-Vancouver_Island
+British_Columbia-North
+Alberta-North
+Saskatchewan-North
+Manitoba-North
+Nunavut-Continental
+NU-Southern_Islands
+NU-Baffin_Island
+NU-Victoria_Island-East
+NU-Northern_Islands
+new phase: Reinforcement
+enter a Reinforcement phase command: 
+Army count changed to 2
+Army count changed to 11
+Army count changed to 0
+Army count changed to 0
+Player sush has been allotted 3 armies for this round
+Player sanjay has been allotted 14 armies for this round
+Player sush: New_Brunswick has been assigned with 1
+Player sanjay: Nova_Scotia has been assigned with 3
+Player sush: New_Brunswick has been assigned with 2
+Player sanjay: Nova_Scotia has been assigned with 11
+new phase: Attack
+enter a Attack phase command: 
+This command does not exist
+enter a Attack phase command: 

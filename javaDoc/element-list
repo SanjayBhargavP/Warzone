@@ -1,4 +1,6 @@
 org.concordia.macs.Controllers
+org.concordia.macs.JSuite
 org.concordia.macs.Models
+org.concordia.macs.State
 org.concordia.macs.Utilities
 org.concordia.macs.View
