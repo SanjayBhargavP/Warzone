@@ -35,7 +35,7 @@ public class CountryTest
     void getCountryFromID_ValidID_ReturnsCorrectCountry()
     {
         Country country = Country.getCountryFromId(d_connectivity.getD_countriesList(), 5);
-        assertEquals(country.getD_countryName(), "China");
+        assertEquals(country.getD_countryName(), "Argentina");
     }
 
     /**
@@ -48,7 +48,7 @@ public class CountryTest
     @Test
     void getCountryFromID_InvalidID_ReturnsNull()
     {
-        Country country = Country.getCountryFromId(d_connectivity.getD_countriesList(), 20);
+        Country country = Country.getCountryFromId(d_connectivity.getD_countriesList(), 21);
         assertNull(country);
     }
 
@@ -62,9 +62,9 @@ public class CountryTest
     void getCountryFromName_ValidName_ReturnsCorrectCountry()
     {
         Country country = new Country();
-        Country result = country.getCountryFromName(d_connectivity.getD_countriesList(), "Germany");
+        Country result = country.getCountryFromName(d_connectivity.getD_countriesList(), "Russia");
         assertNotNull(result);
-        assertEquals(result.getD_countryId(), 3);
+        assertEquals(result.getD_countryId(), 13);
     }
 
     /**
