@@ -38,6 +38,11 @@ public class Continent
         this.d_countries = p_countries;
     }
 
+    public Continent(int p_id, String p_continent1) {
+        this.d_continentId=p_id;
+        this.d_continentName=p_continent1;
+    }
+
     /**
      * Get Continent ID
      * @return continent ID

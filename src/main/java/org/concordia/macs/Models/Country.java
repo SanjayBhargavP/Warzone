@@ -164,7 +164,7 @@ public class Country
     {
         for(Country c :p_countryList)
         {
-            if(c.getD_countryName().equals(p_countryName))
+            if(c.getD_countryName().equalsIgnoreCase(p_countryName))
                 return c;
         }
         return null;

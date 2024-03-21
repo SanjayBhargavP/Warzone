@@ -146,7 +146,7 @@ public class GameEngine {
       			mycommand = phase_command.nextLine();
 				l_commands = mycommand.split(" "); 
 				System.out.println(" =====================================================================================================");
-
+				try{
 				if(l_commands[0]!= null)
 				{
 				switch (l_commands[0]) {
@@ -228,7 +228,10 @@ public class GameEngine {
 					System.out.println("This command does not exist");
 				}
 				}
-			} while (!(gamePhase instanceof End));
+				}
+				catch (Exception e){
+					e.printStackTrace();
+				}} while (!(gamePhase instanceof End));
 		} while (l_commands[0] != "exit");
 		keyboard.close();
 	}
