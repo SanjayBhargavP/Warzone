@@ -82,6 +82,11 @@ public class Order {
 
     public void execute(Player p_player,Order p_order,Connectivity p_connectivity,int flag,int fortify_flag) {
         LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
+        if(p_order == null)
+        {
+            p_player.setD_armyNumber(0);
+            return;
+        }
         if(flag==0)
         {
             if(p_player.getD_armyNumber() !=0)
@@ -93,7 +98,7 @@ public class Order {
                     {
                         p_player.getD_country().get(i).setD_armyCount(p_order.d_armyCount+ p_player.getD_country().get(i).getD_armyCount());
                         d_logEntryBuffer.log("Player "+p_player.getD_playerName()+": " + p_player.getD_country().get(i).getD_countryName() + " has been assigned with " + p_order.d_armyCount);
-                        System.out.println(ColorCoding.ANSI_RED+"Player "+p_player.getD_playerName()+": "+ p_player.getD_country().get(i).getD_countryName()+" has been assigned with "+p_order.d_armyCount+ColorCoding.ANSI_RESET);
+                        System.out.println(ColorCoding.ANSI_GREEN+"Player "+p_player.getD_playerName()+": "+ p_player.getD_country().get(i).getD_countryName()+" has been assigned with "+p_order.d_armyCount+ColorCoding.ANSI_RESET);
                     }
                 }
             }
@@ -107,6 +112,8 @@ public class Order {
                 case "advance":
                     d_logEntryBuffer.log(p_player.getD_playerName()+"is calling"+"Advance");
                     //System.out.println(p_player.getD_playerName()+"is calling"+"Advance");
+                    System.out.println(p_order.getOrderContent());
+                    System.out.println(l_getCountry.getCountryFromName(p_connectivity.getD_countriesList(), l_orderContent[1])+" second time "+l_getCountry.getCountryFromName(p_connectivity.getD_countriesList(), l_orderContent[2]));
                     PlayersGameplay.advance(p_player,Play.getL_playersArray(),l_getCountry.getCountryFromName(p_connectivity.getD_countriesList(), l_orderContent[1]) , l_getCountry.getCountryFromName(p_connectivity.getD_countriesList(), l_orderContent[2]), Integer.parseInt( l_orderContent[3]),p_connectivity.getD_continentsList(),p_connectivity,fortify_flag);
                     break;
                 case "bomb":
@@ -159,8 +166,6 @@ public class Order {
             }
 
         }
-
-
 
     }
 
