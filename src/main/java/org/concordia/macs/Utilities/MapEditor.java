@@ -184,6 +184,7 @@ public class MapEditor {
         }
         catch (Exception e){
             e.printStackTrace();
+            return 1;
         }
         if (l_country == null) {
             System.out.println("Country " + p_countryId + " does not exist");
@@ -231,7 +232,7 @@ public class MapEditor {
         {
             try {
                 if (country.getD_continentId() == Integer.parseInt((p_continentId))) {
-                    removeCountry(country.getD_countryName(), p_connectivity);
+                    removeCountry(String.valueOf(country.getD_countryId()), p_connectivity);
                 }
             }
             catch (Exception e){

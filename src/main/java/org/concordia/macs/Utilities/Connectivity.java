@@ -137,7 +137,7 @@ public class Connectivity {
 
         for(Country country:d_countriesList)
         {
-            if(country.getD_continentId() == p_countryId)
+            if(country.getD_countryId() == p_countryId)
                 return country;
         }
         return null;

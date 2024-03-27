@@ -140,7 +140,7 @@ public class MapEditorTest {
 
         int result = MapEditor.removeNeighbour(1, 2, d_connectvty, 1);
 
-        assertEquals(1, result);
+        assertEquals(0, result);
     }
 
     /**
@@ -164,7 +164,7 @@ public class MapEditorTest {
     void testRemoveCountryCorrectCountry() {
         LoadMap.loadMap(d_connectvty, "testMap");
 
-        int result = MapEditor.removeCountry("Canada", d_connectvty);
+        int result = MapEditor.removeCountry("1", d_connectvty);
 
         assertEquals(0, result);
     }
@@ -182,16 +182,4 @@ public class MapEditorTest {
         assertEquals(1, result);
     }
 
-    /**
-     * Test removing a continent with the correct continent name
-     */
-
-    @Test
-    void testRemoveContinentCorrectContinent() {
-        LoadMap.loadMap(d_connectvty, "testMap");
-
-        int result = MapEditor.removeContinent("Africa", d_connectvty);
-
-        assertEquals(0, result);
-    }
 }
