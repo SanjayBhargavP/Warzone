@@ -11,7 +11,7 @@ public class Continent
 {
     private int d_continentId;
     private String d_continentName;
-    private List<Country> d_countries;
+    private List<Country> d_countries=new ArrayList<Country>();
     private int d_continentArmyBonus;
 
     /**
@@ -32,6 +32,7 @@ public class Continent
      */
     public Continent(int p_continentID, String p_continentName,int p_continentArmyBonus, List<Country> p_countries)
     {
+        super();
         this.d_continentId=p_continentID;
         this.d_continentName=p_continentName;
         this.d_continentArmyBonus = p_continentArmyBonus;
@@ -131,6 +132,40 @@ public class Continent
                 l_countries.add(i);
         }
         return l_countries;
+    }
+
+    /**
+     * Gets the continent name from continent ID.
+     * @param p_continentId refers to the continent ID.
+     * @param p_continentList refers to the list of continent.
+     * @return continent name
+     *
+     */
+    public static String getNameFromId(int p_continentId,ArrayList<Continent> p_continentList)
+    {
+        for(Continent c:p_continentList)
+        {
+            if(p_continentId==c.getD_continentId())
+                return c.d_continentName;
+        }
+        return null;
+    }
+
+    /**
+     * Gets the continent ID from continent name.
+     * @param p_continentName refers to the continent Name.
+     * @param p_continentList refers to the list of continent.
+     * @return continent id
+     *
+     */
+    public static int getIdFromName(String p_continentName,ArrayList<Continent> p_continentList)
+    {
+        for(Continent c:p_continentList)
+        {
+            if(p_continentName.equals(c.getD_continentName()))
+                return c.d_continentId;
+        }
+        return 0;
     }
 
 }
