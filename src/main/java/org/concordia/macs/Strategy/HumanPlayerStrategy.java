@@ -8,6 +8,7 @@ import org.concordia.macs.Models.Order;
 import java.util.Scanner;
 
 /**
+ * @author Susmitha Mamula
  * The HumanPlayerStrategy class represents a player strategy that involves user interaction for decision-making.
  */
 
