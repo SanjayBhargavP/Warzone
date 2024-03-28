@@ -83,6 +83,8 @@ public abstract class Play extends Phase {
         printInvalidCommandMessage();
     }
 
+    public void loadgame() { printInvalidCommandMessage(); }
+
     /**
      * Ends the game phase.
      */

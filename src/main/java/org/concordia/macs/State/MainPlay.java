@@ -1,5 +1,8 @@
 package org.concordia.macs.State;
 import org.concordia.macs.Controllers.GameEngine;
+import org.concordia.macs.Utilities.Connectivity;
+
+import java.io.FileNotFoundException;
 
 /**
  *
@@ -31,6 +34,11 @@ public abstract class MainPlay extends Play {
             this.printInvalidCommandMessage();
         }
 
+    public void loadgame(String[] p_commands, Connectivity p_connectivity, GameEngine ge) throws FileNotFoundException
+    {
+        this.printInvalidCommandMessage();
+    }
+
     /**
      *Sets the players for the phase
      */
@@ -48,5 +56,10 @@ public abstract class MainPlay extends Play {
         {
             this.printInvalidCommandMessage();
         }
+
+    public void endGame(Connectivity p_connectivity)
+    {
+
+    }
 
 }

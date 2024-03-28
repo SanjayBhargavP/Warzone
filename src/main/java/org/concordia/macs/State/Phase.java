@@ -1,5 +1,8 @@
 package org.concordia.macs.State;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import org.concordia.macs.Controllers.GameEngine;
 import org.concordia.macs.Models.Continent;
 import org.concordia.macs.Models.Country;
@@ -76,7 +79,7 @@ public abstract class Phase {
      * This abstract method is used to add or remove players during the PlaySetup state
      * @param p_commands the commands passed by the user
      */
-    abstract public void setPlayers(String[] p_commands);
+    abstract public void setPlayers(String[] p_commands, Connectivity p_connectivity);
 
     /**
      * This abstract method is used to assign countries to the players during the PlaySetup state
@@ -103,9 +106,39 @@ public abstract class Phase {
     abstract public void fortify(Connectivity p_connectivity);
 
     /**
-     * This abstract method is used to end the game
+     * This abstract method is used to end the game.
+     * @throws FileNotFoundException
      */
-    abstract public void endGame();
+    public void endGame(Connectivity p_connectivity)
+    {
+        Scanner sc= new Scanner(System.in);
+        System.out.println("Do you want to save the game?");
+        String choice = sc.nextLine();
+        if(choice.equalsIgnoreCase("yes"))
+        {
+            System.out.println("Enter the command: ");
+            String[] l_command= sc.nextLine().split(" ");
+            String l_filename=l_command[1];
+            SaveGame sg = new SaveGame();
+            try
+            {
+                sg.saveGame(this,p_connectivity,l_filename);
+            } catch (IOException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("Thank you for Playing the Game");
+            System.exit(0);
+        }
+        else if (choice.equalsIgnoreCase("no"))
+        {
+            System.out.println("Thank you for Playing the Game");
+        }
+        return;
+    }
+
+    abstract public void loadgame(String[] p_commands,Connectivity p_connectivity,GameEngine ge) throws FileNotFoundException;
 
     /**
      * This method displays the help instructions.
@@ -130,7 +163,7 @@ public abstract class Phase {
     /**
      * This method moves the game to next phase
      */
-    abstract public void next();
+    abstract public void next(Connectivity p_connectivity);
 
     /**
      * This method is used to validate the loaded map
@@ -146,6 +179,6 @@ public abstract class Phase {
         System.out.println("Invalid command in state" + this.getClass().getSimpleName());
     }
 
-
+    public abstract void enableTournament(String mycommand);
 
 }
