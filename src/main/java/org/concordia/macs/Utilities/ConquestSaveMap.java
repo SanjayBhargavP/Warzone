@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * The class MapLoader will save the map selected by the user in conquest format
+ * @author - Blesslin Jeba Shiny
  */
 public class ConquestSaveMap {
 
