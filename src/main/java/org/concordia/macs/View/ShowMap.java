@@ -3,6 +3,7 @@ package org.concordia.macs.View;
 import org.concordia.macs.Models.Continent;
 import org.concordia.macs.Models.Country;
 import dnl.utils.text.table.TextTable;
+import org.concordia.macs.Models.LogEntryBuffer;
 import org.concordia.macs.Models.Player;
 
 import java.util.ArrayList;
@@ -20,8 +21,10 @@ public class ShowMap
      */
     public static void showMap(ArrayList<Continent> p_continentList, ArrayList<Country> p_countryList,ArrayList<Player> p_playerList)
     {
+        LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
         if(p_continentList.size()==0)
         {
+            d_logEntryBuffer.log("Continents or Country does not exist");
             System.out.println("Continents or Country does not exist");
             return;
         }

@@ -1,12 +1,16 @@
 package org.concordia.macs.Models;
 
+import org.concordia.macs.Controllers.GameEngine;
+import org.concordia.macs.Utilities.ColorCoding;
+import org.concordia.macs.Utilities.PlayersGameplay;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * class with the details of the player
  *
- * @author Susmitha Mamula
+ * @author Susmitha Mamula,Blesslin Jeba Shiny
  */
 
 public class Player {
@@ -23,6 +27,7 @@ public class Player {
 
     private ArrayList<Integer> d_diplomacyWith = new ArrayList<>();
     private static int d_objCount = 1;
+    private PlayerStrategy strategy;
 
     public Player(){
 
@@ -32,18 +37,19 @@ public class Player {
 
 
     /**
-     *  issues the orders given by the player
+     * Gets the player strategy
+     * @return player strategy
      */
-    public void issue_order(){
-        this.d_playerOrder.add(d_order);
+    public PlayerStrategy getStrategy() {
+        return strategy;
     }
 
     /**
-     * @return once an order is issued and executed then it gets removed from the list
+     * Sets the player strategy
+     * @param strategy strategy
      */
-    public Order next_order(){
-        Order l_order = d_playerOrder.remove(0);
-        return l_order;
+    public void setStrategy(PlayerStrategy strategy) {
+        this.strategy = strategy;
     }
 
     /**
@@ -273,6 +279,7 @@ public class Player {
         d_country.clear();
         d_continent.clear();
     }
+
     /**
      * This function remove the country from the player country list
      * @param c Refers to the country
@@ -281,8 +288,95 @@ public class Player {
     {
         d_country.remove(c);
     }
-    
 
+    /**
+     * Verifies the orders that are issued by the player.
+     *
+     */
+    public boolean verifyOrder(Order p_order, Player p_player) {
+        String l_userOrder = p_order.getOrderContent();
+        boolean l_validUserCommand =false;
+        if(l_userOrder.equalsIgnoreCase("exit"))
+        {
+            System.out.println("Thank you for Playing the Game");
+            System.exit(0);
+        }
+        String[] l_tempOrderListArray=l_userOrder.split(" ");
+        for(int j=0;j<p_player.getD_country().size();j++)
+        {
+            if(Integer.parseInt(l_tempOrderListArray[1])==(p_player.getD_country().get(j).getD_countryId()))
+            {
+                p_order.setD_sourceCountry(p_player.getD_country().get(j));
+                l_validUserCommand= true;
+            }
+        }
+        if(l_validUserCommand)
+        {
+            if(PlayersGameplay.checkArmyAvailable(Integer.parseInt(l_tempOrderListArray[2]),p_player))
+            {
+                p_order.setD_armyCount(Integer.parseInt(l_tempOrderListArray[2]));
+                p_player.setD_order(p_order);
+            }
+            else
+            {
+                l_validUserCommand= false;
+                System.out.println(ColorCoding.ANSI_RED+"Error: Please enter valid number of troops"+ColorCoding.ANSI_RESET);
+            }
+        }
+        else
+        {
+            l_validUserCommand= false;
+            System.out.println(ColorCoding.ANSI_RED+"INVALID Command as player "+p_player.getD_playerName()+" doesn't control country with countryID "+l_tempOrderListArray[1]+ColorCoding.ANSI_RESET);
+        }
+        return l_validUserCommand;
+    }
+
+    /**
+     * Orders that are issued by the player.
+     *
+     */
+    public boolean issue_order(){
+
+        Order l_order;
+        l_order = strategy.createOrder();
+        if(l_order !=null)
+        {
+            if(GameEngine.getPhaseName().equals("Reinforcement"))
+            {
+                while(!verifyOrder(l_order, this))
+                {
+                    System.out.println("INVALID ORDER! Please enter the order again");
+                    l_order = strategy.createOrder();
+                }
+            }
+            this.d_playerOrder.add(l_order);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    /**
+     * Once the order is executed it gets removed from the list.
+     * @return returns the order of the player
+     */
+
+    public Order next_order(){
+        if(d_playerOrder.size() == 0)
+        {
+            System.out.println("d_playerOrder = "+d_playerOrder.size());
+            return null;
+        }
+        else
+        {
+            Order l_order =d_playerOrder.remove(0);
+            return l_order;
+        }
+
+    }
 
 
 }

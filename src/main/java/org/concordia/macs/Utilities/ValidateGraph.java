@@ -22,6 +22,7 @@ public class ValidateGraph {
 
         DFS(1,adjacencyList,visited);
         boolean connected = true;
+
         if(visited.length == 1){
             d_logEntryBuffer.log("Graph is not connected");
             System.out.println(ColorCoding.getRed() +"Graph is not Connected"+ColorCoding.getReset());
