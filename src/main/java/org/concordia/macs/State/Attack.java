@@ -7,12 +7,17 @@ import org.concordia.macs.Models.LogEntryBuffer;
 import org.concordia.macs.Models.Order;
 import org.concordia.macs.Models.Player;
 
+import org.concordia.macs.Strategy.CheaterPlayerStrategy;
+import org.concordia.macs.Strategy.HumanPlayerStrategy;
+
 import org.concordia.macs.Utilities.ColorCoding;
 import org.concordia.macs.Utilities.Connectivity;
 import org.concordia.macs.Utilities.PlayersGameplay;
+import org.concordia.macs.Utilities.SaveGame;
 
 import org.concordia.macs.View.ShowMap;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -28,12 +33,12 @@ public class Attack extends MainPlay
 {
 	static int l_testFlag =0;
 
-    /**
-     * Constructor for the Attack class.
-     *
-     * @param p_ge The associated GameEngine instance.
-     */
-	Attack(GameEngine p_ge) 
+	/**
+	 * Constructor for the Attack class.
+	 *
+	 * @param p_ge The associated GameEngine instance.
+	 */
+	Attack(GameEngine p_ge)
 	{
 		super(p_ge);
 	}
@@ -42,7 +47,7 @@ public class Attack extends MainPlay
 	 * Transition to the next state, which is Fortify.
 	 */
 
-	public void next() 
+	public void next(Connectivity p_connectivity) 
 	{
 		ge.setPhase(new Fortify(ge));
 	}
@@ -52,17 +57,16 @@ public class Attack extends MainPlay
 	 *
 	 * @param p_connectivity The Connectivity object.
 	 */
-
 	public void reinforce(Connectivity p_connectivity) 
 	{
-		printInvalidCommandMessage();
+		printInvalidCommandMessage(); 
 	}
 
-    /**
-     * Handles the logic for player commands related to attacks.
-     *
-     * @param p_connectivity The Connectivity object.
-     */
+	/**
+	 * Handles the logic for player commands related to attacks.
+	 *
+	 * @param p_connectivity The Connectivity object.
+	 */
 	public void attack(Connectivity p_connectivity) 
 	{
 		LogEntryBuffer d_logEntryBuffer= new LogEntryBuffer();
@@ -72,6 +76,7 @@ public class Attack extends MainPlay
 		int l_winner=0;
 		int l_flag1=0;
 		int l_executeOrder=0;
+		int l_countOrder =0;
 
 		while(l_winner==0) 
 		{
@@ -84,7 +89,7 @@ public class Attack extends MainPlay
 			{
 				d_logEntryBuffer.log("Winner assigned for test case");
 				System.out.println("Winner assigned for test case\n");
-				l_playersArray.get(0).setD_country(p_connectivity.getD_countriesList());
+				l_playersArray.get(0).setD_Country(p_connectivity.getD_countryList());
 			}
 
 			if(winner_check>0)
@@ -94,16 +99,19 @@ public class Attack extends MainPlay
 			}
 			
 		do{
-			if(PlayersGameplay.winnerPlayer(l_playersArray, p_connectivity)!=null)
+			Player winner = PlayersGameplay.winnerPlayer(l_playersArray, p_connectivity);
+
+			if(winner !=null)
 			{
-				Player winner = PlayersGameplay.winnerPlayer(l_playersArray, p_connectivity);
+				p_connectivity.setD_winnerPlayer(winner);
 				d_logEntryBuffer.log("CONGRATULATIONS!!! Our Winner is:"+winner.getD_playerName());
 				System.out.println("CONGRATULATIONS!!! Our Winner is:"+winner.getD_playerName());
 
 				l_winner++;
 
 				ge.setPhase(new End(ge));
-				ge.getPhase().endGame();	
+				ge.getPhase().endGame(p_connectivity);
+				return;
 			}
 
 		for(int i=0;i<l_playersArray.size();i++)
@@ -121,7 +129,11 @@ public class Attack extends MainPlay
 			Scanner l_sc = new Scanner(System.in);
 			String l_passContinue = "";
 
-			if(ge.getCheckIfTest())
+			if(ge.getCheckIfSave())
+			{	
+				l_passContinue = "exit";
+			}
+			else if(ge.getCheckIfTest() && !ge.getCheckIfSave())
 			{
 				if(l_testFlag == 0)
 					l_passContinue = "continue";
@@ -129,14 +141,56 @@ public class Attack extends MainPlay
 					l_passContinue = "pass";
 				l_testFlag = l_testFlag+1;
 			}
-
+			else if(ge.getCheckIfTournament())
+			{
+				if(l_countOrder == l_playersArray.size())
+					l_passContinue = "pass";
+				else
+				{
+					l_passContinue = "continue";
+					l_countOrder+=1;
+				}
+			}
 			else
 				l_passContinue=l_sc.nextLine();
-
 			if(l_passContinue.equalsIgnoreCase("exit"))
 			{
-				System.out.println("Thank you for Playing the Game");
-				System.exit(0);
+				Scanner sc= new Scanner(System.in);
+		    	System.out.println("Do you want to save the game?");
+		    	String choice = "";
+		    	String l_filename="";
+		    	if(ge.getCheckIfSave())
+		    		choice = "yes";
+		    	else
+		    		choice = sc.nextLine();
+		    	if(choice.equalsIgnoreCase("yes"))
+		    	{
+		    		System.out.println("Enter the command: ");
+		    		if(!ge.getCheckIfSave())
+		    		{
+			    		String[] l_command= sc.nextLine().split(" ");
+			    		l_filename=l_command[1];
+		    		}
+
+		    		if(ge.getCheckIfSave())
+		    			l_filename = "gg";
+		    		SaveGame sg = new SaveGame();
+		    		try 
+		    		{
+						sg.saveGame(this,p_connectivity,l_filename);
+					} catch (IOException e) 
+		    		{
+
+						e.printStackTrace();
+					}
+		            System.out.println("Thank you for Playing the Game");
+		            System.exit(0);
+		    	}
+		    	else if (choice.equalsIgnoreCase("no"))
+		    	{
+		        System.out.println("Thank you for Playing the Game");
+		    	}
+		    	return;
 			}
 
 			if(l_passContinue.equals("pass"))
@@ -152,20 +206,26 @@ public class Attack extends MainPlay
 			System.out.println("Cards available: "+l_playersArray.get(i).getCards());
 			String l_orderinput = "";
 
-			if(ge.getCheckIfTest())
+			if(l_playersArray.get(i).getStrategy() instanceof HumanPlayerStrategy)
 			{
-				String l_neighbor = Country.get_nameFromId((ArrayList<Country>) l_playersArray.get(i).getD_country(), l_playersArray.get(i).getD_country().get(0).getD_neighbours().get(0));
-				System.out.println(l_neighbor);
-				l_orderinput = "advance " + l_playersArray.get(i).getD_country().get(0).getD_countryName() + " "+l_neighbor+ " "+l_playersArray.get(i).getD_country().get(0).getD_armyCount();
-				System.out.println("For testcase, we have the following command\n"+l_orderinput);
+				l_orderinput=l_sc.nextLine();
 			}
 			else
-				l_orderinput=l_sc.nextLine();
+			{
+				if(l_playersArray.get(i).issue_order())
+				{
+					Order o = l_playersArray.get(i).next_order();
+					l_orderinput=o.getOrderContent();
+				}
+				else
+					continue;
+			}
 
 			if(l_orderinput.equalsIgnoreCase("exit"))
 			{
-				System.out.println("Thank you for Playing the Game");
-				System.exit(0);
+				ge.setPhase(new End(ge));
+				ge.getPhase().endGame(p_connectivity);
+				return;
 			}
 			String[] l_inputOrderArray=l_orderinput.split(" ");
 			switch(l_inputOrderArray[0])
@@ -208,7 +268,7 @@ public class Attack extends MainPlay
 
 			}while(l_flag1==0);
 			
-	}
+		}
 		
 		}while(terminateFlag!=l_playersArray.size());
 		
@@ -216,12 +276,10 @@ public class Attack extends MainPlay
 		 l_executeOrder=0;
 		 HashSet<String> l_emptyOrders=new HashSet<>();
 		
-		
 		while(l_executeOrder!=l_playersArray.size())
 		{
 			for(int j=0;j<l_playersArray.size();j++)
 			{
-				
 				if(l_emptyOrders.contains(l_playersArray.get(j).getD_playerName()))
 					continue;
 				if(l_playersArray.get(j).getD_playerOrder().size()==0) 
@@ -230,10 +288,10 @@ public class Attack extends MainPlay
 					l_executeOrder++;
 					continue;	
 				}
-				l_playersArray.get(j).getD_order().execute(l_playersArray.get(j), l_playersArray.get(j).next_order(),p_connectivity,1,0);
+				l_playersArray.get(j).getD_Order().execute(l_playersArray.get(j), l_playersArray.get(j).next_order(),p_connectivity,1,0);
 			}
 		}
-		ShowMap.showMap(p_connectivity.getD_continentsList(), p_connectivity.getD_countriesList(), l_playersArray);
+		ShowMap.showMap(p_connectivity.getD_continentList(), p_connectivity.getD_countryList(), l_playersArray);
 		winner_check++;
 		PlayersGameplay.resetDiplomacy(l_playersArray);
 	}
@@ -250,13 +308,13 @@ public class Attack extends MainPlay
 
 	public void fortify(Connectivity p_connectivity) 
 	{
-		printInvalidCommandMessage();
+		printInvalidCommandMessage(); 
 	}
 
 	 /**
      * {@inheritDoc}
      */
-
+	@Override
 	public void loadMap(Connectivity p_connectivity, String[] p_commands) 
 	{
 		// Implementation not needed for Attack phase
@@ -266,7 +324,7 @@ public class Attack extends MainPlay
 	 /**
      * {@inheritDoc}
      */
-
+	@Override
 	public void validateMap(Connectivity p_connectivity) 
 	{
 		// Implementation not needed for Attack phase
@@ -276,7 +334,7 @@ public class Attack extends MainPlay
 	 /**
      * {@inheritDoc}
      */
-
+	@Override
 	public void editCountry(String[] p_commands, Connectivity p_connectivity) 
 	{
 		// Implementation not needed for Attack phase
@@ -286,7 +344,7 @@ public class Attack extends MainPlay
 	 /**
      * {@inheritDoc}
      */
-
+	@Override
 	public void editContinent(String[] p_commands, Connectivity p_connectivity) 
 	{
 		// Implementation not needed for Attack phase
@@ -296,7 +354,7 @@ public class Attack extends MainPlay
 	 /**
      * {@inheritDoc}
      */
-
+	@Override
 	public void editNeighbor(String[] p_commands, Connectivity p_connectivity) 
 	{
 		// Implementation not needed for Attack phase
@@ -306,7 +364,7 @@ public class Attack extends MainPlay
 	 /**
      * {@inheritDoc}
      */
-
+	@Override
 	public void saveMap(Connectivity p_connectivity, String p_mapName) 
 	{
 		// Implementation not needed for Attack phase
@@ -316,8 +374,8 @@ public class Attack extends MainPlay
 	 /**
      * {@inheritDoc}
      */
-
-	public void setPlayers(String[] p_commands) 
+	@Override
+	public void setPlayers(String[] p_commands,Connectivity p_connectivity) 
 	{
 		// Implementation not needed for Attack phase
 		
@@ -326,20 +384,28 @@ public class Attack extends MainPlay
 	 /**
      * {@inheritDoc}
      */
-
+	@Override
 	public boolean assignCountries(Connectivity p_connectivity) 
 	{
 		// Implementation not needed for Attack phase
 		return false;
-
 		
 	}
 
-	 /**
-     * {@inheritDoc}
-     */
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void enableTournament(String mycommand) {
+		// Implementation not needed for Attack phase
+		
+	}
 
-	public void endGame() 
+	/**
+	 * {@inheritDoc}
+	 */
+
+	public void endGame()
 	{
 		System.out.println("Thank you for Playing the Game");
 		System.exit(0);
