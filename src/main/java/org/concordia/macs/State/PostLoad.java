@@ -1,8 +1,13 @@
 package org.concordia.macs.State;
 
-import org.concordia.macs.Controllers.GameEngine;
-import org.concordia.macs.Utilities.Connectivity;
-import org.concordia.macs.Utilities.SaveMap;
+import java.util.Scanner;
+import java.io.FileNotFoundException;
+
+import Controllers.GameEngine;
+import Tools.ColorCoding;
+import Tools.Connectivity;
+import Tools.ConquestSaveMap;
+import Tools.SaveMap;
 
 /**
  * Concrete state representing the phase after loading a map.
@@ -13,10 +18,10 @@ public class PostLoad extends Edit {
     /**
      * Constructor for PostLoad phase.
      *
-     * @param p_gameEngine The GameEngine object associated with this phase.
+     * @param p_ge The GameEngine object associated with this phase.
      */
-    public PostLoad(GameEngine p_gameEngine) {
-        super(p_gameEngine);
+    public PostLoad(GameEngine p_ge) {
+        super(p_ge);
     }
 
     /**
@@ -43,79 +48,125 @@ public class PostLoad extends Edit {
     /**
      * Saves the map.
      *
-     * @param p_connectivity The connectivity object containing map data.
-     * @param p_mapName      The name of the map to save.
+     * @param p_connectivity Represents the map content.
+     * @param p_mapName     The name of the map to save.
      */
     public void saveMap(Connectivity p_connectivity, String p_mapName) {
-        int saveMapResult = SaveMap.saveMap(p_connectivity, p_mapName);
-        if (saveMapResult == 0) {
-            ge.setPhase(new PlaySetup(ge));
+        System.out.println("Enter the format for savemap (conquest/domination)");
+        Scanner scanner = new Scanner(System.in);
+        String mapType = "";
+        if (ge.getCheckIfTournament() || ge.getCheckIfTest() || ge.getCheckIfSave())
+            mapType = "domination";
+        else
+            mapType = scanner.nextLine();
+
+        while (!isValidMapType(mapType)) {
+            System.out.println(ColorCoding.red + "Please enter a valid map type (conquest/domination):" + ColorCoding.blank);
+            mapType = scanner.nextLine();
         }
+
+        int saveMapResult = saveMapBasedOnType(p_connectivity, p_mapName, mapType);
+        if (saveMapResult == 0)
+            ge.setPhase(new PlaySetup(ge));
     }
 
     /**
-     * To move to the next phase.
+     * Validates if the provided map type is valid.
+     *
+     * @param mapType The map type to validate.
+     * @return True if the map type is valid, false otherwise.
      */
-    public void next() {
-        System.out.println("Must save the map");
+    private boolean isValidMapType(String mapType) {
+        return mapType.equals("conquest") || mapType.equals("domination");
     }
 
-    // Override methods from superclass
+    /**
+     * Saves the map based on the provided map type.
+     *
+     * @param p_connectivity Represents the map content.
+     * @param p_mapName     The name of the map to save.
+     * @param mapType       The type of the map (conquest/domination).
+     * @return The result of saving the map.
+     */
+    private int saveMapBasedOnType(Connectivity p_connectivity, String p_mapName, String mapType) {
+        int saveMapResult = 0;
+        switch (mapType) {
+            case "conquest":
+                saveMapResult = ConquestSaveMap.conquestMapSaver(p_connectivity, p_mapName);
+                break;
+            case "domination":
+                saveMapResult = SaveMap.saveMap(p_connectivity, p_mapName);
+                break;
+        }
+        return saveMapResult;
+    }
 
+    /**
+     * Moves to the next phase.
+     */
+    public void next(Connectivity p_connectivity) {
+        System.out.println("You must save the map first.");
+    }
+
+    // Override other methods to print invalid command message
     @Override
-    public void editCountry(String[] commands, Connectivity connectivity) {
+    public void editCountry(String[] p_commands, Connectivity p_connectivity) {
         printInvalidCommandMessage();
     }
 
     @Override
-    public void editContinent(String[] commands, Connectivity connectivity) {
+    public void editContinent(String[] p_commands, Connectivity p_connectivity) {
         printInvalidCommandMessage();
     }
 
     @Override
-    public void editNeighbor(String[] commands, Connectivity connectivity) {
+    public void editNeighbor(String[] p_commands, Connectivity p_connectivity) {
         printInvalidCommandMessage();
     }
 
     @Override
-    public void loadMap(Connectivity connectivity, String[] commands) {
+    public void loadMap(Connectivity p_connectivity, String[] p_commands) {
         printInvalidCommandMessage();
     }
 
     @Override
-    public void setPlayers(String[] commands) {
+    public void setPlayers(String[] p_commands, Connectivity p_connectivity) {
         printInvalidCommandMessage();
     }
 
     @Override
-    public boolean assignCountries(Connectivity connectivity) {
+    public boolean assignCountries(Connectivity p_connectivity) {
         printInvalidCommandMessage();
         return false;
     }
 
     @Override
-    public void reinforce(Connectivity connectivity) {
+    public void reinforce(Connectivity p_connectivity) {
         printInvalidCommandMessage();
     }
 
     @Override
-    public void attack(Connectivity connectivity) {
+    public void attack(Connectivity p_connectivity) {
         printInvalidCommandMessage();
     }
 
     @Override
-    public void fortify(Connectivity connectivity) {
+    public void fortify(Connectivity p_connectivity) {
         printInvalidCommandMessage();
     }
 
     @Override
-    public void validateMap(Connectivity connectivity) {
+    public void validateMap(Connectivity p_connectivity) {
         printInvalidCommandMessage();
     }
 
     @Override
-    public void endGame() {
-        System.out.println("Thank you for playing the game");
-        System.exit(0);
+    public void enableTournament(String mycommand) {
+        // Not implemented in this phase
+    }
+
+    @Override
+    public void loadgame(String[] p_commands, Connectivity p_connectivity, GameEngine ge) throws FileNotFoundException {
+        // Not implemented in this phase
     }
 }
