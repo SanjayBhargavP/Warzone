@@ -1,4 +1,4 @@
-package org.concordia.macs.State;
+package org.concordia.macs.Strategy;
 
 import java.util.ArrayList;
 import java.util.Random;
