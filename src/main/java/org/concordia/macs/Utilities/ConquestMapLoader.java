@@ -37,17 +37,17 @@ public class ConquestMapLoader {
 
 		try {
 			File f = new File("");
-			p_connectivity.setD_mapName(p_mapName);
+			p_connectivity.setD_nameOfMap(p_mapName);
 			String absolute = f.getAbsolutePath();
 			p_connectivity.setD_pathName(absolute + File.separator + "src/main/resources");
 			l_fileName = absolute + File.separator + "src/main/resources" + File.separator + l_fileName + ".map";
-			p_connectivity.setD_FilepathName(l_fileName);
-			l_map.setD_mapFileName(l_fileName);
+			p_connectivity.setD_FilePathName(l_fileName);
+			l_map.setD_mapName(l_fileName);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 
-		if (MapCheck.validateMap(l_copyFileName, p_connectivity.getD_pathName())) {
+		if (MapCheck.checkMap(l_copyFileName, p_connectivity.getD_pathName())) {
 			try {
 				l_input = new Scanner(new File(l_fileName));
 				ArrayList<String> l_fileContent = new ArrayList<String>();
@@ -78,7 +78,7 @@ public class ConquestMapLoader {
 
 					l_continentObj.setD_continentId(l_continentID);
 					l_continentObj.setD_continentName(aArr[0]);
-					l_continentObj.setD_continentBonusValue(Integer.parseInt(aArr[1]));
+					l_continentObj.setD_continentArmyBonus(Integer.parseInt(aArr[1]));
 					l_continentID++;
 
 					continentList.add(l_continentObj);
@@ -133,8 +133,8 @@ public class ConquestMapLoader {
 					l_currentCountry.setD_neighbours(l_currentCountry.getD_countryId(), l_neighbouringCountries);
 
 				}
-				p_connectivity.setD_continentList(continentList);
-				p_connectivity.setD_countryList(l_countryList);
+				p_connectivity.setD_continentsList(continentList);
+				p_connectivity.setD_countriesList(l_countryList);
 			} catch (Exception e) {
 				System.err.println(e.getMessage());
 			}
@@ -148,11 +148,11 @@ public class ConquestMapLoader {
 			return 0;
 
 		} else {
-			p_connectivity.setD_continentList(new ArrayList<Continent>());
-			p_connectivity.setD_countryList(new ArrayList<Country>());
+			p_connectivity.setD_continentsList(new ArrayList<Continent>());
+			p_connectivity.setD_countriesList(new ArrayList<Country>());
 			d_logEntryBuffer.log("Map does not exist. Creating a map...");
 			System.out.println(ColorCoding.ANSI_GREEN + "Map does not exist. Creating a map..." + ColorCoding.ANSI_RESET);
-			MapCreater.createMap(l_copyFileName, p_connectivity.getD_pathName());
+			MapCreator.generateMapFile(l_copyFileName, p_connectivity.getD_pathName());
 			SaveMap.saveMap(p_connectivity, l_copyFileName);
 			return 1;
 		}

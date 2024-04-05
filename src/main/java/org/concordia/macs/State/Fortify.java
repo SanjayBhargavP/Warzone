@@ -158,6 +158,11 @@ public class Fortify extends MainPlay{
 
     }
 
+    @Override
+    public void next(Connectivity p_connectivity) {
+
+    }
+
     /**
      * Moves the game to the next phase (Reinforcement) after fortification.
      */
@@ -183,6 +188,12 @@ public class Fortify extends MainPlay{
         // TODO Auto-generated method stub
 
     }
+
+    @Override
+    public void enableTournament(String mycommand) {
+
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -219,15 +230,12 @@ public class Fortify extends MainPlay{
         // TODO Auto-generated method stub
 
     }
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
-    public void setPlayers(String[] p_commands)
-    {
-        // TODO Auto-generated method stub
+    public void setPlayers(String[] p_commands, Connectivity p_connectivity) {
 
     }
+
     /**
      * {@inheritDoc}
      */

@@ -78,21 +78,21 @@ public class CheaterPlayerStrategy extends PlayerStrategy
     public Order createOrder()
     {
         //conquers all the immediate neighboring enemy countries
-		ArrayList<Country> l_playerCountry = d_player.getD_Country();
+		ArrayList<Country> l_playerCountry = (ArrayList<Country>) d_player.getD_country();
 		ArrayList<Country> l_countriesToAdd = new ArrayList<Country>();
 
          for (Country l_country : l_playerCountry)
          {
             for (int l_neighborID : l_country.getD_neighbours())
             {
-                Country l_neighborCountry = l_country.getCountryFromID(d_connectivity.getD_countryList(), l_neighborID);
+                Country l_neighborCountry = l_country.getCountryFromId(d_connectivity.getD_countriesList(), l_neighborID);
 
                 if (!PlayersGameplay.l_neutralCountry.contains(l_neighborCountry) && !l_countriesToAdd.contains(l_neighborCountry)) {
                     Player l_enemyPlayer = PlayersGameplay.findPlayerWithCountry(Play.getL_playersArray(), l_neighborCountry);
 
                     if (l_enemyPlayer != null && !l_playerCountry.contains(l_neighborCountry)) {
                         l_countriesToAdd.add(l_neighborCountry);
-                        l_enemyPlayer.getD_Country().remove(l_neighborCountry);
+                        l_enemyPlayer.getD_country().remove(l_neighborCountry);
                    
                     }
                 }
@@ -102,24 +102,22 @@ public class CheaterPlayerStrategy extends PlayerStrategy
         //doubles the number of armies on its countries that have enemy neighbors
 		for(Country l_country:l_countriesToAdd)
         {
-            if (!d_player.getD_Country().contains(l_country))
+            if (!d_player.getD_country().contains(l_country))
             {
-                l_country.setD_armyDeployedOnCountry(l_country.getD_armyDeployedOnCountry() * 2);
+                l_country.setD_armyCount(l_country.getD_armyCount() * 2);
             }
         }
 
         //add all countries to players
         for(Country l_country:l_countriesToAdd)
         {
-            if(!d_player.getD_Country().contains(l_country))
-				d_player.getD_Country().add(l_country);
+            if(!d_player.getD_country().contains(l_country))
+				d_player.getD_country().add(l_country);
         }
 
-        ShowMap.viewMap(d_connectivity.getD_continentList(), d_connectivity.getD_countryList(), Play.getL_playersArray());
+        ShowMap.showMap(d_connectivity.getD_continentsList(), d_connectivity.getD_countriesList(), Play.getL_playersArray());
 		return null;
 	}
-            
-    }
 
 
 

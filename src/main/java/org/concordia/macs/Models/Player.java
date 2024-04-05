@@ -1,6 +1,7 @@
 package org.concordia.macs.Models;
 
 import org.concordia.macs.Controllers.GameEngine;
+import org.concordia.macs.Strategy.PlayerStrategy;
 import org.concordia.macs.Utilities.ColorCoding;
 import org.concordia.macs.Utilities.PlayersGameplay;
 

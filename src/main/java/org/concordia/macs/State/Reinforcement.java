@@ -65,7 +65,7 @@ public class Reinforcement extends MainPlay
 				String l_userOrder="";
 				boolean l_outcomeIssueOrder = false;
 
-				if(l_playersArray.get(i).getD_armyCount()!=0 && !(l_tempName.contains(l_playersArray.get(i).getD_playerName())))
+				if(l_playersArray.get(i).getD_armyNumber()!=0 && !(l_tempName.contains(l_playersArray.get(i).getD_playerName())))
 				{
 					d_logEntryBuffer.log("Player "+l_playersArray.get(i).getD_playerName()+" deploy your troops:");
 					System.out.println("Player "+l_playersArray.get(i).getD_playerName()+" deploy your troops:");
@@ -91,7 +91,7 @@ public class Reinforcement extends MainPlay
 							continue;
 						else
 						{
-						if(l_playersArray.get(j).getD_armyCount()==0)
+						if(l_playersArray.get(j).getD_armyNumber()==0)
 							{
 								l_tempName.add(l_playersArray.get(j).getD_playerName());
 								flag++;	
@@ -119,11 +119,11 @@ public class Reinforcement extends MainPlay
 			{
 				for(int i=0;i<l_tempPlayerArray.size();i++)
 				{
-					if(l_tempPlayerArray.get(i).getD_armyCount()!=0)
+					if(l_tempPlayerArray.get(i).getD_armyNumber()!=0)
 					{
-						l_tempPlayerArray.get(i).getD_Order().execute(l_tempPlayerArray.get(i), l_tempPlayerArray.get(i).next_order(),p_connectivity,0,0);
+						l_tempPlayerArray.get(i).getD_order().execute(l_tempPlayerArray.get(i), l_tempPlayerArray.get(i).next_order(),p_connectivity,0,0);
 
-						if(l_tempPlayerArray.get(i).getD_armyCount()==0)
+						if(l_tempPlayerArray.get(i).getD_armyNumber()==0)
 						{
 							flag+=1;
 						}
@@ -142,7 +142,7 @@ public class Reinforcement extends MainPlay
 			System.out.println(ColorCoding.ANSI_GREEN+"All Armies have been successfully deployed. Enter command to proceed"+ColorCoding.ANSI_RESET);
 		}
 
-		ShowMap.showMap(p_connectivity.getD_continentList(), p_connectivity.getD_countryList(), Play.getL_playersArray());
+		ShowMap.showMap(p_connectivity.getD_continentsList(), p_connectivity.getD_countriesList(), Play.getL_playersArray());
 		System.out.println("reinforcement done");
 		ge.setPhase(new Attack(ge));
 	}

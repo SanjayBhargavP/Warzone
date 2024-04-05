@@ -2,6 +2,8 @@ package org.concordia.macs.Utilities;
 
 import org.concordia.macs.Models.Continent;
 import org.concordia.macs.Models.Country;
+import org.concordia.macs.Models.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,23 @@ public class Connectivity {
     private String d_filePathName;
 
     private String d_nameOfMap;
+
+    private Player d_winnerPlayer = new Player();
+
+    /**
+     * Function is used to get the player who won the game
+     * @return player object
+     */
+    public Player getD_winnerPlayer() {
+        return d_winnerPlayer;
+    }
+    /**
+     * Function is used to set the player who won the game
+     * @param p_winnerPlayer
+     */
+    public void setD_winnerPlayer(Player p_winnerPlayer) {
+        this.d_winnerPlayer = p_winnerPlayer;
+    }
 
     /**
      * Function is used to get the name of current map

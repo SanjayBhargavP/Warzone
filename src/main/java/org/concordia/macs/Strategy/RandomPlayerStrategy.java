@@ -57,7 +57,7 @@ public class RandomPlayerStrategy extends PlayerStrategy {
      */
     @Override
     protected Country toDefend() {
-        ArrayList<Country> l_playerCountries = d_player.getD_Country();
+        ArrayList<Country> l_playerCountries = (ArrayList<Country>) d_player.getD_country();
         if (l_playerCountries.isEmpty())
             return null;
         Random random = new Random();
@@ -86,7 +86,7 @@ public class RandomPlayerStrategy extends PlayerStrategy {
         if (GameEngine.getPhaseName().equals("Reinforcement")) {
             orderContent = "deploy";
             orderContent = orderContent + toDefend().getD_countryId() + " "
-                    + random.nextInt(d_player.getD_armyCount() + 1);
+                    + random.nextInt(d_player.getD_armyNumber() + 1);
             order.setOrderContent(orderContent);
             System.out.println(orderContent);
             return order;
@@ -94,39 +94,39 @@ public class RandomPlayerStrategy extends PlayerStrategy {
 
         else if (GameEngine.getPhaseName().equals("Attack")) {
             // runs until valid command is not generated
-            for (;;) {
-                String[] commands = { "advance", "bomb", "blockade", "airlift", "negotiate" };
-                String str = commands[random.nextInt(commands.length)];
-                switch (str) {
+            for (; ; ) {
+                String[] commands = {"advance", "bomb", "blockade", "airlift", "negotiate"};
+                orderContent = commands[random.nextInt(commands.length)];
+                switch (orderContent) {
                     case "advance":
                         Country l_defendingCountry = toDefend();
                         ArrayList<Integer> l_neighbour = l_defendingCountry.getD_neighbours();
 
                         int randomIndex = random.nextInt(l_neighbour.size());
-                        Country l_targetCountry = Country.getCountryFromID(d_connectivity.getD_countryList(),
+                        Country l_targetCountry = Country.getCountryFromId(d_connectivity.getD_countriesList(),
                                 l_neighbour.get(randomIndex));
 
-                        int randomTroops = random.nextInt(l_defendingCountry.getD_armyDeployedOnCountry() + 1);
-                        str = str + " " + l_defendingCountry.getD_countryName() + " "
+                        int randomTroops = random.nextInt(l_defendingCountry.getD_armyCount() + 1);
+                        orderContent = orderContent + " " + l_defendingCountry.getD_countryName() + " "
                                 + l_targetCountry.getD_countryName() + " " + randomTroops;
-                        order.setOrderContent(str);
-                        System.out.println(str);
+                        order.setOrderContent(orderContent);
+                        System.out.println(orderContent);
                         return order;
 
                     case "bomb":
-                        if (d_player.getCards().contains(str)) {
-                            for (;;)// runs till it finds the neighboring enemy territory
+                        if (d_player.getCards().contains(orderContent)) {
+                            for (; ; )// runs till it finds the neighboring enemy territory
                             {
                                 Country l_Country = toDefend();
                                 l_neighbour = l_Country.getD_neighbours();
                                 randomIndex = random.nextInt(l_neighbour.size());
-                                l_targetCountry = Country.getCountryFromID(d_connectivity.getD_countryList(),
+                                l_targetCountry = Country.getCountryFromId(d_connectivity.getD_countriesList(),
                                         l_neighbour.get(randomIndex));
 
-                                if (!d_player.getD_Country().contains(l_targetCountry)) {
-                                    str = str + " " + l_targetCountry.getD_countryId();
-                                    order.setOrderContent(str);
-                                    System.out.println(str);
+                                if (!d_player.getD_country().contains(l_targetCountry)) {
+                                    orderContent = orderContent + " " + l_targetCountry.getD_countryId();
+                                    order.setOrderContent(orderContent);
+                                    System.out.println(orderContent);
                                     return order;
                                 }
                             }
@@ -134,7 +134,7 @@ public class RandomPlayerStrategy extends PlayerStrategy {
                             break;
 
                     case "airlift":
-                        if (d_player.getCards().contains(str)) {
+                        if (d_player.getCards().contains(orderContent)) {
                             Country l_fromCountry = toDefend();
                             Country l_toCountry = toDefend();
 
@@ -143,20 +143,20 @@ public class RandomPlayerStrategy extends PlayerStrategy {
                             else
                                 l_toCountry = toDefend();
 
-                            randomTroops = random.nextInt(l_fromCountry.getD_armyDeployedOnCountry() + 1);
-                            str = str + " " + l_fromCountry.getD_countryId() + " " + l_toCountry.getD_countryId() + " "
+                            randomTroops = random.nextInt(l_fromCountry.getD_armyCount() + 1);
+                            orderContent = orderContent + " " + l_fromCountry.getD_countryId() + " " + l_toCountry.getD_countryId() + " "
                                     + randomTroops;
-                            order.setOrderContent(str);
-                            System.out.println(str);
+                            order.setOrderContent(orderContent);
+                            System.out.println(orderContent);
                             return order;
                         } else
                             break;
 
                     case "blockade":
-                        if (d_player.getCards().contains(str)) {
-                            str = str + " " + toDefend().getD_countryId();
-                            order.setOrderContent(str);
-                            System.out.println(str);
+                        if (d_player.getCards().contains(orderContent)) {
+                            orderContent = orderContent + " " + toDefend().getD_countryId();
+                            order.setOrderContent(orderContent);
+                            System.out.println(orderContent);
                             return order;
                         } else
                             break;
@@ -167,19 +167,18 @@ public class RandomPlayerStrategy extends PlayerStrategy {
                             randomIndex = random.nextInt(l_playersSize);
                             Player l_otherPlayer = Play.l_playersArray.get(randomIndex);
                             if (d_player.getD_playerId() != l_otherPlayer.getD_playerId()) {
-                                str = str + " " + d_player.getD_playerId() + " " + l_otherPlayer.getD_playerId();
-                                order.setOrderContent(str);
-                                System.out.println(str);
+                                orderContent = orderContent + " " + d_player.getD_playerId() + " " + l_otherPlayer.getD_playerId();
+                                order.setOrderContent(orderContent);
+                                System.out.println(orderContent);
                                 return order;
-                            } else
-                                break;
-                        }
+                            }
+                        } else
+                            break;
 
                 }
             }
-
-            System.out.println(str);
-            return null;
         }
+            System.out.println(orderContent);
+            return null;
     }
 }
