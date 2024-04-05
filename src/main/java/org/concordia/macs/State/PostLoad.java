@@ -3,11 +3,11 @@ package org.concordia.macs.State;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 
-import Controllers.GameEngine;
-import Tools.ColorCoding;
-import Tools.Connectivity;
-import Tools.ConquestSaveMap;
-import Tools.SaveMap;
+import org.concordia.macs.Controllers.GameEngine;
+import org.concordia.macs.Utilities.ColorCoding;
+import org.concordia.macs.Utilities.Connectivity;
+import org.concordia.macs.Utilities.ConquestSaveMap;
+import org.concordia.macs.Utilities.SaveMap;
 
 /**
  * Concrete state representing the phase after loading a map.
@@ -61,7 +61,7 @@ public class PostLoad extends Edit {
             mapType = scanner.nextLine();
 
         while (!isValidMapType(mapType)) {
-            System.out.println(ColorCoding.red + "Please enter a valid map type (conquest/domination):" + ColorCoding.blank);
+            System.out.println(ColorCoding.ANSI_RED + "Please enter a valid map type (conquest/domination):" + ColorCoding.ANSI_RESET);
             mapType = scanner.nextLine();
         }
 

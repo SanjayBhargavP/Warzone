@@ -1,6 +1,7 @@
 package org.concordia.macs.Models;
 
 import org.concordia.macs.Utilities.Connectivity;
+import org.concordia.macs.Utilities.ConquestMapLoader;
 import org.concordia.macs.Utilities.LoadMap;
 import org.concordia.macs.Utilities.MapCheck;
 

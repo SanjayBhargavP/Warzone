@@ -3,18 +3,19 @@ package org.concordia.macs.State;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import Controllers.GameEngine;
-import Models.LogEntryBuffer;
-import Tools.ColorCoding;
-import Tools.Connectivity;
-import Tools.MapEditor;
-import Tools.Graph;
+import org.concordia.macs.Controllers.GameEngine;
+import org.concordia.macs.Models.LogEntryBuffer;
+import org.concordia.macs.Models.Map;
+import org.concordia.macs.Utilities.ColorCoding;
+import org.concordia.macs.Utilities.Connectivity;
+import org.concordia.macs.Utilities.MapEditor;
+import org.concordia.macs.Utilities.Graph;
 
 /**
  * Concrete state representing the phase before loading a map.
  * Allows the user to load, edit, and validate the map before entering PostLoad phase.
  */
-public class Preload extends Edit {
+public class PreLoad extends Edit {
     private LogEntryBuffer logEntryBuffer = new LogEntryBuffer();
 
     /**
@@ -22,7 +23,7 @@ public class Preload extends Edit {
      *
      * @param p_ge The GameEngine object associated with this phase.
      */
-    public Preload(GameEngine p_ge) {
+    public PreLoad(GameEngine p_ge) {
         super(p_ge);
     }
 
@@ -35,7 +36,7 @@ public class Preload extends Edit {
     public void loadMap(Connectivity p_connectivity, String[] p_commands) {
         if (p_commands.length != 2) {
             logEntryBuffer.log("No map entered. Please enter the name of the map to be loaded");
-            System.out.println(ColorCoding.red + "No map entered. Please enter the name of the map to be loaded" + ColorCoding.blank);
+            System.out.println(ColorCoding.ANSI_RED + "No map entered. Please enter the name of the map to be loaded" + ColorCoding.ANSI_RESET);
             return;
         }
 
@@ -51,8 +52,8 @@ public class Preload extends Edit {
      * @param p_connectivity Represents the map content.
      */
     private void validateLoadedMap(Connectivity p_connectivity) {
-        System.out.println(ColorCoding.cyan + "\n--------Validating the loaded map--------\n" + ColorCoding.blank);
-        Graph graph = new Graph(p_connectivity.getD_countryList().size(), p_connectivity);
+        System.out.println(ColorCoding.ANSI_CYAN + "\n--------Validating the loaded map--------\n" + ColorCoding.ANSI_RESET);
+        Graph graph = new Graph(p_connectivity.getD_countriesList().size(), p_connectivity);
         if (graph.continentConnection(p_connectivity, graph))
             graph.isConnected(graph);
     }
@@ -73,7 +74,7 @@ public class Preload extends Edit {
                 i = i + 2;
             } else {
                 logEntryBuffer.log("ERROR: Invalid Command");
-                System.out.println(ColorCoding.red + "ERROR: Invalid Command" + ColorCoding.blank);
+                System.out.println(ColorCoding.ANSI_RED + "ERROR: Invalid Command" + ColorCoding.ANSI_RESET);
             }
         }
         next(p_connectivity);
@@ -119,7 +120,7 @@ public class Preload extends Edit {
                 i = i + 3;
             } else {
                 logEntryBuffer.log("ERROR: Invalid Command");
-                System.out.println(ColorCoding.red + "ERROR: Invalid Command" + ColorCoding.blank);
+                System.out.println(ColorCoding.ANSI_RED + "ERROR: Invalid Command" + ColorCoding.ANSI_RESET);
             }
         }
         next(p_connectivity);
@@ -162,6 +163,22 @@ public class Preload extends Edit {
         } else {
             System.out.println("Continue editing map:");
         }
+    }
+
+
+    /**
+     * Validates the loaded map.
+     *
+     * @param p_connectivity  represents the map content
+     */
+    @Override
+    public void validateMap(Connectivity p_connectivity)
+    {
+        System.out.println(ColorCoding.ANSI_CYAN+"\n--------Validating the loaded map--------\n"+ColorCoding.ANSI_RESET);
+        Graph l_graph=new Graph(p_connectivity.getD_countriesList().size(),p_connectivity);
+        if(l_graph.continentConnection(p_connectivity, l_graph))
+            l_graph.isConnected(l_graph);
+        next(p_connectivity);
     }
 
     // Override other methods to print invalid command message

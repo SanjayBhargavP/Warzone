@@ -20,6 +20,7 @@ import org.concordia.macs.State.Attack;
 import org.concordia.macs.State.Phase;
 import org.concordia.macs.State.Play;
 import org.concordia.macs.State.PlaySetup;
+import org.concordia.macs.View.ShowMap;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -104,7 +105,7 @@ public class LoadGame {
 				}
 			}
 
-			connectivity.setD_mapName(l_map_name);
+			connectivity.setD_nameOfMap(l_map_name);
 
 			for (int i = l_countries_length + 1; i < l_players_length - 1; i++) {
 				String a = l_fileContent.get(i);
@@ -113,11 +114,11 @@ public class LoadGame {
 				obj.setD_countryName(aArr[0]);
 				obj.setD_countryId(Integer.parseInt(aArr[1]));
 				obj.setD_continentId(Integer.parseInt(aArr[2]));
-				obj.setD_armyDeployedOnCountry(Integer.parseInt(aArr[3]));
+				obj.setD_armyCount(Integer.parseInt(aArr[3]));
 				d_countryList.add(obj);
 			}
 
-			connectivity.setD_countryList(d_countryList);
+			connectivity.setD_countriesList(d_countryList);
 
 			for (int i = l_continents_length + 1; i < l_countries_length - 1; i++) {
 
@@ -127,7 +128,7 @@ public class LoadGame {
 				continent.setD_continentId(Integer.parseInt(aArr[0]));
 				continent.setD_continentName(aArr[1]);
 				d_continentList.add(continent);
-				connectivity.setD_continentList(d_continentList);
+				connectivity.setD_continentsList(d_continentList);
 			}
 
 			for (int i = l_players_length + 1; i < l_phase_length - 1; ) {
@@ -139,19 +140,19 @@ public class LoadGame {
 				String l_playername = l_player_details[1];
 				player.setD_playerId(l_playerid);
 				player.setD_playerName(l_playername);
-				player.setD_Order(new Order());
+				player.setD_order(new Order());
 				String[] l_country_details = l_fileContent.get(i + 2).split(" ");
 
 				for (int j = 0; j < l_country_details.length; j++) {
-					for (int k = 0; k < connectivity.getD_countryList().size(); k++) {
-						if (l_country_details[j].equals(connectivity.getD_countryList().get(k).getD_countryName())) {
-							d__player_countryList.add(connectivity.getD_countryList().get(k));
+					for (int k = 0; k < connectivity.getD_countriesList().size(); k++) {
+						if (l_country_details[j].equals(connectivity.getD_countriesList().get(k).getD_countryName())) {
+							d__player_countryList.add(connectivity.getD_countriesList().get(k));
 							break;
 						}
 					}
 				}
 
-				player.setD_Country(d__player_countryList);
+				player.setD_country(d__player_countryList);
 				String[] l_card_details = l_fileContent.get(i + 3).split(" ");
 
 				if (l_card_details[1] != null) {
@@ -162,7 +163,7 @@ public class LoadGame {
 
 				player.setCards(d_player_cards);
 				String[] l_army_details = l_fileContent.get(i + 4).split(" ");
-				player.setD_armyCount(Integer.parseInt(l_army_details[1]));
+				player.setD_armyNumber(Integer.parseInt(l_army_details[1]));
 				String[] l_strategy_details = l_fileContent.get(i + 5).split(" ");
 
 				switch (l_strategy_details[1]) {
@@ -187,23 +188,23 @@ public class LoadGame {
 				i = i + 7;
 			}
 			if (!l_map_name.equalsIgnoreCase("null")) {
-				MapLoader.loadMap(connectivity, l_map_name);
+				LoadMap.loadMap(connectivity, l_map_name);
 			}
 			for (int i = l_countries_length + 1; i < l_players_length - 1; i++) {
 				String a = l_fileContent.get(i);
 				String[] aArr = a.split(" ");
-				for (int k = 0; k < connectivity.getD_countryList().size(); k++) {
-					if (aArr[0].equals(connectivity.getD_countryList().get(k).getD_countryName())) {
-						connectivity.getD_countryList().get(k).setD_armyDeployedOnCountry(Integer.parseInt(aArr[3]));
+				for (int k = 0; k < connectivity.getD_countriesList().size(); k++) {
+					if (aArr[0].equals(connectivity.getD_countriesList().get(k).getD_countryName())) {
+						connectivity.getD_countriesList().get(k).setD_armyCount(Integer.parseInt(aArr[3]));
 					}
 				}
 			}
 		}
 		System.out.println("GAME SUMMARY: ");
 		for (int i = 0; i < Play.l_playersArray.size(); i++) {
-			System.out.println("Player " + Integer.sum(i, 1) + "(" + Play.l_playersArray.get(i).getD_playerName() + ") has Army Count: " + Play.l_playersArray.get(i).getD_armyCount());
+			System.out.println("Player " + Integer.sum(i, 1) + "(" + Play.l_playersArray.get(i).getD_playerName() + ") has Army Count: " + Play.l_playersArray.get(i).getD_armyNumber());
 			PlayersGameplay.showPlayersCountry(Play.l_playersArray.get(i), 1);
 		}
-		View.ShowMap.showMap(connectivity.getD_continentList(), connectivity.getD_countryList(), Play.l_playersArray);
+		ShowMap.showMap(connectivity.getD_continentsList(), connectivity.getD_countriesList(), Play.l_playersArray);
 	}
 }

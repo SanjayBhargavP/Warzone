@@ -2,10 +2,12 @@ package org.concordia.macs.State;
 import org.concordia.macs.Controllers.GameEngine;
 import org.concordia.macs.Models.LogEntryBuffer;
 import org.concordia.macs.Models.Player;
+import org.concordia.macs.Strategy.*;
 import org.concordia.macs.Utilities.ColorCoding;
 import org.concordia.macs.Utilities.Connectivity;
 import org.concordia.macs.Utilities.PlayersGameplay;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -146,7 +148,7 @@ public class PlaySetup extends Play {
     public boolean assignCountries(Connectivity p_connectivity) {
         if(l_playersArray.size()>0)
         {
-            if(PlayersGameplay.assignCountries(l_playersArray,p_connectivity.getD_countriesList(),p_connectivity.getD_continentsList())==0)
+            if(PlayersGameplay.assigncountries(l_playersArray,p_connectivity.getD_countriesList(),p_connectivity.getD_continentsList())==0)
             {
                 d_logEntryBuffer.log("Countries assigned to players Successfully");
                 System.out.println(ColorCoding.ANSI_GREEN+"Countries assigned to players Successfully"+ColorCoding.ANSI_RESET+"\n");
@@ -202,6 +204,11 @@ public class PlaySetup extends Play {
      */
     public void fortify(Connectivity p_connectivity) {
         printInvalidCommandMessage();
+    }
+
+    @Override
+    public void loadgame(String[] p_commands, Connectivity p_connectivity, GameEngine ge) throws FileNotFoundException {
+
     }
 
     /**

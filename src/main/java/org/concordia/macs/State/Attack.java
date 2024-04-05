@@ -89,7 +89,7 @@ public class Attack extends MainPlay
 			{
 				d_logEntryBuffer.log("Winner assigned for test case");
 				System.out.println("Winner assigned for test case\n");
-				l_playersArray.get(0).setD_Country(p_connectivity.getD_countryList());
+				l_playersArray.get(0).setD_country(p_connectivity.getD_countriesList());
 			}
 
 			if(winner_check>0)
@@ -288,10 +288,10 @@ public class Attack extends MainPlay
 					l_executeOrder++;
 					continue;	
 				}
-				l_playersArray.get(j).getD_Order().execute(l_playersArray.get(j), l_playersArray.get(j).next_order(),p_connectivity,1,0);
+				l_playersArray.get(j).getD_order().execute(l_playersArray.get(j), l_playersArray.get(j).next_order(),p_connectivity,1,0);
 			}
 		}
-		ShowMap.showMap(p_connectivity.getD_continentList(), p_connectivity.getD_countryList(), l_playersArray);
+		ShowMap.showMap(p_connectivity.getD_continentsList(), p_connectivity.getD_countriesList(), l_playersArray);
 		winner_check++;
 		PlayersGameplay.resetDiplomacy(l_playersArray);
 	}

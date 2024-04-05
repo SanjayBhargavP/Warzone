@@ -27,7 +27,7 @@ public class GameEngine {
 	/**
 	 * State object of the GameEngine 
 	 */
-	private Phase gamePhase;
+	private static Phase gamePhase;
 	private Connectivity connectivity;
 
 	private boolean checkIfTest = false;
@@ -140,8 +140,8 @@ public class GameEngine {
 		d_logEntryBuffer.clearFile();
 		Connectivity l_connectivity=new Connectivity();
 		
-		l_connectivity.setD_continentList(new ArrayList<Continent>());
-		l_connectivity.setD_countryList(new ArrayList<Country>());
+		l_connectivity.setD_continentsList(new ArrayList<Continent>());
+		l_connectivity.setD_countriesList(new ArrayList<Country>());
 
 		boolean l_check_if_map_loaded = false;
 		Scanner keyboard = new Scanner(System.in);
@@ -166,7 +166,7 @@ public class GameEngine {
 			switch (startOption) {
 
 				case 1:
-					setPhase(new Preload(this));
+					setPhase(new PreLoad(this));
 					break;
 
 				case 2:
@@ -223,7 +223,7 @@ public class GameEngine {
 						break;
 
 					case "showmap":
-						if(l_check_if_map_loaded) gamePhase.showMap(l_connectivity.getD_continentList(),l_connectivity.getD_countryList(),Play.getL_playersArray());
+						if(l_check_if_map_loaded) gamePhase.showMap(l_connectivity.getD_continentsList(),l_connectivity.getD_countriesList(),Play.getL_playersArray());
 						else {
 							d_logEntryBuffer.log("ERROR: Map cannot be viewed before loading it");
 							System.out.println(ColorCoding.ANSI_RED+"ERROR: Map cannot be viewed before loading it"+ColorCoding.ANSI_RESET);
@@ -255,7 +255,7 @@ public class GameEngine {
 						break;
 
 					case "gameplayer":
-						gamePhase.setPlayers(l_commands);
+						gamePhase.setPlayers(l_commands,l_connectivity);
 						break;
 
 					case "assigncountries":
@@ -291,7 +291,7 @@ public class GameEngine {
 						break;
 
 					case "exit":
-						gamePhase.endGame();
+						gamePhase.endGame(l_connectivity);
 						break;
 
 					default:
