@@ -32,7 +32,7 @@ public class PlayersGamePlayTest {
             l_currentPlayer.setD_playerName("player1");
             d_playersArray.add(l_currentPlayer);
 
-            PlayersGameplay.assignCountries((ArrayList<Player>) d_playersArray, d_connectivity.getD_countriesList(),
+            PlayersGameplay.assigncountries((ArrayList<Player>) d_playersArray, d_connectivity.getD_countriesList(),
                     d_connectivity.getD_continentsList());
 
             PlayersGameplay.assignArmiesToPlayers((ArrayList<Player>) d_playersArray);
@@ -45,7 +45,7 @@ public class PlayersGamePlayTest {
     @Test
     void assignCountriesWithoutPlayersTest() {
         d_playersArray.clear();
-        assertEquals(1, PlayersGameplay.assignCountries((ArrayList<Player>) d_playersArray, d_connectivity.getD_countriesList(),
+        assertEquals(1, PlayersGameplay.assigncountries((ArrayList<Player>) d_playersArray, d_connectivity.getD_countriesList(),
                 d_connectivity.getD_continentsList()));
     }
 
@@ -59,7 +59,7 @@ public class PlayersGamePlayTest {
         d_playersArray.add(l_testPlayer);
         ArrayList<Country> l_countries = new ArrayList<>();
 
-        assertEquals(1, PlayersGameplay.assignCountries((ArrayList<Player>) d_playersArray, l_countries,
+        assertEquals(1, PlayersGameplay.assigncountries((ArrayList<Player>) d_playersArray, l_countries,
                 d_connectivity.getD_continentsList()));
     }
 
