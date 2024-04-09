@@ -6,10 +6,7 @@ import java.util.Scanner;
 import org.concordia.macs.Controllers.GameEngine;
 import org.concordia.macs.Models.LogEntryBuffer;
 import org.concordia.macs.Models.Map;
-import org.concordia.macs.Utilities.ColorCoding;
-import org.concordia.macs.Utilities.Connectivity;
-import org.concordia.macs.Utilities.MapEditor;
-import org.concordia.macs.Utilities.Graph;
+import org.concordia.macs.Utilities.*;
 
 /**
  * Concrete state representing the phase before loading a map.
@@ -34,15 +31,20 @@ public class PreLoad extends Edit {
      * @param p_commands     Array of user commands for loading a map.
      */
     public void loadMap(Connectivity p_connectivity, String[] p_commands) {
-        if (p_commands.length != 2) {
-            logEntryBuffer.log("No map entered. Please enter the name of the map to be loaded");
-            System.out.println(ColorCoding.ANSI_RED + "No map entered. Please enter the name of the map to be loaded" + ColorCoding.ANSI_RESET);
-            return;
+        int newMapCreated = 0;
+        if (p_commands.length == 2) {
+            newMapCreated = LoadMap.loadMap(p_connectivity, p_commands[1]);
+        } else {
+            System.out.println(ColorCoding.getRed() + "No map entered. Please enter the name of the map to be loaded" + ColorCoding.getReset());
         }
-
-        Map.checkMap(p_connectivity, p_commands[1]);
-
-        validateLoadedMap(p_connectivity);
+        if (newMapCreated == 0) {
+            System.out.println(ColorCoding.getCyan() + "\n-------- Validating the loaded map --------\n" + ColorCoding.getReset());
+            Graph graph = new Graph(p_connectivity.getD_countriesList().size(), p_connectivity);
+            if (graph.continentConnection(p_connectivity, graph))
+                graph.isConnected(graph);
+        } else {
+            System.out.println(ColorCoding.getGreen() + "Skipping Map Validation as it is a newly created map" + ColorCoding.getReset());
+        }
         next(p_connectivity);
     }
 
@@ -111,19 +113,23 @@ public class PreLoad extends Edit {
      * @param p_connectivity Represents the map content.
      */
     public void editNeighbor(String[] p_commands, Connectivity p_connectivity) {
-        for (int i = 1; i < p_commands.length;) {
-            if (p_commands[i].equals("-add")) {
-                MapEditor.addNeighbour(Integer.parseInt(p_commands[i + 1]), Integer.parseInt(p_commands[i + 2]), p_connectivity);
-                i = i + 3;
-            } else if (p_commands[i].equals("-remove")) {
-                MapEditor.removeNeighbour(Integer.parseInt(p_commands[i + 1]), Integer.parseInt(p_commands[i + 2]), p_connectivity, 1);
-                i = i + 3;
-            } else {
-                logEntryBuffer.log("ERROR: Invalid Command");
-                System.out.println(ColorCoding.ANSI_RED + "ERROR: Invalid Command" + ColorCoding.ANSI_RESET);
+        try {
+            for (int i = 1; i < p_commands.length; ) {
+                if (p_commands[i].equals("-add")) {
+                    MapEditor.addNeighbour(Integer.parseInt(p_commands[i + 1]), Integer.parseInt(p_commands[i + 2]), p_connectivity);
+                    i = i + 3;
+                } else if (p_commands[i].equals("-remove")) {
+                    MapEditor.removeNeighbour(Integer.parseInt(p_commands[i + 1]), Integer.parseInt(p_commands[i + 2]), p_connectivity, 1);
+                    i = i + 3;
+                } else {
+                    System.out.println(ColorCoding.getRed() + "ERROR: Invalid Command" + ColorCoding.getReset());
+                }
             }
+            next(p_connectivity);
         }
-        next(p_connectivity);
+        catch (Exception e){
+            //e.printStackTrace();
+        }
     }
 
     /**

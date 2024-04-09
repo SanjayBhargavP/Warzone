@@ -68,11 +68,11 @@ public class PhaseValidationTest {
             String[] playerCommands = d_commands[4].split(" ");
 
             // Setting up players and assigning countries
-            d_gameEngine.getPhase().setPlayers(playerCommands);
+            d_gameEngine.getPhase().setPlayers(playerCommands, d_gameEngine.getConnectivity());
             d_gameEngine.getPhase().assignCountries(d_gameEngine.getConnectivity());
 
             // Going to the next phase
-            d_gameEngine.getPhase().next();
+            d_gameEngine.getPhase().next(d_gameEngine.getConnectivity());
 
             // Checking if the phase is set to Reinforcement
             assertEquals("Reinforcement", d_gameEngine.getPhaseName());
