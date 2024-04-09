@@ -200,105 +200,109 @@ public class GameEngine {
 				l_commands = mycommand.split(" "); 
 				System.out.println(" =================================================");
 
-				if(l_commands[0]!= null)
-				{
-				switch (l_commands[0]) {
+				if(l_commands[0]!= null) {
+					try {
+					switch (l_commands[0]) {
 
-					case "tournament" :
-						gamePhase.enableTournament(mycommand);
-						System.out.println("Tournament complete! Thank you participating");
-						System.exit(0);
+							case "tournament":
+								gamePhase.enableTournament(mycommand);
+								System.out.println("Tournament complete! Thank you participating");
+								System.exit(0);
 
-					case "loadmap":
-						gamePhase.loadMap(l_connectivity,l_commands);
-						l_check_if_map_loaded = true;
-						break;
+							case "loadmap":
+								gamePhase.loadMap(l_connectivity, l_commands);
+								l_check_if_map_loaded = true;
+								break;
 
-					case "validatemap":
-						if(l_check_if_map_loaded) gamePhase.validateMap(l_connectivity);
-						else {
-							d_logEntryBuffer.log("ERROR: Map cannot be validated before loading it");
-							System.out.println(ColorCoding.ANSI_RED+"ERROR: Map cannot be validated before loading it"+ColorCoding.ANSI_RESET);
+							case "validatemap":
+								if (l_check_if_map_loaded) gamePhase.validateMap(l_connectivity);
+								else {
+									d_logEntryBuffer.log("ERROR: Map cannot be validated before loading it");
+									System.out.println(ColorCoding.ANSI_RED + "ERROR: Map cannot be validated before loading it" + ColorCoding.ANSI_RESET);
+								}
+								break;
+
+							case "showmap":
+								if (l_check_if_map_loaded)
+									gamePhase.showMap(l_connectivity.getD_continentsList(), l_connectivity.getD_countriesList(), Play.getL_playersArray());
+								else {
+									d_logEntryBuffer.log("ERROR: Map cannot be viewed before loading it");
+									System.out.println(ColorCoding.ANSI_RED + "ERROR: Map cannot be viewed before loading it" + ColorCoding.ANSI_RESET);
+								}
+								break;
+
+							case "help":
+								gamePhase.help();
+								break;
+
+							case "editcountry":
+								gamePhase.editCountry(l_commands, l_connectivity);
+								break;
+
+							case "editcontinent":
+								if (l_check_if_map_loaded) gamePhase.editContinent(l_commands, l_connectivity);
+								else {
+									d_logEntryBuffer.log("ERROR: Map cannot be edited before loading it");
+									System.out.println(ColorCoding.ANSI_RED + "ERROR: Map cannot be edited before loading it" + ColorCoding.ANSI_RESET);
+								}
+								break;
+
+							case "editneighbor":
+								gamePhase.editNeighbor(l_commands, l_connectivity);
+								break;
+
+							case "savemap":
+								gamePhase.saveMap(l_connectivity, l_commands[1]);
+								break;
+
+							case "gameplayer":
+								gamePhase.setPlayers(l_commands, l_connectivity);
+								break;
+
+							case "assigncountries":
+								if (gamePhase.assignCountries(l_connectivity)) {
+									gamePhase.next(l_connectivity);
+									gamePhase.reinforce(l_connectivity);
+									gamePhase.attack(l_connectivity);
+									if (this.getPhaseName().equals("End")) {
+										return;
+									}
+									gamePhase.fortify(l_connectivity);
+								}
+								break;
+
+							case "deploy":
+								gamePhase.reinforce(l_connectivity);
+								gamePhase.attack(l_connectivity);
+								gamePhase.fortify(l_connectivity);
+								break;
+
+							case "attack":
+								gamePhase.attack(l_connectivity);
+								break;
+
+							case "fortify":
+								gamePhase.fortify(l_connectivity);
+								break;
+
+							case "loadgame":
+								gamePhase.loadgame(l_commands, l_connectivity, this);
+								break;
+
+							case "exit":
+								gamePhase.endGame(l_connectivity);
+								break;
+
+							default:
+								d_logEntryBuffer.log("This command does not exist");
+								System.out.println("This command does not exist");
 						}
-						break;
-
-					case "showmap":
-						if(l_check_if_map_loaded) gamePhase.showMap(l_connectivity.getD_continentsList(),l_connectivity.getD_countriesList(),Play.getL_playersArray());
-						else {
-							d_logEntryBuffer.log("ERROR: Map cannot be viewed before loading it");
-							System.out.println(ColorCoding.ANSI_RED+"ERROR: Map cannot be viewed before loading it"+ColorCoding.ANSI_RESET);
-						}
-						break;
-
-					case "help":
-						gamePhase.help();
-						break;
-
-					case "editcountry":
-						gamePhase.editCountry(l_commands, l_connectivity);
-						break;
-
-					case "editcontinent":
-						if(l_check_if_map_loaded) gamePhase.editContinent(l_commands, l_connectivity);
-						else {
-							d_logEntryBuffer.log("ERROR: Map cannot be edited before loading it");
-							System.out.println(ColorCoding.ANSI_RED+"ERROR: Map cannot be edited before loading it"+ColorCoding.ANSI_RESET);
-						}
-						break;
-
-					case "editneighbor":
-						gamePhase.editNeighbor(l_commands, l_connectivity);
-						break;
-
-					case "savemap":
-						gamePhase.saveMap(l_connectivity, l_commands[1]);
-						break;
-
-					case "gameplayer":
-						gamePhase.setPlayers(l_commands,l_connectivity);
-						break;
-
-					case "assigncountries":
-						if(gamePhase.assignCountries(l_connectivity))
-						{
-							gamePhase.next(l_connectivity);
-							gamePhase.reinforce(l_connectivity);
-							gamePhase.attack(l_connectivity);
-							if(this.getPhaseName().equals("End"))
-							{
-								return;
-							}
-							gamePhase.fortify(l_connectivity);
-						}
-						break;
-
-					case "deploy":
-						gamePhase.reinforce(l_connectivity);
-						gamePhase.attack(l_connectivity);
-						gamePhase.fortify(l_connectivity);
-						break;
-
-					case "attack":
-						gamePhase.attack(l_connectivity);
-						break;
-
-					case "fortify":
-						gamePhase.fortify(l_connectivity);
-						break;
-
-					case "loadgame":
-						gamePhase.loadgame(l_commands,l_connectivity,this);
-						break;
-
-					case "exit":
-						gamePhase.endGame(l_connectivity);
-						break;
-
-					default:
-						d_logEntryBuffer.log("This command does not exist");
-						System.out.println("This command does not exist");
+                    }catch (Exception e) {
+                            d_logEntryBuffer.log("This command does not exist");
+							System.out.println("This command does not exist");
+					}
 				}
-				}
+
 			} while (!(gamePhase instanceof End));
 		} while (!l_commands[0].equals("exit"));
 		keyboard.close();
