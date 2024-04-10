@@ -35,7 +35,7 @@ public class Reinforcement extends MainPlay
 	 *
 	 * @param p_ge The associated GameEngine object.
 	 */
-	Reinforcement(GameEngine p_ge)
+	public Reinforcement(GameEngine p_ge)
 	{
 		super(p_ge);
 	}
