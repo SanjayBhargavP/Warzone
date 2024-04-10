@@ -4,14 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import Controllers.GameEngine;
-import Models.Country;
-import Models.Order;
-import Models.Player;
-import Tools.Connectivity;
-import Tools.MapLoader;
-import state.Attack;
-import state.Reinforcement;
+import org.concordia.macs.Controllers.GameEngine;
+import org.concordia.macs.Models.Country;
+import org.concordia.macs.Models.Order;
+import org.concordia.macs.Models.Player;
+import org.concordia.macs.Utilities.Connectivity;
+import org.concordia.macs.Utilities.LoadMap;
+import org.concordia.macs.State.Attack;
+import org.concordia.macs.State.Reinforcement;
 
 /**
  * This is aggressive player test
@@ -34,15 +34,15 @@ public class AggressivePlayerStrategyTest {
         c1.setD_countryId(1);
         c2.setD_countryId(2);
 
-        c1.setD_armyDeployedOnCountry(5);
-        c2.setD_armyDeployedOnCountry(10);
+        c1.setD_armyCount(5);
+        c2.setD_armyCount(10);
 
         d_player1.addCountry(c1);
         d_player1.addCountry(c2);
 
-        d_player1.setD_armyCount(10);
+        d_player1.setD_armyNumber(10);
 
-        System.out.println(d_player1.getD_Country().get(1).getD_armyDeployedOnCountry());
+        System.out.println(d_player1.getD_country().get(1).getD_armyCount());
 
         AggressivePlayerStrategy B = new AggressivePlayerStrategy(d_player1, d_connectivity);
 
@@ -61,11 +61,11 @@ public class AggressivePlayerStrategyTest {
     void advanceTest()
     {
 
-        MapLoader.loadMap(d_connectivity, "VeryBasic");
+        LoadMap.loadMap(d_connectivity, "VeryBasic");
 
         Player d_player1 = new Player();
-        Country c1 = d_connectivity.getD_countryList().get(0); //canada
-        Country c2 = d_connectivity.getCountryByID(c1.getD_neighbours().get(0)); //usa
+        Country c1 = d_connectivity.getD_countriesList().get(0); //canada
+        Country c2 = d_connectivity.getCountryFromCountryId(c1.getD_neighbours().get(0)); //usa
 
 
 
@@ -73,10 +73,10 @@ public class AggressivePlayerStrategyTest {
         d_player1.addCountry(c1);
         d_player1.addCountry(c2);
 
-        c1.setD_armyDeployedOnCountry(5);//canada
-        c2.setD_armyDeployedOnCountry(12);//usa
+        c1.setD_armyCount(5);//canada
+        c2.setD_armyCount(12);//usa
 
-        d_player1.setD_armyCount(10);
+        d_player1.setD_armyNumber(10);
 
         AggressivePlayerStrategy B = new AggressivePlayerStrategy(d_player1, d_connectivity);
 
@@ -95,11 +95,11 @@ public class AggressivePlayerStrategyTest {
     @Test
     void advanceAttackTest()
     {
-        MapLoader.loadMap(d_connectivity, "VeryBasic");
+        LoadMap.loadMap(d_connectivity, "VeryBasic");
 
         Player d_player1 = new Player();
-        Country c1 = d_connectivity.getD_countryList().get(0); //canada
-        Country c2 = d_connectivity.getCountryByID(c1.getD_neighbours().get(0)); //usa
+        Country c1 = d_connectivity.getD_countriesList().get(0); //canada
+        Country c2 = d_connectivity.getCountryFromCountryId(c1.getD_neighbours().get(0)); //usa
 
 
 
@@ -107,10 +107,10 @@ public class AggressivePlayerStrategyTest {
         d_player1.addCountry(c1);
         //d_player1.addCountry(c2);
 
-        c1.setD_armyDeployedOnCountry(5);//canada
-        c2.setD_armyDeployedOnCountry(12);//usa
+        c1.setD_armyCount(5);//canada
+        c2.setD_armyCount(12);//usa
 
-        d_player1.setD_armyCount(10);
+        d_player1.setD_armyNumber(10);
 
         AggressivePlayerStrategy B = new AggressivePlayerStrategy(d_player1, d_connectivity);
 

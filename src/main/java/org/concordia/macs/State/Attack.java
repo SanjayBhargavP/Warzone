@@ -38,7 +38,7 @@ public class Attack extends MainPlay
 	 *
 	 * @param p_ge The associated GameEngine instance.
 	 */
-	Attack(GameEngine p_ge)
+	public Attack(GameEngine p_ge)
 	{
 		super(p_ge);
 	}
