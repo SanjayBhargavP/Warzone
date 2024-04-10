@@ -6,14 +6,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Controllers.GameEngine;
-import Tools.ColorCoding;
-import Tools.Connectivity;
-import Tools.MapLoader;
-import Tools.SaveMap;
-import Views.ViewMap;
+import org.concordia.macs.Controllers.GameEngine;
+import org.concordia.macs.Utilities.ColorCoding;
+import org.concordia.macs.Utilities.Connectivity;
+import org.concordia.macs.Utilities.LoadMap;
+import org.concordia.macs.Utilities.SaveMap;
+import org.concordia.macs.View.ShowMap;
 
-public class saveGame {
+public class SaveGame {
     /**
      * GameEngine refers to static object GameEngine
      * d_connectibity refers to static Connectivity Object
@@ -33,10 +33,10 @@ public class saveGame {
 
     @Test
     public void testSaveGame() {
-        gameEngine.setPhase(new Preload(gameEngine));
+        gameEngine.setPhase(new PreLoad(gameEngine));
         System.out.println(gameEngine.getPhase());
-        assertEquals("Preload",gameEngine.getPhaseName());
-        System.out.println(ColorCoding.green+"Phase has been successfully changed to "+gameEngine.getPhaseName()+ColorCoding.blank);
+        assertEquals("PreLoad",gameEngine.getPhaseName());
+        System.out.println(ColorCoding.ANSI_GREEN+"Phase has been successfully changed to "+gameEngine.getPhaseName()+ColorCoding.ANSI_RESET);
         String[] mapCommand = d_commands[1].split(" ") ;
 
         if(d_commands[1].equals("loadmap VeryBasic"))
@@ -45,19 +45,19 @@ public class saveGame {
 
         }
         assertEquals("PostLoad",gameEngine.getPhaseName());
-        System.out.println(ColorCoding.green+"Phase has been successfully changed to "+gameEngine.getPhaseName()+ColorCoding.blank);
+        System.out.println(ColorCoding.ANSI_GREEN+"Phase has been successfully changed to "+gameEngine.getPhaseName()+ColorCoding.ANSI_RESET);
         if(d_commands[3].equals("savemap VeryBasic"))
         {
             gameEngine.getPhase().saveMap(d_connectivity, "VeryBasic");
         }
         assertEquals("PlaySetup",gameEngine.getPhaseName());
-        System.out.println(ColorCoding.green+"Phase has been successfully changed to "+gameEngine.getPhaseName()+ColorCoding.blank);
+        System.out.println(ColorCoding.ANSI_GREEN+"Phase has been successfully changed to "+gameEngine.getPhaseName()+ColorCoding.ANSI_RESET);
         mapCommand = d_commands[4].split(" ");
         gameEngine.getPhase().setPlayers(mapCommand,gameEngine.getConnectivity());
         gameEngine.getPhase().assignCountries(gameEngine.getConnectivity());
         gameEngine.getPhase().next(d_connectivity);
         assertEquals("Reinforcement",gameEngine.getPhaseName());
-        System.out.println(ColorCoding.green+"Phase has been successfully changed to "+gameEngine.getPhaseName()+ColorCoding.blank);
+        System.out.println(ColorCoding.ANSI_GREEN+"Phase has been successfully changed to "+gameEngine.getPhaseName()+ColorCoding.ANSI_RESET);
         gameEngine.getPhase().reinforce(d_connectivity);
         assertEquals("Attack",gameEngine.getPhaseName());
         gameEngine.getPhase().attack(d_connectivity);

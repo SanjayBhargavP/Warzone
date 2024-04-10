@@ -7,15 +7,15 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import Controllers.GameEngine;
-import Models.Continent;
-import Models.Country;
-import Tools.Connectivity;
+import org.concordia.macs.Controllers.GameEngine;
+import org.concordia.macs.Models.Continent;
+import org.concordia.macs.Models.Country;
+import org.concordia.macs.Utilities.Connectivity;
 
 /**
  * The SaveLoadGameTest class includes test cases for savegame and loadgame functionality.
  */
-public class loadSaveTest {
+public class LoadSaveTest {
 
     GameEngine gameEngine = new GameEngine();
     Connectivity l_connectivity=new Connectivity();
@@ -26,8 +26,8 @@ public class loadSaveTest {
     @Test
     public void testLoadGame() {
         gameEngine.setCheckIfTest(true);
-        l_connectivity.setD_continentList(new ArrayList<Continent>());
-        l_connectivity.setD_countryList(new ArrayList<Country>());
+        l_connectivity.setD_continentsList(new ArrayList<Continent>());
+        l_connectivity.setD_countriesList(new ArrayList<Country>());
         String l_userCommand = "loadgame gg";
         String[] l_spiltCommand = l_userCommand.split(" ");
         gameEngine.setPhase(new PlayGame(gameEngine));

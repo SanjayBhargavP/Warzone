@@ -9,15 +9,15 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Controllers.GameEngine;
-import Models.Continent;
-import Models.Country;
-import Tools.Connectivity;
+import org.concordia.macs.Controllers.GameEngine;
+import org.concordia.macs.Models.Continent;
+import org.concordia.macs.Models.Country;
+import org.concordia.macs.Utilities.Connectivity;
 
 /**
- * tournamentValidation is used for successfully validating the given tournament scenario
+ * TournamentValidation is used for successfully validating the given tournament scenario
  */
-public class tournamentValidation {
+public class TournamentValidation {
 
     /**
      * l_connectivity refers to connectivity object
@@ -43,9 +43,9 @@ public class tournamentValidation {
      */
     @Test
     public void testTournament() {
-        l_connectivity.setD_continentList(new ArrayList<Continent>());
-        l_connectivity.setD_countryList(new ArrayList<Country>());
-        String l_userCommand = "tournament -M VeryBasic canada -P Random Aggressive Cheater Benevolent -G 3 -D 10";
+        l_connectivity.setD_continentsList(new ArrayList<Continent>());
+        l_connectivity.setD_countriesList(new ArrayList<Country>());
+        String l_userCommand = "tournament -M VeryBasic -P Random Aggressive Cheater Benevolent -G 3 -D 10";
         gameEngine.setPhase(new PlayGame(gameEngine));
         gameEngine.getPhase().enableTournament(l_userCommand);
     }
