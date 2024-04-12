@@ -1,0 +1,80 @@
+[map]
+VeryBasic
+
+[Continents]
+1 N.America
+2 S.America
+3 Africa
+4 Europe
+5 Asia
+6 Australia
+7 Antartica
+
+[Countries]
+Canada 1 1 0
+USA 2 1 0
+Mexico 3 1 1
+Brazil 4 2 7
+Argentina 5 2 0
+Columbia 6 2 3
+S.Africa 7 3 0
+Tanzania 8 3 0
+Sudan 9 3 0
+Libya 10 3 0
+India 11 5 0
+China 12 5 0
+Russia 13 5 3
+UK 14 4 8
+France 15 4 0
+Sweden 16 4 0
+Melbourne 17 6 0
+Sydney 18 6 3
+Queensland 19 6 0
+Snow 20 7 0
+
+[Players]
+141 Random
+Player Countries:
+Canada USA Mexico Brazil Argentina 
+Cards: []
+Armies: 0
+Behaviour: Random
+
+142 Aggressive
+Player Countries:
+Columbia 
+Cards: []
+Armies: 0
+Behaviour: Aggressive
+
+143 Cheater
+Player Countries:
+Ontario-North Manitoba-South Saskatchewan-South Alberta-South British_Columbia-South Quebec-Central Ontario-South Ontario-West Manitoba-North NU-Southern_Islands Saskatchewan-North Alberta-North BC-Vancouver_Island British_Columbia-North N&L-Newfoundland N&L-Labrador Quebec-North Quebec-South Nunavut-Continental NU-Baffin_Island Nova_Scotia New_Brunswick NU-Victoria_Island-East NU-Northern_Islands Prince_Edward_Island S.Africa Tanzania Sudan Libya India China 
+Cards: []
+Armies: 15
+Behaviour: Cheater
+
+144 Benevolent
+Player Countries:
+Russia 
+Cards: []
+Armies: 0
+Behaviour: Benevolent
+
+166 p1
+Player Countries:
+UK France Sweden Melbourne 
+Cards: []
+Armies: 0
+Behaviour: Aggressive
+
+167 p2
+Player Countries:
+Sydney 
+Cards: []
+Armies: 0
+Behaviour: Aggressive
+
+[phase]
+Attack
+

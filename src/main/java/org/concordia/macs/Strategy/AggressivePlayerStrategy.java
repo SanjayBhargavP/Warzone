@@ -126,7 +126,7 @@ public class AggressivePlayerStrategy extends PlayerStrategy {
 
 			if (c != null) {
 				str = str + c[0].getD_countryName() + " " + c[1].getD_countryName() + " " + c[0].getD_armyCount();
-				System.out.println(str + c[0].getD_countryName() + " " + c[1].getD_countryName() + " " + c[0].getD_armyCount());
+				System.out.println(str);
 				o.setOrderContent(str);
 				ShowMap.showMap(d_connectivity.getD_continentsList(), d_connectivity.getD_countriesList(), Play.getL_playersArray());
 				return o;
@@ -140,7 +140,7 @@ public class AggressivePlayerStrategy extends PlayerStrategy {
 
 			if (c != null) {
 				str = str + c[0].getD_countryName() + " " + c[1].getD_countryName() + " " + c[0].getD_armyCount();
-				System.out.println(str + c[0].getD_countryName() + " " + c[1].getD_countryName() + " " + c[0].getD_armyCount());
+				System.out.println(str);
 				o.setOrderContent(str);
 				ShowMap.showMap(d_connectivity.getD_continentsList(), d_connectivity.getD_countriesList(), Play.getL_playersArray());
 				return o;
