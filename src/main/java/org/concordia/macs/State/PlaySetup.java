@@ -36,7 +36,7 @@ public class PlaySetup extends Play {
     {
         for(int i=1;i<p_commands.length;)
         {
-            if(ge.getCheckIfTest())
+            if(ge.getCheckIfTournament())
             {
                 Player l_player = new Player();
                 switch(p_commands[i])

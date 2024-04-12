@@ -170,7 +170,7 @@ public class GameEngine {
 					break;
 
 				case 2:
-					setPhase(new PlaySetup(this));
+					setPhase(new PlayGame(this));
 					break;
 
 				case 3:

@@ -129,13 +129,13 @@ public class MapEditor {
 		LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
 		
 		Country l_country = new Country();
-		if(p_connectivity.getD_continentsList().size()==0)
+		if(p_connectivity.getD_continentsList().isEmpty())
 		{
 			d_logEntryBuffer.log("ERROR: Enter the values of continents first..");
 			System.out.println("ERROR: Enter the values of continents first..");
 			return 1;
 		}
-		if(p_connectivity.getD_countriesList().size()==0)
+		if(p_connectivity.getD_countriesList().isEmpty())
 		{
 			d_logEntryBuffer.log("ERROR: Enter the values of countries first..");
 			System.out.println("ERROR: Enter the values of countries first..");
@@ -160,6 +160,11 @@ public class MapEditor {
 			{
 				if(p_connectivity.getD_countriesList().get(i).getD_countryId()==p_countryId)
 					{
+						if(p_connectivity.getD_countriesList().get(i).getD_neighbours().contains(p_neighbourcountryId)){
+							d_logEntryBuffer.log("Neighbor "+l_country.get_nameFromId(p_connectivity.getD_countriesList(),p_neighbourcountryId)+ "("+p_neighbourcountryId +") is already added successfully to "+l_country.get_nameFromId(p_connectivity.getD_countriesList(),p_countryId)+"("+p_countryId+")");
+							System.out.println("Neighbor "+l_country.get_nameFromId(p_connectivity.getD_countriesList(),p_neighbourcountryId)+ "("+p_neighbourcountryId +") is already added successfully to "+l_country.get_nameFromId(p_connectivity.getD_countriesList(),p_countryId)+"("+p_countryId+")");
+							return 1;
+						}
 					p_connectivity.getD_countriesList().get(i).getD_neighbours().add(p_neighbourcountryId);
 					d_logEntryBuffer.log("Neighbor "+l_country.get_nameFromId(p_connectivity.getD_countriesList(),p_neighbourcountryId)+ "("+p_neighbourcountryId +") added successfully to "+l_country.get_nameFromId(p_connectivity.getD_countriesList(),p_countryId)+"("+p_countryId+")");
 					System.out.println("Neighbor "+l_country.get_nameFromId(p_connectivity.getD_countriesList(),p_neighbourcountryId)+ "("+p_neighbourcountryId +") added successfully to "+l_country.get_nameFromId(p_connectivity.getD_countriesList(),p_countryId)+"("+p_countryId+")");

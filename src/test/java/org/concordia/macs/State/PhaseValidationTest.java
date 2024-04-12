@@ -107,10 +107,10 @@ public class PhaseValidationTest {
             System.out.println(ColorCoding.ANSI_GREEN + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.ANSI_RESET);
 
             // Performing Attack again
-            d_gameEngine.getPhase().attack(d_connectvty);
+            d_gameEngine.getPhase().next(d_connectvty);
 
             // Checking if the phase is set to End
-            assertEquals("End", d_gameEngine.getPhaseName());
+            assertEquals("Fortify", d_gameEngine.getPhaseName());
             System.out.println(ColorCoding.ANSI_GREEN + "Phase has been successfully changed to " + d_gameEngine.getPhaseName() + ColorCoding.ANSI_RESET);
         }
     }

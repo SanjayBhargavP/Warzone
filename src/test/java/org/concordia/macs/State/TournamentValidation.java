@@ -45,7 +45,7 @@ public class TournamentValidation {
     public void testTournament() {
         l_connectivity.setD_continentsList(new ArrayList<Continent>());
         l_connectivity.setD_countriesList(new ArrayList<Country>());
-        String l_userCommand = "tournament -M VeryBasic -P Random Aggressive Cheater Benevolent -G 3 -D 10";
+        String l_userCommand = "tournament -M VeryBasic canada -P Random Aggressive Cheater Benevolent -G 3 -D 10";
         gameEngine.setPhase(new PlayGame(gameEngine));
         gameEngine.getPhase().enableTournament(l_userCommand);
     }

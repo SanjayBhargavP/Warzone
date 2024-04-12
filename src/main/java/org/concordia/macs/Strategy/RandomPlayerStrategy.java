@@ -84,7 +84,7 @@ public class RandomPlayerStrategy extends PlayerStrategy {
         // Generate a deploy order for random country with random number of troops
         // during the Reinforcement phase
         if (GameEngine.getPhaseName().equals("Reinforcement")) {
-            orderContent = "deploy";
+            orderContent = "deploy ";
             orderContent = orderContent + toDefend().getD_countryId() + " "
                     + random.nextInt(d_player.getD_armyNumber() + 1);
             order.setOrderContent(orderContent);

@@ -28,7 +28,7 @@ public class LoadSaveTest {
         gameEngine.setCheckIfTest(true);
         l_connectivity.setD_continentsList(new ArrayList<Continent>());
         l_connectivity.setD_countriesList(new ArrayList<Country>());
-        String l_userCommand = "loadgame gg";
+        String l_userCommand = "loadgame testLoadGame";
         String[] l_spiltCommand = l_userCommand.split(" ");
         gameEngine.setPhase(new PlayGame(gameEngine));
         try {

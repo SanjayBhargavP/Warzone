@@ -264,7 +264,7 @@ public class PlayersGameplay {
 				System.out.println(ColorCoding.ANSI_RED+"Error: Country "+p_fromCountry.getD_countryName()+" doesn't belong to Map"+ColorCoding.ANSI_RESET);
 				return 1;
 			}
-			else if(!p_connectivity.getD_countriesList().contains(p_toCountry))
+			else if(p_toCountry!=null && !p_connectivity.getD_countriesList().contains(p_toCountry))
 			{
 				d_logEntryBuffer.log("Error: Country "+p_toCountry.getD_countryName()+" doesn't belong to Map");
 				System.out.println(ColorCoding.ANSI_RED+"Error: Country "+p_toCountry.getD_countryName()+" doesn't belong to Map"+ColorCoding.ANSI_RESET);
