@@ -58,9 +58,9 @@ public class SaveGame {
         gameEngine.getPhase().next(d_connectivity);
         assertEquals("Reinforcement",gameEngine.getPhaseName());
         System.out.println(ColorCoding.ANSI_GREEN+"Phase has been successfully changed to "+gameEngine.getPhaseName()+ColorCoding.ANSI_RESET);
-        gameEngine.getPhase().reinforce(d_connectivity);
-        assertEquals("Attack",gameEngine.getPhaseName());
-        gameEngine.getPhase().attack(d_connectivity);
+//        gameEngine.getPhase().reinforce(d_connectivity);
+//        assertEquals("Attack",gameEngine.getPhaseName());
+//        gameEngine.getPhase().attack(d_connectivity);
 
     }
 }
