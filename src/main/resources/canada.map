@@ -38,8 +38,6 @@ Northwestern_Territories 2
 29 NT-Victoria_Island-West 6
 30 Northwest_Territories-Continental 6
 31 Yukon_Territory 6
-32 ddd 4
-33 mmm 5
 
 [borders]
 1 8 2 3
@@ -73,5 +71,3 @@ Northwestern_Territories 2
 29 24 27 28 30
 30 17 18 19 21 28 29 31
 31 17 30
-32
-33

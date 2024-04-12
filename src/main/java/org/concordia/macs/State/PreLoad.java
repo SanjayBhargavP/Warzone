@@ -31,21 +31,29 @@ public class PreLoad extends Edit {
      * @param p_commands     Array of user commands for loading a map.
      */
     public void loadMap(Connectivity p_connectivity, String[] p_commands) {
-        int newMapCreated = 0;
-        if (p_commands.length == 2) {
-            newMapCreated = LoadMap.loadMap(p_connectivity, p_commands[1]);
-        } else {
-            System.out.println(ColorCoding.getRed() + "No map entered. Please enter the name of the map to be loaded" + ColorCoding.getReset());
-        }
-        if (newMapCreated == 0) {
-            System.out.println(ColorCoding.getCyan() + "\n-------- Validating the loaded map --------\n" + ColorCoding.getReset());
-            Graph graph = new Graph(p_connectivity.getD_countriesList().size(), p_connectivity);
-            if (graph.continentConnection(p_connectivity, graph))
-                graph.isConnected(graph);
-        } else {
-            System.out.println(ColorCoding.getGreen() + "Skipping Map Validation as it is a newly created map" + ColorCoding.getReset());
-        }
-        next(p_connectivity);
+            int l_newMapCreated = 0;
+            if(p_commands.length == 2)
+            {
+                Map.checkMap(p_connectivity, p_commands[1]);
+
+            } else {
+                logEntryBuffer.log("No map entered. Please enter name of map to be loaded");
+                System.out.println(ColorCoding.ANSI_RED+"No map entered. Please enter name of map to be loaded"+ColorCoding.ANSI_RESET);
+            }
+            if(l_newMapCreated == 0 )
+            {
+                logEntryBuffer.log("Validating the loaded Map");
+                System.out.println(ColorCoding.ANSI_CYAN+"\n--------Validating the loaded map--------\n"+ColorCoding.ANSI_RESET);
+                Graph l_graph=new Graph(p_connectivity.getD_countriesList().size(),p_connectivity);
+                if(l_graph.continentConnection(p_connectivity, l_graph))
+                    l_graph.isConnected(l_graph);
+
+            }
+            else
+            {
+                System.out.println(ColorCoding.ANSI_GREEN+"Skipping Map Validation as it is a newly created map"+ColorCoding.ANSI_RESET);
+            }
+            next(p_connectivity);
     }
 
     /**

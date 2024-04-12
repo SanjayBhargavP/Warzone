@@ -23,11 +23,6 @@ public class ValidateGraph {
         DFS(1,adjacencyList,visited);
         boolean connected = true;
 
-        if(visited.length == 1){
-            d_logEntryBuffer.log("Graph is not connected");
-            System.out.println(ColorCoding.getRed() +"Graph is not Connected"+ColorCoding.getReset());
-            return 1;
-        }
         for(int i=1;i< visited.length;i++)
         {
             if(!visited[i]) {
@@ -41,7 +36,7 @@ public class ValidateGraph {
             d_logEntryBuffer.log("Graph is connected");
             System.out.println(ColorCoding.getGreen()+"Graph is Connected"+ColorCoding.getReset());
             d_logEntryBuffer.log("\n----- Loaded Map is Valid -----\n"+ColorCoding.getReset());
-            System.out.println(ColorCoding.getGreen()+"\n-----Loaded Map is a Valid Map-----\n"+ColorCoding.getReset());
+            System.out.println(ColorCoding.getGreen()+"\n----- Loaded Map is a Valid Map-----\n"+ColorCoding.getReset());
             return 0;
         }
         else {
